@@ -52,7 +52,7 @@ export function readFields(raw, contentType) {
 }
 
 export async function sendConsult(fields, env = process.env, fetchImpl = globalThis.fetch) {
-  const name = clean(fields.name, 200);
+  const name = clean(fields.name, 200).replace(/[\r\n]/g, "");
   const email = clean(fields.email, 200);
   const company = clean(fields.company, 200);
   const size = clean(fields.fleet_size, 40);
@@ -116,8 +116,9 @@ function resultPage(title, message) {
 }
 
 function clientAddress(req) {
-  const forwarded = req.headers["x-forwarded-for"];
-  if (typeof forwarded === "string" && forwarded.length) return forwarded.split(",")[0].trim();
+  const real = req.headers["x-real-ip"];
+  const value = Array.isArray(real) ? real[0] : real;
+  if (typeof value === "string" && value.trim()) return value.trim();
   return req.socket?.remoteAddress || "local";
 }
 
