@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI operations glossary | 0xRay</title>
+  <meta name="description" content="A glossary for AI Fleet OPS. Industry terms come first. The shorter names this fleet writes on tickets and in the house file come second." />
+  <link rel="canonical" href="https://ops.0xray.dev/lexicon/" />
+  <link rel="stylesheet" href="../assets/site.css" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://ops.0xray.dev/lexicon/#article",
+      "headline": "AI operations glossary",
+      "description": "A glossary for AI Fleet OPS. Industry terms come first. The shorter names this fleet writes on tickets and in the house file come second.",
+      "url": "https://ops.0xray.dev/lexicon/",
+      "inLanguage": "en",
+      "datePublished": "2026-10-30",
+      "dateModified": "2026-10-30",
+      "author": {
+        "@type": "Organization",
+        "name": "0xRay",
+        "url": "https://0xray.dev"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "0xRay",
+        "url": "https://ops.0xray.dev/"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://ops.0xray.dev/lexicon/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://ops.0xray.dev/lexicon/#breadcrumbs",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "AI Fleet OPS",
+          "item": "https://ops.0xray.dev/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "AI operations glossary",
+          "item": "https://ops.0xray.dev/lexicon/"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://ops.0xray.dev/lexicon/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why are there two names for the same thing?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Operators and founders search with industry words. The fleet's own files use shorter names. This page lists the industry word first and our name second so a reader can move between a guide and a ticket."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which name should we use in a design doc?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Use the industry term in anything a founder or a new operator will read. Use our name when you are pointing at a field in the house, the brief, or the product."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What if a glossary entry and a guide disagree?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The glossary is the short form. The guide is the operating detail. If a word is ambiguous, the glossary entry wins, and the guide should be corrected to match it."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <a class="skip" href="#content">Skip to content</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="../">AI Fleet OPS <span>0xRay</span></a>
+      <nav aria-label="Primary">
+        <a href="../">Hub</a>
+        <a href="../guides/">Guides</a>
+        <a href="./" aria-current="page">Lexicon</a>
+        <a href="https://ops.0xray.dev/#consult">Consult</a>
+      </nav>
+    </div>
+  </header>
+  <main id="content" class="wrap">
+    <p class="crumb"><a href="../">Hub</a> / Glossary</p>
+    <p class="eyebrow">Lexicon</p>
+    <h1>AI operations glossary</h1>
+    <p class="direct">Yes. This glossary pairs the words operators search with the shorter names this fleet writes on a ticket. Use the industry term in a design doc a founder will read. Use our name when you point at a field in the house file or the product. If a guide and an entry disagree, the entry wins.</p>
+    <p>Use the industry term in conversation with operators and founders. Use our name when you are in the house file, the brief, or the product. Each entry is short on purpose. The guide has the operating detail.</p><article class="term" id="fleet">
+  <h2>What is a multi-agent fleet?</h2>
+  <p class="ours">Multi-agent fleet. Our name: fleet</p>
+  <p>Named roles that share one queue, one written procedure, and one release bar. The roster is the fleet. A pile of chats is not.</p>
+  <p class="see">Read <a href="../guides/what-is-ai-fleet-ops/">What is AI Fleet OPS</a> <a href="../guides/stand-up/">Standing up an agent team</a></p>
+</article><article class="term" id="operating-kit">
+  <h2>What is the operating kit?</h2>
+  <p class="ours">Operating kit. Our name: suit</p>
+  <p>The kit an agent runs with so memory, rules, and checks stay on when the context window closes. It fastens onto the host you already use. It is not the whole product by itself.</p>
+  <p class="see">Read <a href="../guides/what-is-ai-fleet-ops/">What is AI Fleet OPS</a> <a href="../guides/stand-up/">Standing up an agent team</a></p>
+</article><article class="term" id="named-role">
+  <h2>What is a named role?</h2>
+  <p class="ours">Named role. Our name: seat</p>
+  <p>A role on the roster, such as implementer, publisher, reviewer, or coordinator. The field is the role, not a personal name and not a model brand. The human owner is a person, and is not one of these roles.</p>
+  <p class="see">Read <a href="../guides/control-plane/">Orchestrating agent work</a> <a href="../guides/stand-up/">Standing up an agent team</a></p>
+</article><article class="term" id="operating-procedure">
+  <h2>What is the operating procedure?</h2>
+  <p class="ours">Operating procedure. Our name: OP-PROC</p>
+  <p>The written rules for how the team runs. The house file overrides the pack on owner, roles, public voice, what is allowed, what to ask first, and which queue is real. After a context reset, read that file from disk. A memory note is not the re-read.</p>
+  <p class="see">Read <a href="../guides/control-plane/">Orchestrating agent work</a> <a href="../guides/stand-up/">Standing up an agent team</a></p>
+</article><article class="term" id="work-queue">
+  <h2>What is the work queue?</h2>
+  <p class="ours">Work queue. Our name: Bifrost</p>
+  <p>The live board when the live URL is set. Each issue, pull request, and comment becomes one ticket and one inbox line, then the owning role is resumed. When the live URL is unset, the queue is the hand-kept house board. One of those is the record.</p>
+  <p class="see">Read <a href="../guides/control-plane/">Orchestrating agent work</a> <a href="../guides/what-is-ai-fleet-ops/">What is AI Fleet OPS</a></p>
+</article><article class="term" id="work-brief">
+  <h2>What is a work brief?</h2>
+  <p class="ours">Work brief. Our name: packet</p>
+  <p>The fields on a ticket: goal, constraints, path, acceptance, gates, evidence, next owner, escalate, and the ownership line. A live ticket missing the person who does the work, or the person who answers, is not ready for a pass.</p>
+  <p class="see">Read <a href="../guides/control-plane/">Orchestrating agent work</a> <a href="../guides/ship-gates/">Release gates</a></p>
+</article><article class="term" id="ticket">
+  <h2>What is a ticket?</h2>
+  <p class="ours">Ticket. Our name: card</p>
+  <p>One GitHub issue or pull request. It has a title, a URL, an owning role, a stage from open through done, and a state of live, held, parked, or closed. A chat line is not a ticket.</p>
+  <p class="see">Read <a href="../guides/control-plane/">Orchestrating agent work</a> <a href="../guides/ship-gates/">Release gates</a></p>
+</article><article class="term" id="advance-request">
+  <h2>What is an advance request?</h2>
+  <p class="ours">Advance request. Our name: tip</p>
+  <p>A role asks the implementer to open or move the work the ticket already names. It is not the brief, not the handoff, and not a public post.</p>
+  <p class="see">Read <a href="../guides/ship-gates/">Release gates</a> <a href="../guides/eng-vs-dist/">Build lane vs go-to-market</a></p>
+</article><article class="term" id="strict-review">
+  <h2>What is a strict review?</h2>
+  <p class="ours">Strict review. Our name: Strict</p>
+  <p>The review tier for a change that ships, touches production, security, or identity. Lighter tiers cover ordinary review. Documentation copy uses the normal tier. The reviewer writes PASS or FIX on the pull request.</p>
+  <p class="see">Read <a href="../guides/ship-gates/">Release gates</a> <a href="../guides/compute-discipline/">Model spend and compute</a></p>
+</article><article class="term" id="public-go">
+  <h2>What is a go-to-market go?</h2>
+  <p class="ours">Go-to-market go. Our name: after GO</p>
+  <p>The human owner's explicit go for a public post, listing, or launch. Without it, public posts stay on hold. A build-lane PASS is not this go. This plant is on hold.</p>
+  <p class="see">Read <a href="../guides/eng-vs-dist/">Build lane vs go-to-market</a> <a href="../guides/ship-gates/">Release gates</a></p>
+</article><article class="term" id="fasten">
+  <h2>What does it mean to fasten the kit?</h2>
+  <p class="ours">Fasten the kit. Our name: wear</p>
+  <p>Install the operating kit onto the project and prove the hooks are live. The house check reports PASS when the house is ready. Files on disk without live hooks are not a running team.</p>
+  <p class="see">Read <a href="../guides/stand-up/">Standing up an agent team</a> <a href="../guides/what-is-ai-fleet-ops/">What is AI Fleet OPS</a></p>
+</article><article class="term" id="ownership">
+  <h2>What is the ownership line?</h2>
+  <p class="ours">Ownership line (RACI). Our name: raci</p>
+  <p>R does the work. A answers for the result. C is consulted before a judgment gate. I is informed after the event. On the brief the line looks like R, A, C, and I. A live ticket missing R or A is not ready for a pass.</p>
+  <p class="see">Read <a href="../guides/control-plane/">Orchestrating agent work</a> <a href="../guides/ship-gates/">Release gates</a></p>
+</article><article class="term" id="resume-signal">
+  <h2>What is a resume signal?</h2>
+  <p class="ours">Resume signal. Our name: wake</p>
+  <p>The queue tells a role to pick up one ticket. A handoff is the brief plus this signal. A message in a group room does not resume anyone. After a context cut, the role also reads the session ticket on disk.</p>
+  <p class="see">Read <a href="../guides/control-plane/">Orchestrating agent work</a> <a href="../guides/stand-up/">Standing up an agent team</a></p>
+</article><article class="term" id="pipeline">
+  <h2>What is a pipeline?</h2>
+  <p class="ours">Pipeline. Our name: plate</p>
+  <p>One bounded pipeline a role works inside. A search stays on that pipeline's ticket. The architecture track writes the pipeline, or a fix, only after that track is handed over, and before compute is spent.</p>
+  <p class="see">Read <a href="../guides/compute-discipline/">Model spend and compute</a> <a href="../guides/control-plane/">Orchestrating agent work</a></p>
+</article><section id="next">
+  <h2>How do you request a consult?</h2>
+  <p>Bring the queue you have, the role list, and what should ship next week. A consult maps the gaps and the first gate.</p>
+  <p class="cta-row"><a class="btn btn-pri" href="https://ops.0xray.dev/#consult">Request a consult</a></p>
+</section><section class="related">
+<h2>Where should you read next?</h2>
+<ul class="plain">
+<li><a href="../guides/what-is-ai-fleet-ops/">What is AI Fleet OPS</a></li>
+<li><a href="../guides/control-plane/">Orchestrating agent work</a></li>
+<li><a href="../guides/ship-gates/">Release gates</a></li>
+</ul>
+</section>
+    <section class="faq" id="faq">
+<h2>What else do operators ask?</h2>
+<h3>Why are there two names for the same thing?</h3>
+<p>Operators and founders search with industry words. The fleet's own files use shorter names. This page lists the industry word first and our name second so a reader can move between a guide and a ticket.</p>
+<h3>Which name should we use in a design doc?</h3>
+<p>Use the industry term in anything a founder or a new operator will read. Use our name when you are pointing at a field in the house, the brief, or the product.</p>
+<h3>What if a glossary entry and a guide disagree?</h3>
+<p>The glossary is the short form. The guide is the operating detail. If a word is ambiguous, the glossary entry wins, and the guide should be corrected to match it.</p>
+</section>
+    
+  </main>
+  <footer class="site-footer">
+    <p>Build work ships on a recorded review. The public lane stays on hold until the owner gives an explicit go.</p>
+    <p><a href="https://0xray.dev">Product</a> · <a href="https://docs.0xray.dev">Docs</a> · <a href="https://bifrost.0xray.dev">Live board</a></p>
+    <p>© 0xRay · AI Fleet OPS</p>
+  </footer>
+</body>
+</html>

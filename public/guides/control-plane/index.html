@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Agent control plane | 0xRay</title>
+  <meta name="description" content="The agent control plane is one work queue, a brief with ownership on every ticket, and a procedure the next session reads from disk." />
+  <link rel="canonical" href="https://ops.0xray.dev/guides/control-plane/" />
+  <link rel="stylesheet" href="../../assets/site.css" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://ops.0xray.dev/guides/control-plane/#article",
+      "headline": "The agent control plane",
+      "description": "The agent control plane is one work queue, a brief with ownership on every ticket, and a procedure the next session reads from disk.",
+      "url": "https://ops.0xray.dev/guides/control-plane/",
+      "inLanguage": "en",
+      "datePublished": "2026-10-30",
+      "dateModified": "2026-10-30",
+      "author": {
+        "@type": "Organization",
+        "name": "0xRay",
+        "url": "https://0xray.dev"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "0xRay",
+        "url": "https://ops.0xray.dev/"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://ops.0xray.dev/guides/control-plane/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://ops.0xray.dev/guides/control-plane/#breadcrumbs",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "AI Fleet OPS",
+          "item": "https://ops.0xray.dev/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Operating guides",
+          "item": "https://ops.0xray.dev/guides/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "The agent control plane",
+          "item": "https://ops.0xray.dev/guides/control-plane/"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://ops.0xray.dev/guides/control-plane/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the control plane for an agent fleet?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The control plane is the work queue, the ownership on each ticket, and the procedure roles re-read after a restart. Agent orchestration is those three staying in agreement."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which work queue should we use?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Use one. If the live URL is set, the live board is the queue. If it is unset, the hand-kept house board is the queue. A second board becomes a second memory."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What does a work brief need before anyone starts?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Goal, constraints, path, acceptance, gates, evidence, the next owner, where to escalate, and the ownership line. Who does the work and who answers have to be filled, or the ticket is not ready for a pass."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What resumes a role after context loss?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "An inbox line that points at one ticket, plus the session ticket and the procedure on disk. A message in a shared room does not resume the work."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do we observe the fleet?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Read the queue. Each ticket has an owner, a stage, and a state. Record real events: opened work, a review verdict, a merge, a deploy. A continuous-integration tick is not one of those events."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <a class="skip" href="#content">Skip to content</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="../../">AI Fleet OPS <span>0xRay</span></a>
+      <nav aria-label="Primary">
+        <a href="../../">Hub</a>
+        <a href="../" aria-current="page">Guides</a>
+        <a href="../../lexicon/">Lexicon</a>
+        <a href="https://ops.0xray.dev/#consult">Consult</a>
+      </nav>
+    </div>
+  </header>
+  <main id="content" class="wrap">
+    <p class="crumb"><a href="../../">Hub</a> / <a href="../">Guides</a> / Control plane</p>
+    <p class="eyebrow">Agent orchestration</p>
+    <h1>The agent control plane</h1>
+    <p class="direct">Yes. Agent orchestration holds when one queue, one owner, and one written procedure still agree after a restart. The outcome is a ticket you can resume, instead of a chat that invented a second plan. You get it by filing a brief before code, waking the next role on that ticket, and rereading the procedure from disk.</p>
+    
+<section id="problem">
+  <h2>What breaks agent orchestration?</h2>
+  <p>Agent orchestration breaks when work has two homes. The ticket says one thing, the chat says another, and after a context reset the role rebuilds a third version from whatever is still in the prompt. Owners overlap. The same bug is fixed twice, or it is not fixed at all.</p>
+  <p>You cannot operate what you cannot see. A multi-agent system with no queue has no stage, no owner, and no event log. Status becomes a personality trait of the model.</p>
+</section>
+
+<section id="model">
+  <h2>What does the control plane consist of?</h2>
+  <p>The control plane is three objects and one rule.</p>
+  <h3>The queue</h3>
+  <p>One board is the record. When a live URL is configured, each issue, pull request, and comment becomes one ticket and one inbox line for the owning role, and that role is resumed. When the live URL is unset, the hand-kept board in the house folder is the queue. Stages run open, then review, fix, merge, retest, and done. A ticket is live, held, parked, or closed. Work that never becomes a ticket is forgotten as soon as the chat moves on.</p>
+  <h3>The brief</h3>
+  <p>Each ticket carries a short brief: goal, constraints, path, acceptance, gates, evidence, next owner, escalate, and an ownership line. R does the work. A answers for the result. C is consulted before a judgment call. I is informed after the event. Keep each field short enough to re-read on resume, about two hundred characters. A live ticket missing R or A is not ready, and review does not pass it. Acceptance in the brief is the eval the later diff has to meet. Write it before code. That order is what <a href="../ship-gates/">release gates</a> enforce.</p>
+  <h3>The procedure</h3>
+  <p>A pack procedure ships with the kit. The house file overrides it for the owner, the roles, the public voice, what a role may do, what needs a human yes, and which board is real. On every resume, and after every context cut, the role reads that file from disk. A memory note is not the re-read. The <a href="../stand-up/">stand-up guide</a> shows where the house file points.</p>
+  <h3>The handoff rule</h3>
+  <p>A handoff is the brief delivered to the next role, plus a resume signal that points at the same ticket. The shared room is for talk. The inbox line is the resume. A direct message with no ticket is not work. An advance request only asks the implementer to open or move work the ticket already names. It does not replace the brief.</p>
+  <h3>What you watch</h3>
+  <p>Observability is the queue. Record real events: work opened or pushed, a review verdict, a merge, an owner message, a blocker, a finished deploy. A continuous-integration run is attached to the ticket and is not, by itself, board traffic. A draft parks. A live pull request with no real event for a long stretch parks. An idle loop on parked work is noise.</p>
+  <div class="callout">
+    <p>We call the live queue Bifrost, the brief a packet, the role a seat, and the procedure file OP-PROC. Those names are defined in the <a href="../../lexicon/">glossary</a>.</p>
+  </div>
+</section>
+
+<section id="steps">
+  <h2>How do you put the control plane in place?</h2>
+  <ol class="steps">
+    <li><strong>Declare the queue in the house file.</strong> One URL or one file path. Tell every role. Stop updating the other board.</li>
+    <li><strong>Open a ticket the same day you decide to do the work.</strong> One issue or one pull request. Record the owner. Keep the stage honest.</li>
+    <li><strong>Paste the brief</strong> with goal, constraints, path, acceptance, gates, evidence, next owner, escalate, and the ownership line. Fill who does the work and who answers before anyone codes.</li>
+    <li><strong>Lock the gate list when review starts.</strong> The implementer sets it. The reviewer may raise it and does not lower it.</li>
+    <li><strong>Hand off by delivering the brief and waking the next role on that ticket.</strong> Leave the room message as talk. It does not clear the handoff.</li>
+    <li><strong>On every resume, re-read the procedure from the file the house names,</strong> then the session ticket, then the working notes. Continue the intent already written there.</li>
+  </ol>
+</section>
+
+<section id="failure-modes">
+  <h2>Where does orchestration fail in practice?</h2>
+  <ul class="failures">
+    <li><strong>Two queues.</strong> The live board and a hand-kept file both look official. Roles update the one they remember.</li>
+    <li><strong>A task that exists only in chat.</strong> There is no owner and no stage, so a restart drops it.</li>
+    <li><strong>A brief with no R or A.</strong> The ticket looks busy and review still cannot pass it. The amber mark is the warning, not a pass.</li>
+    <li><strong>A room message treated as the handoff.</strong> The next role never gets an inbox line. The ticket sits still while the room looks active.</li>
+    <li><strong>The procedure rewritten from memory</strong> after compaction. The house file said something else. The role follows the paraphrase and drifts.</li>
+  </ul>
+</section>
+<section id="next">
+  <h2>How do you request a consult?</h2>
+  <p>Bring the queue you have, the role list, and what should ship next week. A consult maps the gaps and the first gate.</p>
+  <p class="cta-row"><a class="btn btn-pri" href="https://ops.0xray.dev/#consult">Request a consult</a></p>
+</section><section class="related">
+<h2>Where should you read next?</h2>
+<ul class="plain">
+<li><a href="../../guides/ship-gates/">Release gates for agent fleets</a></li>
+<li><a href="../../guides/stand-up/">Standing up an agent team</a></li>
+<li><a href="../../guides/what-is-ai-fleet-ops/">What is AI Fleet OPS</a></li>
+<li><a href="../../lexicon/">Glossary</a></li>
+</ul>
+</section>
+    <section class="faq" id="faq">
+<h2>What else do operators ask?</h2>
+<h3>What is the control plane for an agent fleet?</h3>
+<p>The control plane is the work queue, the ownership on each ticket, and the procedure roles re-read after a restart. Agent orchestration is those three staying in agreement.</p>
+<h3>Which work queue should we use?</h3>
+<p>Use one. If the live URL is set, the live board is the queue. If it is unset, the hand-kept house board is the queue. A second board becomes a second memory.</p>
+<h3>What does a work brief need before anyone starts?</h3>
+<p>Goal, constraints, path, acceptance, gates, evidence, the next owner, where to escalate, and the ownership line. Who does the work and who answers have to be filled, or the ticket is not ready for a pass.</p>
+<h3>What resumes a role after context loss?</h3>
+<p>An inbox line that points at one ticket, plus the session ticket and the procedure on disk. A message in a shared room does not resume the work.</p>
+<h3>How do we observe the fleet?</h3>
+<p>Read the queue. Each ticket has an owner, a stage, and a state. Record real events: opened work, a review verdict, a merge, a deploy. A continuous-integration tick is not one of those events.</p>
+</section>
+    
+  </main>
+  <footer class="site-footer">
+    <p>Build work ships on a recorded review. The public lane stays on hold until the owner gives an explicit go.</p>
+    <p><a href="https://0xray.dev">Product</a> · <a href="https://docs.0xray.dev">Docs</a> · <a href="https://bifrost.0xray.dev">Live board</a></p>
+    <p>© 0xRay · AI Fleet OPS</p>
+  </footer>
+</body>
+</html>

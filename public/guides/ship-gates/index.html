@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Release gates for agents | 0xRay</title>
+  <meta name="description" content="Release gates for agent fleets: what done means, when review is strict, and how a PASS is recorded before anything ships." />
+  <link rel="canonical" href="https://ops.0xray.dev/guides/ship-gates/" />
+  <link rel="stylesheet" href="../../assets/site.css" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://ops.0xray.dev/guides/ship-gates/#article",
+      "headline": "Release gates for agents",
+      "description": "Release gates for agent fleets: what done means, when review is strict, and how a PASS is recorded before anything ships.",
+      "url": "https://ops.0xray.dev/guides/ship-gates/",
+      "inLanguage": "en",
+      "datePublished": "2026-10-30",
+      "dateModified": "2026-10-30",
+      "author": {
+        "@type": "Organization",
+        "name": "0xRay",
+        "url": "https://0xray.dev"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "0xRay",
+        "url": "https://ops.0xray.dev/"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://ops.0xray.dev/guides/ship-gates/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://ops.0xray.dev/guides/ship-gates/#breadcrumbs",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "AI Fleet OPS",
+          "item": "https://ops.0xray.dev/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Operating guides",
+          "item": "https://ops.0xray.dev/guides/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Release gates for agents",
+          "item": "https://ops.0xray.dev/guides/ship-gates/"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://ops.0xray.dev/guides/ship-gates/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is a release gate for an agent change?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A release gate is a check that has to be true before merge or publish. On every merge, continuous integration is green and the docs match the change. Heavier changes add install proof and a live proof after publish."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What counts as done?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A receipt: a live URL, a package registry view, a release URL, or a reviewer PASS recorded on the pull request. A green build is the first gate, not the receipt."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "When is the review strict?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Use the strict tier when the change ships, touches production, security, or identity. Ordinary code review can be lighter. Documentation copy uses the normal tier. The reviewer writes PASS or FIX and posts it as a review on the pull request."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What should we hand the next role?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The brief and a resume signal that point at the same ticket. The next owner is named on the brief. A room message does not complete the handoff."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Who records the ship decision?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The implementer writes the change. A different role records PASS or FIX as a review on the pull request. A sentence in chat is not that record."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <a class="skip" href="#content">Skip to content</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="../../">AI Fleet OPS <span>0xRay</span></a>
+      <nav aria-label="Primary">
+        <a href="../../">Hub</a>
+        <a href="../" aria-current="page">Guides</a>
+        <a href="../../lexicon/">Lexicon</a>
+        <a href="https://ops.0xray.dev/#consult">Consult</a>
+      </nav>
+    </div>
+  </header>
+  <main id="content" class="wrap">
+    <p class="crumb"><a href="../../">Hub</a> / <a href="../">Guides</a> / Release gates</p>
+    <p class="eyebrow">Human-in-the-loop governance</p>
+    <h1>Release gates for agents</h1>
+    <p class="direct">Yes. An agent change ships when a reviewer records PASS against a brief written first and the floor checks are true. The outcome is a receipt, not the author's claim that the work is done. You get it by setting the gate list, posting the review on the pull request, and handing off the brief with a resume signal.</p>
+    
+<section id="problem">
+  <h2>Why do agent releases slip through?</h2>
+  <p>The agent that wrote the change is the voice that calls it done. Continuous integration goes green. Someone types an approval in chat. The merge lands. A wording nit starts a second review round. A security change gets the same glance as a comment edit. The public channel hears that it shipped because the build went green.</p>
+  <p>Release gates for agents exist so the eval is outside the author. The acceptance was written earlier. The reviewer scores the diff against it. The receipt is a recorded verdict or a live proof, and chat is neither.</p>
+</section>
+
+<section id="model">
+  <h2>What has to be true before an agent change ships?</h2>
+  <h3>Done is a receipt</h3>
+  <p>A live URL, a package-registry view, a release URL, or a reviewer PASS recorded on the pull request. Green continuous integration is the first gate. It is the floor, not the receipt. The brief's acceptance lines are the eval. Code review checks the diff against that brief, which is why the <a href="../control-plane/">brief is written first</a>.</p>
+  <h3>The floor, and what you add</h3>
+  <p>Every merge needs green checks and docs that match the change. Add install proof when a package has to install on the machines where people actually run it. That install proof runs on the human owner's machine, because the role machines do not carry every environment. Add live proof when you publish: a fresh install and an upgrade. A tag pushed by itself is not live proof. The implementer sets this list on the brief. The reviewer may raise it and may not lower it. The list locks when review starts.</p>
+  <h3>How deep the review is</h3>
+  <p>Light and normal review still need the reviewer's pass and green checks before merge. The strict tier is reserved for a change that ships, touches production, security, or identity. Documentation copy uses the normal tier. A doc-only edit skips tests and CI when no code, test, or generated output depends on those docs. The first review lists every blocker and labels each finding as a blocker, a nit, or unverified. A re-review checks the blockers. Nits do not open a new round.</p>
+  <p>The reviewer writes PASS or FIX and posts it as a review on the pull request, as the role, not as a personal account. A chat sentence is not that review. A hotfix is the exception that merges on green checks, with the review after, and it does not merge before the checks are green. A few-line production fix can be deployed by the shipping role once tests are green. Anything larger is a cloud run, covered in <a href="../compute-discipline/">model spend</a>.</p>
+  <p>A must-fix finding is for wrong live behavior, for security, spend, or payment risk, or for a procedure line that would send the next role the wrong way. Wording and nits are an approval plus a later linked ticket.</p>
+  <h3>Advance request and handoff</h3>
+  <p>An advance request asks the implementer to open or move the work the ticket already names. On a cluster of same-path tickets, the accountable person asks this way and does not open the pull request. The person who does the work opens it. The advance request is not the brief, not the handoff, and not a public post. The handoff is still the brief plus a resume signal on that ticket. Public language is a different lane, in the <a href="../eng-vs-dist/">build versus go-to-market guide</a>.</p>
+  <div class="callout">
+    <p>We call the strict review tier Strict, and the advance request a tip. Both are in the <a href="../../lexicon/">glossary</a>.</p>
+  </div>
+</section>
+
+<section id="steps">
+  <h2>How do you run a release gate?</h2>
+  <ol class="steps">
+    <li><strong>Write acceptance on the brief before any code.</strong> Scope, files, docs touched, tests, and what is out of scope. Get a pass on that brief, then implement against it.</li>
+    <li><strong>Set the gate list.</strong> Green checks and matching docs on every merge. Add install proof and live proof when the scope needs them.</li>
+    <li><strong>Pick the review tier from the scope.</strong> Use the strict tier for ship, production, security, or identity. Use the normal tier for doc copy. Light or normal still needs green checks before merge.</li>
+    <li><strong>Record PASS or FIX on the pull request.</strong> List blockers once. Re-review those blockers only.</li>
+    <li><strong>Merge on that recorded pass plus the floor.</strong> A hotfix merges on green checks and is reviewed after. It does not merge on a red build.</li>
+    <li><strong>Call it done only when the receipt exists.</strong> If another role owes the next cut, deliver the brief and the resume signal together.</li>
+  </ol>
+</section>
+
+<section id="failure-modes">
+  <h2>Where do release gates fail?</h2>
+  <ul class="failures">
+    <li><strong>Merge on a green build alone.</strong> Gate one passed. The reviewer receipt and the docs check never happened.</li>
+    <li><strong>Gates lowered after review started.</strong> The scope got quieter on paper. The diff did not.</li>
+    <li><strong>Nits opening a new round.</strong> Blockers wait while wording changes recycle the pull request.</li>
+    <li><strong>A personal-account approval or a chat pass.</strong> The pull request has no review from the reviewer role. The merge is unauthorized by the gate even if the button was green.</li>
+    <li><strong>An advance request treated as permission to post.</strong> The implementer was asked to open the work. The public lane was not opened.</li>
+  </ul>
+</section>
+<section id="next">
+  <h2>How do you request a consult?</h2>
+  <p>Bring the queue you have, the role list, and what should ship next week. A consult maps the gaps and the first gate.</p>
+  <p class="cta-row"><a class="btn btn-pri" href="https://ops.0xray.dev/#consult">Request a consult</a></p>
+</section><section class="related">
+<h2>Where should you read next?</h2>
+<ul class="plain">
+<li><a href="../../guides/control-plane/">Orchestrating agent work</a></li>
+<li><a href="../../guides/eng-vs-dist/">Build lane vs go-to-market lane</a></li>
+<li><a href="../../guides/compute-discipline/">Governing model spend and compute</a></li>
+<li><a href="../../lexicon/">Glossary</a></li>
+</ul>
+</section>
+    <section class="faq" id="faq">
+<h2>What else do operators ask?</h2>
+<h3>What is a release gate for an agent change?</h3>
+<p>A release gate is a check that has to be true before merge or publish. On every merge, continuous integration is green and the docs match the change. Heavier changes add install proof and a live proof after publish.</p>
+<h3>What counts as done?</h3>
+<p>A receipt: a live URL, a package registry view, a release URL, or a reviewer PASS recorded on the pull request. A green build is the first gate, not the receipt.</p>
+<h3>When is the review strict?</h3>
+<p>Use the strict tier when the change ships, touches production, security, or identity. Ordinary code review can be lighter. Documentation copy uses the normal tier. The reviewer writes PASS or FIX and posts it as a review on the pull request.</p>
+<h3>What should we hand the next role?</h3>
+<p>The brief and a resume signal that point at the same ticket. The next owner is named on the brief. A room message does not complete the handoff.</p>
+<h3>Who records the ship decision?</h3>
+<p>The implementer writes the change. A different role records PASS or FIX as a review on the pull request. A sentence in chat is not that record.</p>
+</section>
+    
+  </main>
+  <footer class="site-footer">
+    <p>Build work ships on a recorded review. The public lane stays on hold until the owner gives an explicit go.</p>
+    <p><a href="https://0xray.dev">Product</a> · <a href="https://docs.0xray.dev">Docs</a> · <a href="https://bifrost.0xray.dev">Live board</a></p>
+    <p>© 0xRay · AI Fleet OPS</p>
+  </footer>
+</body>
+</html>

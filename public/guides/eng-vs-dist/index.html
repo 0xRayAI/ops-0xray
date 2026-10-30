@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>When not to post | 0xRay</title>
+  <meta name="description" content="Keep the build lane and the go-to-market lane apart. A review ships code. Public posts stay on hold until the owner gives a go." />
+  <link rel="canonical" href="https://ops.0xray.dev/guides/eng-vs-dist/" />
+  <link rel="stylesheet" href="../../assets/site.css" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://ops.0xray.dev/guides/eng-vs-dist/#article",
+      "headline": "When not to post",
+      "description": "Keep the build lane and the go-to-market lane apart. A review ships code. Public posts stay on hold until the owner gives a go.",
+      "url": "https://ops.0xray.dev/guides/eng-vs-dist/",
+      "inLanguage": "en",
+      "datePublished": "2026-10-30",
+      "dateModified": "2026-10-30",
+      "author": {
+        "@type": "Organization",
+        "name": "0xRay",
+        "url": "https://0xray.dev"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "0xRay",
+        "url": "https://ops.0xray.dev/"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://ops.0xray.dev/guides/eng-vs-dist/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://ops.0xray.dev/guides/eng-vs-dist/#breadcrumbs",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "AI Fleet OPS",
+          "item": "https://ops.0xray.dev/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Operating guides",
+          "item": "https://ops.0xray.dev/guides/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "When not to post",
+          "item": "https://ops.0xray.dev/guides/eng-vs-dist/"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://ops.0xray.dev/guides/eng-vs-dist/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the difference between the build lane and the go-to-market lane?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The build lane merges and deploys code under release gates. The go-to-market lane publishes posts, listings, and launch copy. A pass on the build lane leaves the public lane closed."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "When are we allowed to post?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "When the human owner gives an explicit go for that public item. Until then the lane stays on hold. A draft, a ticket comment, or a review pass is not that go."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Who writes public copy, and who sends it?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The coordinator can draft the brief for a public item and run a plain-language read. The post still waits for the owner's go. Specialists, when you have them, handle posts, listings, and audio inside that go."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why keep the lanes apart?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A demo that works is a build fact. A public claim is a different fact, with a different owner and a different gate. The receipt has to exist before the claim does."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is this website a launch announcement?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "This site is the operating manual for the consulting practice. The go-to-market lane for this plant is on hold."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <a class="skip" href="#content">Skip to content</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="../../">AI Fleet OPS <span>0xRay</span></a>
+      <nav aria-label="Primary">
+        <a href="../../">Hub</a>
+        <a href="../" aria-current="page">Guides</a>
+        <a href="../../lexicon/">Lexicon</a>
+        <a href="https://ops.0xray.dev/#consult">Consult</a>
+      </nav>
+    </div>
+  </header>
+  <main id="content" class="wrap">
+    <p class="crumb"><a href="../../">Hub</a> / <a href="../">Guides</a> / Build vs go-to-market</p>
+    <p class="eyebrow">Public lane</p>
+    <h1>When not to post</h1>
+    <p class="direct">Yes. Keep the build lane and the go-to-market lane on different gates. Code can ship on a recorded review while public posts stay on hold until the human owner gives an explicit go. Mark each ticket build or public, and do not treat a merge as an announcement. On this plant that go has not been given.</p>
+    
+<section id="problem">
+  <h2>Why is a green build a bad time to post?</h2>
+  <p>The build is green and somebody posts. The post is a different product from the merge. It has a different audience, a different owner, and a different definition of done. Multi-agent teams leak announcements from the same channel that merges code. Launch copy gets ahead of the receipt, and the public record describes a go that nobody called.</p>
+</section>
+
+<section id="model">
+  <h2>How do the build lane and the public lane stay apart?</h2>
+  <p>Keep two lanes. They can share a company and a week. They do not share a gate.</p>
+  <h3>Build lane</h3>
+  <p>Implement, review, merge, deploy. The gate is a recorded PASS plus the release floor in the <a href="../ship-gates/">release guide</a>. The thing you can see is the ticket: owner, stage, and the receipt. A coordinator does not deploy, publish, or spend. The shipping role merges after review. The reviewer does not merge.</p>
+  <h3>Go-to-market lane</h3>
+  <p>Posts, listings, and launch language. The gate is an explicit go from the human owner for that item. The coordinator may draft the public brief and run a plain-language read so someone outside the team can follow it. Specialists, when you staff them, handle posts, listings, and audio. They still wait for the go. A draft is not armed. An advance request is not a public post. Exact public copy ships only as an armed order that names its own gates.</p>
+  <p>The fleet runs on one plane and one queue. Two lanes sit on that plane. The build lane merges code. The public lane sends posts only after GO. A pass on the build lane leaves public posts on hold. The <a href="../what-is-ai-fleet-ops/">overview</a> treats that split as part of the discipline.</p>
+  <div class="callout hold">
+    <p>Public posts wait until the owner says go. We mark that moment after GO. Until then the public lane stays on hold. On this plant the go has not been given. This manual is the operating text for the consulting practice. It does not announce a public launch. The short name is in the <a href="../../lexicon/">glossary</a>.</p>
+  </div>
+</section>
+
+<section id="steps">
+  <h2>How do you keep a post from shipping early?</h2>
+  <ol class="steps">
+    <li><strong>Mark every ticket build or public</strong> when you open it. A public ticket needs the owner's go before anyone posts.</li>
+    <li><strong>Write the public voice in the house file:</strong> which account, how often, and how replies sound.</li>
+    <li><strong>Let the coordinator draft and run the plain-language read.</strong> Internal shorthand fails that read. Fix the words before they are armed.</li>
+    <li><strong>Store exact public copy as an armed order</strong> with its gates. Leave drafts labeled as drafts. An advance request stays on the build ticket.</li>
+    <li><strong>Ship the code on its release gates.</strong> Leave the post unsent while the public lane is on hold.</li>
+    <li><strong>On this plant, do not describe a go that has not been given.</strong> If you need the lane opened, that is a consult with the owner, not a sentence in a pull request.</li>
+  </ol>
+</section>
+
+<section id="failure-modes">
+  <h2>Where do the lanes get mixed?</h2>
+  <ul class="failures">
+    <li><strong>A review pass treated as permission to post.</strong> The build gate opened. The public gate did not.</li>
+    <li><strong>Launch language inside a build ticket</strong> with no owner go and no armed copy. The next role treats the paragraph as the announcement.</li>
+    <li><strong>A public claim with no receipt.</strong> The post says live. The release URL does not exist.</li>
+    <li><strong>A specialist posting from a room message.</strong> The room is not the go, and it is not the handoff.</li>
+    <li><strong>Skipping the plain-language read.</strong> The post is accurate to the team and opaque to everyone it was meant to reach.</li>
+  </ul>
+</section>
+<section id="next">
+  <h2>How do you request a consult?</h2>
+  <p>Bring the queue you have, the role list, and what should ship next week. A consult maps the gaps and the first gate.</p>
+  <p class="cta-row"><a class="btn btn-pri" href="https://ops.0xray.dev/#consult">Request a consult</a></p>
+</section><section class="related">
+<h2>Where should you read next?</h2>
+<ul class="plain">
+<li><a href="../../guides/ship-gates/">Release gates for agent fleets</a></li>
+<li><a href="../../guides/what-is-ai-fleet-ops/">What is AI Fleet OPS</a></li>
+<li><a href="../../guides/control-plane/">Orchestrating agent work</a></li>
+<li><a href="../../lexicon/">Glossary</a></li>
+</ul>
+</section>
+    <section class="faq" id="faq">
+<h2>What else do operators ask?</h2>
+<h3>What is the difference between the build lane and the go-to-market lane?</h3>
+<p>The build lane merges and deploys code under release gates. The go-to-market lane publishes posts, listings, and launch copy. A pass on the build lane leaves the public lane closed.</p>
+<h3>When are we allowed to post?</h3>
+<p>When the human owner gives an explicit go for that public item. Until then the lane stays on hold. A draft, a ticket comment, or a review pass is not that go.</p>
+<h3>Who writes public copy, and who sends it?</h3>
+<p>The coordinator can draft the brief for a public item and run a plain-language read. The post still waits for the owner's go. Specialists, when you have them, handle posts, listings, and audio inside that go.</p>
+<h3>Why keep the lanes apart?</h3>
+<p>A demo that works is a build fact. A public claim is a different fact, with a different owner and a different gate. The receipt has to exist before the claim does.</p>
+<h3>Is this website a launch announcement?</h3>
+<p>This site is the operating manual for the consulting practice. The go-to-market lane for this plant is on hold.</p>
+</section>
+    
+  </main>
+  <footer class="site-footer">
+    <p>Build work ships on a recorded review. The public lane stays on hold until the owner gives an explicit go.</p>
+    <p><a href="https://0xray.dev">Product</a> · <a href="https://docs.0xray.dev">Docs</a> · <a href="https://bifrost.0xray.dev">Live board</a></p>
+    <p>© 0xRay · AI Fleet OPS</p>
+  </footer>
+</body>
+</html>

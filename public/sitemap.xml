@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://ops.0xray.dev/</loc></url>
+  <url><loc>https://ops.0xray.dev/guides/</loc></url>
+  <url><loc>https://ops.0xray.dev/guides/what-is-ai-fleet-ops/</loc></url>
+  <url><loc>https://ops.0xray.dev/guides/control-plane/</loc></url>
+  <url><loc>https://ops.0xray.dev/guides/ship-gates/</loc></url>
+  <url><loc>https://ops.0xray.dev/guides/stand-up/</loc></url>
+  <url><loc>https://ops.0xray.dev/guides/eng-vs-dist/</loc></url>
+  <url><loc>https://ops.0xray.dev/guides/compute-discipline/</loc></url>
+  <url><loc>https://ops.0xray.dev/lexicon/</loc></url>
+</urlset>

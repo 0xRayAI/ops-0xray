@@ -3,84 +3,263 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>AI Fleet OPS — consulting for suited agent fleets | 0xRay</title>
-  <meta name="description" content="Stand up a 0xRay fleet that remembers the job, runs under shared rules, and ships on PASS. Book a consult." />
-  <style>
-    :root { color-scheme: dark; --bg:#0b0f14; --fg:#e8eef5; --muted:#9aa7b5; --acc:#5eead4; --card:#121821; }
-    * { box-sizing: border-box; }
-    body { margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif; background:var(--bg); color:var(--fg); line-height:1.5; }
-    a { color:var(--acc); }
-    .wrap { max-width: 42rem; margin: 0 auto; padding: 3rem 1.25rem 4rem; }
-    h1 { font-size: clamp(2rem, 5vw, 2.75rem); letter-spacing: -0.03em; margin: 0 0 .75rem; }
-    .sub { color: var(--muted); font-size: 1.125rem; margin-bottom: 1.5rem; }
-    .cta { display:inline-flex; gap:.75rem; flex-wrap:wrap; margin-bottom: 2.5rem; }
-    .btn { display:inline-block; padding:.7rem 1.1rem; border-radius:.5rem; text-decoration:none; font-weight:600; }
-    .btn-pri { background:var(--acc); color:#042f2e; }
-    .btn-sec { border:1px solid #2a3644; color:var(--fg); }
-    h2 { font-size:1.1rem; margin:2rem 0 .75rem; }
-    ol,ul { padding-left: 1.2rem; color: var(--muted); }
-    li { margin: .35rem 0; }
-    .card { background:var(--card); border:1px solid #1e2833; border-radius:.75rem; padding:1.25rem; margin-top:1rem; }
-    label { display:block; font-size:.85rem; color:var(--muted); margin:.75rem 0 .25rem; }
-    input,textarea,select { width:100%; padding:.65rem .7rem; border-radius:.4rem; border:1px solid #2a3644; background:#0b0f14; color:var(--fg); }
-    button { margin-top:1rem; padding:.7rem 1.1rem; border:0; border-radius:.5rem; background:var(--acc); color:#042f2e; font-weight:700; cursor:pointer; }
-    .hint { font-size:.85rem; color:var(--muted); margin-top:.5rem; }
-    footer { margin-top:3rem; padding-top:1.5rem; border-top:1px solid #1e2833; color:var(--muted); font-size:.9rem; }
-  </style>
+  <title>One plane, one queue | 0xRay</title>
+  <meta name="description" content="One plane and one queue for a multi-agent system: named owners, release gates, and a ceiling on model spend." />
+  <link rel="canonical" href="https://ops.0xray.dev/" />
+  <link rel="stylesheet" href="assets/site.css" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://ops.0xray.dev/#article",
+      "headline": "One plane, one queue",
+      "description": "One plane and one queue for a multi-agent system: named owners, release gates, and a ceiling on model spend.",
+      "url": "https://ops.0xray.dev/",
+      "inLanguage": "en",
+      "datePublished": "2026-10-30",
+      "dateModified": "2026-10-30",
+      "author": {
+        "@type": "Organization",
+        "name": "0xRay",
+        "url": "https://0xray.dev"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "0xRay",
+        "url": "https://ops.0xray.dev/"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://ops.0xray.dev/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://ops.0xray.dev/#breadcrumbs",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "AI Fleet OPS",
+          "item": "https://ops.0xray.dev/"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://ops.0xray.dev/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is AI Fleet OPS?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "AI Fleet OPS is the operating discipline for a multi-agent system in production. Named roles share one work queue, a written procedure, human-in-the-loop release gates, and a ceiling on model spend. The job has to be recoverable after a context window closes."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Who should read this manual?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Operators who run the queue, founders who own the outcome and the public voice, and engineering leads who own release gates and compute. The three start-here paths on this page point each job at the right guides."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do agents keep a job after the context window closes?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The next session reads the procedure and the session ticket from disk, then resumes the same role on the same ticket. The long notes stay in the working page. The chat scroll is not the record."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "When can the team post publicly?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The build lane and the go-to-market lane are separate. A review pass on a pull request leaves the public lane closed. This plant stays on hold until the human owner gives an explicit go."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I request a consult?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Use the form on this page. It emails consult@ops.0xray.dev. Until that mailbox is live, the interim address is consult@0xray.dev. Say what the team should ship next week."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
 </head>
 <body>
-  <main class="wrap">
-    <h1>AI Fleet OPS</h1>
-    <p class="sub">Run a suited agent fleet without the chaos. We stand up the house, keep the Bifrost board honest, and ship the next cut with you.</p>
-    <div class="cta">
-      <a class="btn btn-pri" href="#consult">Request a consult</a>
-      <a class="btn btn-sec" href="https://0xray.dev">Wear the suit</a>
+  <a class="skip" href="#content">Skip to content</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="./">AI Fleet OPS <span>0xRay</span></a>
+      <nav aria-label="Primary">
+        <a href="./" aria-current="page">Hub</a>
+        <a href="guides/">Guides</a>
+        <a href="lexicon/">Lexicon</a>
+        <a href="https://ops.0xray.dev/#consult">Consult</a>
+      </nav>
     </div>
+  </header>
+  <main id="content" class="wrap wide">
+    
+    <p class="eyebrow">Multi-agent operations</p>
+    <h1>One plane, one queue</h1>
+    <p class="direct">Yes. AI Fleet OPS runs a multi-agent system on one plane and one queue so the job survives a context reset. Named roles share that queue, a human records the release, and model spend has a ceiling. You get there by writing the procedure on disk, filing every task as a ticket, and holding public posts until after GO.</p>
+    
+<section>
+  <h2>What are the operating parts?</h2>
+  <p>A fleet is running when one plane holds these four parts. A chat transcript cannot stand in for any of them.</p>
+  <div class="parts">
+    <article class="card">
+      <span class="kicker">Queue</span>
+      <h3>One work queue</h3>
+      <p>Every task is a ticket with an owner, a stage, and a state. Agent orchestration is that queue staying the record after the session ends.</p>
+    </article>
+    <article class="card">
+      <span class="kicker">Ownership</span>
+      <h3>Named roles</h3>
+      <p>Someone implements, someone reviews, someone coordinates. A human owner holds money, credentials, deletes, publishing, and taste.</p>
+    </article>
+    <article class="card">
+      <span class="kicker">Release</span>
+      <h3>A recorded gate</h3>
+      <p>Done is a receipt: a live URL, a registry view, a release, or a reviewer PASS on the pull request. A green build is the first check, not the receipt.</p>
+    </article>
+    <article class="card">
+      <span class="kicker">Spend</span>
+      <h3>A compute ceiling</h3>
+      <p>Write the spec before the cloud run. One deep-work run per ticket. New wakes go quiet when the weekly budget hits its hold line.</p>
+    </article>
+  </div>
+</section>
 
-    <h2>What you get</h2>
-    <ol>
-      <li><strong>House stand-up</strong> — seats, suits, OP-PROC, Bifrost wired so the fleet wakes with the job.</li>
-      <li><strong>Ops rhythm</strong> — cards, packets, gates; ship on PASS, not vibes.</li>
-      <li><strong>Ongoing OPS</strong> — watch, tip, Dist when you want the public lane; you keep the keys.</li>
-    </ol>
+<section>
+  <h2>Where should you start?</h2>
+  <div class="paths">
+    <article class="path">
+      <span class="kicker">Operator</span>
+      <h3><a class="stretch" href="guides/stand-up/">Run the team day to day</a></h3>
+      <p>Stand the house up, then keep the queue and the release gate honest.</p>
+      <p class="see"><a href="guides/stand-up/">Standing up an agent team</a> · <a href="guides/control-plane/">Control plane</a> · <a href="guides/ship-gates/">Release gates</a></p>
+    </article>
+    <article class="path">
+      <span class="kicker">Founder</span>
+      <h3><a class="stretch" href="guides/what-is-ai-fleet-ops/">Own the outcome</a></h3>
+      <p>Learn the discipline, keep the public lane closed until you call it, and set the spend line.</p>
+      <p class="see"><a href="guides/what-is-ai-fleet-ops/">What AI Fleet OPS is</a> · <a href="guides/eng-vs-dist/">Build lane vs go-to-market</a> · <a href="guides/compute-discipline/">Model spend</a></p>
+    </article>
+    <article class="path">
+      <span class="kicker">Eng lead</span>
+      <h3><a class="stretch" href="guides/control-plane/">Own the gates and the compute</a></h3>
+      <p>Put ownership on the ticket, score the change against a written eval, and stop extra runs.</p>
+      <p class="see"><a href="guides/control-plane/">Control plane</a> · <a href="guides/ship-gates/">Release gates</a> · <a href="guides/compute-discipline/">Model spend</a></p>
+    </article>
+  </div>
+</section>
 
-    <h2>Proof</h2>
-    <ul>
-      <li>Product: <a href="https://0xray.dev">0xray.dev</a> · <a href="https://docs.0xray.dev">docs</a> · <a href="https://bifrost.0xray.dev">Bifrost</a></li>
-      <li>Open source suit (MIT). Consulting is how we run it with you.</li>
-    </ul>
+<section>
+  <h2>Which guide matches the work?</h2>
+  <p>Six guides, one operating system. In-house names for these ideas live in the <a href="lexicon/">glossary</a>, industry term first.</p>
+  <div class="pillars">
+    <article class="pillar">
+      <h3><a class="title" href="guides/what-is-ai-fleet-ops/">What is AI Fleet OPS</a></h3>
+      <p>Multi-agent operations in production: reliability after context loss, human judgment, and the difference between shipping code and announcing it.</p>
+    </article>
+    <article class="pillar">
+      <h3><a class="title" href="guides/control-plane/">Orchestrating agent work</a></h3>
+      <p>The control plane: one queue, a brief on every ticket, an ownership line, and a procedure the next session actually reads.</p>
+    </article>
+    <article class="pillar">
+      <h3><a class="title" href="guides/ship-gates/">Release gates for agent fleets</a></h3>
+      <p>Review depth, PASS or FIX, what counts as done, and how work moves to the next role without turning chat into the gate.</p>
+    </article>
+    <article class="pillar">
+      <h3><a class="title" href="guides/stand-up/">Standing up an agent team</a></h3>
+      <p>The house path: fasten the kit, prove the checks are live, and only then give a role its first ticket.</p>
+    </article>
+    <article class="pillar">
+      <h3><a class="title" href="guides/eng-vs-dist/">Build lane vs go-to-market</a></h3>
+      <p>When a merge is allowed and when a public post is still on hold. This plant's public lane is on hold.</p>
+    </article>
+    <article class="pillar">
+      <h3><a class="title" href="guides/compute-discipline/">Model spend and compute</a></h3>
+      <p>Architecture before the run, one cloud agent per ticket, and a weekly line that stops new wakes.</p>
+    </article>
+  </div>
+</section>
 
-    <h2>Offers</h2>
-    <ul>
-      <li><strong>Scout</strong> — one session: fleet map + gap list</li>
-      <li><strong>Stand-up</strong> — house + board + first ship gate</li>
-      <li><strong>Retain</strong> — weekly OPS; Dist optional</li>
-    </ul>
+<section>
+  <h2>How does a consult work?</h2>
+  <p>The manual is the work. A consult is how we run that work with you. You keep the keys.</p>
+  <div class="offers">
+    <article class="offer">
+      <h3>Scout</h3>
+      <p>One session. A map of roles, queue, gates, and the gaps that will drop the job on the next restart.</p>
+    </article>
+    <article class="offer">
+      <h3>Stand-up</h3>
+      <p>House rules, one queue, the kit fastened, and the first release gate on a real ticket.</p>
+    </article>
+    <article class="offer">
+      <h3>Retain</h3>
+      <p>Weekly operations on the queue and the gates. The public lane opens only when you call it.</p>
+    </article>
+  </div>
+</section>
 
-    <section id="consult" class="card">
-      <h2 style="margin-top:0">Request a consult</h2>
-      <p style="color:var(--muted);margin-top:0">Tell us what the fleet should ship next week.</p>
-      <form action="mailto:consult@ops.0xray.dev" method="get" enctype="text/plain">
-        <label for="name">Name</label>
-        <input id="name" name="name" required autocomplete="name" />
-        <label for="email">Work email</label>
-        <input id="email" name="email" type="email" required autocomplete="email" />
-        <label for="company">Company</label>
-        <input id="company" name="company" autocomplete="organization" />
-        <label for="size">Fleet size</label>
-        <select id="size" name="fleet_size">
-          <option>1</option>
-          <option>2–5</option>
-          <option>6+</option>
-        </select>
-        <label for="need">What do you need?</label>
-        <textarea id="need" name="need" rows="3" required></textarea>
-        <button type="submit">Request a consult</button>
-        <p class="hint">We’ll reply from ops — usually within one business day. Interim notify: consult@0xray.dev until mailboxes land.</p>
-      </form>
-    </section>
 
-    <footer>© 0xRay · Product at <a href="https://0xray.dev">0xray.dev</a> · <a href="https://docs.0xray.dev">Docs</a> · <a href="https://bifrost.0xray.dev">Bifrost</a></footer>
+    <section class="faq" id="faq">
+<h2>What else do operators ask?</h2>
+<h3>What is AI Fleet OPS?</h3>
+<p>AI Fleet OPS is the operating discipline for a multi-agent system in production. Named roles share one work queue, a written procedure, human-in-the-loop release gates, and a ceiling on model spend. The job has to be recoverable after a context window closes.</p>
+<h3>Who should read this manual?</h3>
+<p>Operators who run the queue, founders who own the outcome and the public voice, and engineering leads who own release gates and compute. The three start-here paths on this page point each job at the right guides.</p>
+<h3>How do agents keep a job after the context window closes?</h3>
+<p>The next session reads the procedure and the session ticket from disk, then resumes the same role on the same ticket. The long notes stay in the working page. The chat scroll is not the record.</p>
+<h3>When can the team post publicly?</h3>
+<p>The build lane and the go-to-market lane are separate. A review pass on a pull request leaves the public lane closed. This plant stays on hold until the human owner gives an explicit go.</p>
+<h3>How do I request a consult?</h3>
+<p>Use the form on this page. It emails consult@ops.0xray.dev. Until that mailbox is live, the interim address is consult@0xray.dev. Say what the team should ship next week.</p>
+</section>
+    
+<section class="consult" id="consult">
+  <h2>How do you request a consult?</h2>
+  <p>Tell us what the team should ship next week.</p>
+  <form action="mailto:consult@ops.0xray.dev" method="get" enctype="text/plain">
+    <label for="name">Name</label>
+    <input id="name" name="name" required autocomplete="name" />
+    <label for="email">Work email</label>
+    <input id="email" name="email" type="email" required autocomplete="email" />
+    <label for="company">Company</label>
+    <input id="company" name="company" autocomplete="organization" />
+    <label for="size">How many agents are in the team?</label>
+    <select id="size" name="fleet_size">
+      <option>1</option>
+      <option>2–5</option>
+      <option>6+</option>
+    </select>
+    <label for="need">What do you need?</label>
+    <textarea id="need" name="need" rows="4" required></textarea>
+    <button type="submit">Request a consult</button>
+    <p class="hint">We'll reply from ops, usually within one business day. Interim notify: consult@0xray.dev until mailboxes land.</p>
+  </form>
+</section>
+
   </main>
+  <footer class="site-footer">
+    <p>Build work ships on a recorded review. The public lane stays on hold until the owner gives an explicit go.</p>
+    <p><a href="https://0xray.dev">Product</a> · <a href="https://docs.0xray.dev">Docs</a> · <a href="https://bifrost.0xray.dev">Live board</a></p>
+    <p>© 0xRay · AI Fleet OPS</p>
+  </footer>
 </body>
 </html>

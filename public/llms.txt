@@ -1,0 +1,17 @@
+# AI Fleet OPS
+
+> One plane and one queue for multi-agent operations in production.
+
+Operating manual for a multi-agent team. Public posts stay on hold until the owner gives a go.
+
+## Pages
+
+- [Hub](https://ops.0xray.dev/): one plane, one queue, start here by job
+- [Operating guides](https://ops.0xray.dev/guides/): the six parts of the manual
+- [What is AI Fleet OPS](https://ops.0xray.dev/guides/what-is-ai-fleet-ops/): multi-agent operations in production
+- [The agent control plane](https://ops.0xray.dev/guides/control-plane/): queues, ownership, and the procedure
+- [Release gates for agents](https://ops.0xray.dev/guides/ship-gates/): review, PASS, and the receipt
+- [Stand up an agent team](https://ops.0xray.dev/guides/stand-up/): keep the job after context loss
+- [When not to post](https://ops.0xray.dev/guides/eng-vs-dist/): build lane versus public posts
+- [Agent model spend](https://ops.0xray.dev/guides/compute-discipline/): spec first, one run, weekly hold line
+- [Glossary](https://ops.0xray.dev/lexicon/): industry term first, our name second

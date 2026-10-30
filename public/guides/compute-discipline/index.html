@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Agent model spend | 0xRay</title>
+  <meta name="description" content="Govern model spend for an agent fleet: write the spec first, run one cloud agent per ticket, and stop new work at the weekly line." />
+  <link rel="canonical" href="https://ops.0xray.dev/guides/compute-discipline/" />
+  <link rel="stylesheet" href="../../assets/site.css" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://ops.0xray.dev/guides/compute-discipline/#article",
+      "headline": "Govern agent model spend",
+      "description": "Govern model spend for an agent fleet: write the spec first, run one cloud agent per ticket, and stop new work at the weekly line.",
+      "url": "https://ops.0xray.dev/guides/compute-discipline/",
+      "inLanguage": "en",
+      "datePublished": "2026-10-30",
+      "dateModified": "2026-10-30",
+      "author": {
+        "@type": "Organization",
+        "name": "0xRay",
+        "url": "https://0xray.dev"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "0xRay",
+        "url": "https://ops.0xray.dev/"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://ops.0xray.dev/guides/compute-discipline/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://ops.0xray.dev/guides/compute-discipline/#breadcrumbs",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "AI Fleet OPS",
+          "item": "https://ops.0xray.dev/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Operating guides",
+          "item": "https://ops.0xray.dev/guides/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Govern agent model spend",
+          "item": "https://ops.0xray.dev/guides/compute-discipline/"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://ops.0xray.dev/guides/compute-discipline/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How do we keep agent compute from burning the budget?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Write the specification before the run. Keep one deep-work run per ticket. Stop opening new runs when weekly spend reaches the hold line. A run with no ticket id does not start."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What does architecture-first mean?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The bug or outcome, the reproduction, what finished looks like, and the paths are written down before a cloud agent is launched. The run implements that spec."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "When is a second cloud run justified?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A new run waits until three things are true: the current agent already has two or more jobs queued, the new job touches different files, and the job can be briefed from the docs alone. Otherwise the current run keeps the ticket."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Who is allowed to spend?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Model spend, production changes, and publish sit with the human owner unless the house file names an exception. A role does not invent a budget."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the weekly hold line?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "When spend reaches about three quarters of the weekly budget, new wakes stay quiet and the next-wave plan stays quiet. Essential work already in flight can finish. A few-line production fix can still ship once tests are green."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <a class="skip" href="#content">Skip to content</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="../../">AI Fleet OPS <span>0xRay</span></a>
+      <nav aria-label="Primary">
+        <a href="../../">Hub</a>
+        <a href="../" aria-current="page">Guides</a>
+        <a href="../../lexicon/">Lexicon</a>
+        <a href="https://ops.0xray.dev/#consult">Consult</a>
+      </nav>
+    </div>
+  </header>
+  <main id="content" class="wrap">
+    <p class="crumb"><a href="../../">Hub</a> / <a href="../">Guides</a> / Model spend</p>
+    <p class="eyebrow">AI spend control</p>
+    <h1>Govern agent model spend</h1>
+    <p class="direct">Yes. Agent compute stays inside a budget when the spec exists before the run, one cloud agent owns the ticket, and new work stops at a weekly hold line. The outcome is a bill that matches finished tickets. You get it by writing the bug, the reproduction, and the paths, then launching only against a ticket id.</p>
+    
+<section id="problem">
+  <h2>Why does agent compute burn the budget?</h2>
+  <p>Cloud agents are easy to fan out and hard to account for. A team launches a run to discover what the task is. Two runs edit one pull request. The weekly bill arrives before the spec does. An empty queue still wakes roles, and the wakes spend more, because nobody set a line where new work stops.</p>
+  <p>Model spend is an operations problem. It has an owner, a spec, and a ceiling. It is not a side effect of leaving agents on.</p>
+</section>
+
+<section id="model">
+  <h2>How do you govern model spend?</h2>
+  <h3>Architecture before the run</h3>
+  <p>Write the bug or the outcome, how to reproduce the current behavior, what finished looks like, and the paths. That page is the spec the run implements. The architecture track sits outside the day-to-day roster. Reach it on the ticket: an issue, a pull request, or a comment that mentions the person who owns the track. A side inbox is a second queue, which the <a href="../control-plane/">control plane</a> already forbids.</p>
+  <h3>One run on the ticket</h3>
+  <p>Deep work goes to a cloud agent, including a long review. No ticket id, no launch. One implementation run on the ticket, then one review run, and not both live. The run pushes a branch. The role's own application opens the pull request. A wake from the queue does not itself launch a run. Roles do not build the receipt on a laptop. The cloud run is where code and tests execute. A few-line production fix can be deployed by the shipping role once tests are green. Anything larger waits for the cloud run. The release side of that rule is in <a href="../ship-gates/">release gates</a>.</p>
+  <h3>When a second run is allowed</h3>
+  <p>All three have to be true. The current agent already has two or more jobs queued. The new job touches different files. The new job can be briefed from the docs alone. If one is false, the current run keeps the ticket.</p>
+  <h3>The weekly ceiling</h3>
+  <p>Set a weekly budget before the second agent exists. At about three quarters of it, stop waking new work and stop opening a plan for the next wave. Do not launch a run to use the remainder. Essential work already in flight can finish. A hotfix can still ship on green tests. A larger change waits for a run that already exists, or for the budget to reset. Spend, production changes, and publish need the human owner's yes unless the house file names an exception. That house file is written when the team is stood up.</p>
+  <div class="callout">
+    <p>On this fleet the architecture track is Arch1. It writes a fix, or one pipeline (a plate), only when that track is handed over. The spec stays in plain language: the bug, how to reproduce it, what fixed looks like, and the paths. The name is in the <a href="../../lexicon/">glossary</a>.</p>
+  </div>
+</section>
+
+<section id="steps">
+  <h2>What do you do before a cloud run?</h2>
+  <ol class="steps">
+    <li><strong>Write the spec in plain language</strong> before you talk about a cloud run. Bug or outcome, reproduction, finished state, paths.</li>
+    <li><strong>Open the ticket and paste the brief,</strong> including acceptance and the ownership line. Launch only against that ticket id.</li>
+    <li><strong>Keep a single implementation run.</strong> When it finishes and the required checks are green, start the review run. Do not leave both live.</li>
+    <li><strong>Apply the three-part test</strong> before any extra run. Two or more jobs already queued, different files, briefable from docs.</li>
+    <li><strong>Publish the weekly number</strong> to the owner and the coordinator. At about three quarters, new wakes and the next-wave plan stay quiet.</li>
+    <li><strong>Let a few-line production fix ship on green tests.</strong> Send everything larger through the cloud run, or wait for the budget.</li>
+  </ol>
+</section>
+
+<section id="failure-modes">
+  <h2>Where does compute discipline fail?</h2>
+  <ul class="failures">
+    <li><strong>A run launched to invent the spec.</strong> The bill pays for exploration. The ticket still has no acceptance line.</li>
+    <li><strong>Two live runs on one pull request.</strong> They overwrite each other and the review has no single head to score.</li>
+    <li><strong>A laptop build treated as the receipt.</strong> The role's machine is not the plant. The queue never sees a cloud run, and the proof is local.</li>
+    <li><strong>An empty queue that keeps waking roles</strong> after the weekly line is already quiet. The wakes spend. They do not create a ticket.</li>
+    <li><strong>Architecture reached on a side channel.</strong> The spec never lands on the ticket, so the run implements a conversation.</li>
+  </ul>
+</section>
+<section id="next">
+  <h2>How do you request a consult?</h2>
+  <p>Bring the queue you have, the role list, and what should ship next week. A consult maps the gaps and the first gate.</p>
+  <p class="cta-row"><a class="btn btn-pri" href="https://ops.0xray.dev/#consult">Request a consult</a></p>
+</section><section class="related">
+<h2>Where should you read next?</h2>
+<ul class="plain">
+<li><a href="../../guides/ship-gates/">Release gates for agent fleets</a></li>
+<li><a href="../../guides/stand-up/">Standing up an agent team</a></li>
+<li><a href="../../guides/control-plane/">Orchestrating agent work</a></li>
+<li><a href="../../lexicon/">Glossary</a></li>
+</ul>
+</section>
+    <section class="faq" id="faq">
+<h2>What else do operators ask?</h2>
+<h3>How do we keep agent compute from burning the budget?</h3>
+<p>Write the specification before the run. Keep one deep-work run per ticket. Stop opening new runs when weekly spend reaches the hold line. A run with no ticket id does not start.</p>
+<h3>What does architecture-first mean?</h3>
+<p>The bug or outcome, the reproduction, what finished looks like, and the paths are written down before a cloud agent is launched. The run implements that spec.</p>
+<h3>When is a second cloud run justified?</h3>
+<p>A new run waits until three things are true: the current agent already has two or more jobs queued, the new job touches different files, and the job can be briefed from the docs alone. Otherwise the current run keeps the ticket.</p>
+<h3>Who is allowed to spend?</h3>
+<p>Model spend, production changes, and publish sit with the human owner unless the house file names an exception. A role does not invent a budget.</p>
+<h3>What is the weekly hold line?</h3>
+<p>When spend reaches about three quarters of the weekly budget, new wakes stay quiet and the next-wave plan stays quiet. Essential work already in flight can finish. A few-line production fix can still ship once tests are green.</p>
+</section>
+    
+  </main>
+  <footer class="site-footer">
+    <p>Build work ships on a recorded review. The public lane stays on hold until the owner gives an explicit go.</p>
+    <p><a href="https://0xray.dev">Product</a> · <a href="https://docs.0xray.dev">Docs</a> · <a href="https://bifrost.0xray.dev">Live board</a></p>
+    <p>© 0xRay · AI Fleet OPS</p>
+  </footer>
+</body>
+</html>

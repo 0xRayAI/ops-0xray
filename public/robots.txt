@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://ops.0xray.dev/sitemap.xml
