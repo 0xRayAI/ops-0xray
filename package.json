@@ -1,0 +1,9 @@
+{
+  "name": "ops-0xray",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "start": "npx --yes serve public -l tcp://0.0.0.0:${PORT:-3000}"
+  },
+  "engines": { "node": ">=20" }
+}
