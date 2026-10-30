@@ -8,7 +8,7 @@ Copy rules for the site live in [docs/AEO-SEO-PLAYBOOK.md](docs/AEO-SEO-PLAYBOOK
 
 The site is the category manual for AI Fleet OPS: one plane, one queue, release gates, and a ceiling on model spend. It is a hub, six guides, and a glossary. Industry language leads. In-house names live in the glossary, industry term first.
 
-Railway runs `npm start`, which serves `public/` with `serve`. The consult form is `mailto:consult@0xray.dev`. `consult@ops.0xray.dev` is on hold, not a live mailbox. No backend.
+Railway runs `npm start` (`node server.mjs`). That serves `public/` and `POST /api/consult`. The form emails consult@0xray.dev through Resend. Set `RESEND_API_KEY` on the host. `RESEND_FROM` is optional and defaults to `AI Fleet OPS <consult@0xray.dev>`. No Tally.
 
 | Path | What it is |
 | --- | --- |

@@ -88,7 +88,7 @@
           "name": "How do I request a consult?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Use the form on this page. It emails consult@0xray.dev. consult@ops.0xray.dev is on hold, not a live mailbox. Say what the team should ship next week."
+            "text": "Use the form on this page. It emails consult@0xray.dev. Say what the team should ship next week."
           }
         }
       ]
@@ -229,13 +229,13 @@
 <h3>When can the team post publicly?</h3>
 <p>The build lane and the go-to-market lane are separate. A review pass on a pull request leaves the public lane closed. This plant stays on hold until the human owner gives an explicit go.</p>
 <h3>How do I request a consult?</h3>
-<p>Use the form on this page. It emails consult@0xray.dev. consult@ops.0xray.dev is on hold, not a live mailbox. Say what the team should ship next week.</p>
+<p>Use the form on this page. It emails consult@0xray.dev. Say what the team should ship next week.</p>
 </section>
     
 <section class="consult" id="consult">
   <h2>How do you request a consult?</h2>
   <p>Tell us what the team should ship next week.</p>
-  <form action="mailto:consult@0xray.dev" method="get" enctype="text/plain">
+  <form action="/api/consult" method="post">
     <label for="name">Name</label>
     <input id="name" name="name" required autocomplete="name" />
     <label for="email">Work email</label>
@@ -251,7 +251,7 @@
     <label for="need">What do you need?</label>
     <textarea id="need" name="need" rows="4" required></textarea>
     <button type="submit">Request a consult</button>
-    <p class="hint">We'll reply within one business day. Mail goes to consult@0xray.dev. consult@ops.0xray.dev is on hold.</p>
+    <p class="hint">We'll reply within one business day. The form emails consult@0xray.dev.</p>
   </form>
 </section>
 
