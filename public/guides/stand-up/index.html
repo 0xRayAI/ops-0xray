@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Stand up an agent team | 0xRay</title>
+  <meta name="description" content="Stand up an agent team so the job survives context loss: house rules, a running operating kit, a live check, and a first ticket." />
+  <link rel="canonical" href="https://ops.0xray.dev/guides/stand-up/" />
+  <link rel="stylesheet" href="../../assets/site.css" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://ops.0xray.dev/guides/stand-up/#article",
+      "headline": "Stand up an agent team",
+      "description": "Stand up an agent team so the job survives context loss: house rules, a running operating kit, a live check, and a first ticket.",
+      "url": "https://ops.0xray.dev/guides/stand-up/",
+      "inLanguage": "en",
+      "datePublished": "2026-10-30",
+      "dateModified": "2026-10-30",
+      "author": {
+        "@type": "Organization",
+        "name": "0xRay",
+        "url": "https://0xray.dev"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "0xRay",
+        "url": "https://ops.0xray.dev/"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://ops.0xray.dev/guides/stand-up/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://ops.0xray.dev/guides/stand-up/#breadcrumbs",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "AI Fleet OPS",
+          "item": "https://ops.0xray.dev/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Operating guides",
+          "item": "https://ops.0xray.dev/guides/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Stand up an agent team",
+          "item": "https://ops.0xray.dev/guides/stand-up/"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://ops.0xray.dev/guides/stand-up/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How do we stand up an agent team?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Name the owner, the roles, the public voice, what they may do, and what needs a human yes. Fasten the operating kit on the project, prove the checks are live, point at one queue, and only then open the first ticket."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do we know the kit is actually running?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Run the house check until it reports PASS, and keep an inspect receipt that says the kit is fastened. A copied instruction file with no live hooks is not a running team."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What happens on the session after a context reset?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The role reads the procedure file named by the house, then the session ticket, then the working notes, and continues the same job. It does not reconstruct the rules from memory."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "When may a new role ship?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "After a written role, a fastened kit with an inspect receipt, an orientation, and an acknowledgement. The first assignment is a ticket, not a side task in chat."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Where is the install path documented?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The steps on this page list the install commands. The house kit is @0xray/grok-bot. The product manual is at docs.0xray.dev."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <a class="skip" href="#content">Skip to content</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="../../">AI Fleet OPS <span>0xRay</span></a>
+      <nav aria-label="Primary">
+        <a href="../../">Hub</a>
+        <a href="../" aria-current="page">Guides</a>
+        <a href="../../lexicon/">Lexicon</a>
+        <a href="https://ops.0xray.dev/#consult">Consult</a>
+      </nav>
+    </div>
+  </header>
+  <main id="content" class="wrap">
+    <p class="crumb"><a href="../../">Hub</a> / <a href="../">Guides</a> / Stand-up</p>
+    <p class="eyebrow">Agent reliability</p>
+    <h1>Stand up an agent team</h1>
+    <p class="direct">Yes. An agent team keeps the job when the rules live in a house file, the operating kit is actually running, and the next session reads the ticket from disk. The outcome is a restart that continues the same intent. You get it by fastening the kit, proving the checks, and only then opening the first ticket.</p>
+    
+<section id="problem">
+  <h2>Why does a new agent team forget the job?</h2>
+  <p>The repository has an instructions file and three agents, and nothing is actually running. The first context cut forgets the house rules. A new role starts merging before anyone has checked that its hooks fire. The board people mention in chat is not the board the software updates.</p>
+  <p>Standing up an agent team is the path that makes the job recoverable. Skip it and every later gate is theater: the review has no role, the queue has no home, and the restart has nothing on disk to read.</p>
+</section>
+
+<section id="model">
+  <h2>What does a stood-up team have on disk?</h2>
+  <p>The house is the folder of team rules. It names the human owner, the roles, the public voice, the actions a role may take without asking, the actions that need a yes, and which queue is the real one. If that folder is missing, start from the house template. Name the roles whatever fits the company. The template names are examples.</p>
+  <p>The operating kit is fastened onto the project so memory, checks, and the work loop stay on when the window closes. Install brings in the memory organ. The fasten step writes project instructions, config, and the host bridges. Inside a git checkout it also fastens editor hooks. A file sitting on disk with dead hooks is not a running team.</p>
+  <p>The session ticket is one line on disk: the intent, and the next cut. The long body lives in the working notes. After a context cut, read the session ticket, then the notes, then the procedure file the house names. Leave the intent alone so the same job continues. The <a href="../what-is-ai-fleet-ops/">definition guide</a> says why this is the reliability bar. The <a href="../control-plane/">control plane guide</a> says what the procedure and the queue contain.</p>
+  <p>A new role does not ship on the day it appears. The hire gate is a written role, a fastened kit with an inspect receipt on disk, an orientation, and an acknowledgement. Then the first ticket. The brief on that ticket names who does the work and who answers, and it is passed before a cloud run writes code.</p>
+  <div class="callout">
+    <p>Fastening the kit is called wear. The one-line session ticket is the station card. Files on disk without live hooks are a costume. The house check has to report PASS before ship work. The short names are in the <a href="../../lexicon/">glossary</a>.</p>
+  </div>
+</section>
+
+<section id="steps">
+  <h2>How do you stand the team up?</h2>
+  <ol class="steps">
+    <li><strong>Write the house decisions on one page.</strong> Human owner, role names, public voice, what they may do, what needs a yes (publish, production, pay, secrets, delete), and which queue is real.</li>
+    <li><strong>Install and fasten the kit</strong> in the checkout you mean to run:
+      <pre><code>npm install 0xray
+npx 0xray wear
+npx 0xray status</code></pre>
+    </li>
+    <li><strong>Prove the checks are live.</strong> On the house kit, <code>npx @0xray/grok-bot doctor</code> until it reports House: PASS. Keep the inspect receipt. If the example house file is still in the folder, the check stays failed until you remove it.</li>
+    <li><strong>Initialize the house only when the folder is missing.</strong> <code>npx @0xray/grok-bot house init</code> copies the template and will not overwrite a file that is already there.</li>
+    <li><strong>Fill the house file</strong> and point its procedure line at the file roles must re-read. Remove the example file the doctor rejects.</li>
+    <li><strong>Choose one queue.</strong> Set the live URL only when the live board should be the record. Leave it unset to keep the hand-kept house board.</li>
+    <li><strong>Bring up one role at a time.</strong> Role description, fastened kit, inspect receipt, orientation, acknowledgement. Then a ticket.</li>
+    <li><strong>Open the first ticket with a brief.</strong> Pass that brief before any cloud run writes code. Spend stays inside the weekly hold line.</li>
+    <li><strong>After the first context reset, resume from disk</strong> and confirm the role continues the same intent.</li>
+  </ol>
+</section>
+
+<section id="failure-modes">
+  <h2>Where does stand-up fail?</h2>
+  <ul class="failures">
+    <li><strong>Costume.</strong> The instruction file is in the repo. The hooks never fire. The team looks set up and forgets the job on the next cut.</li>
+    <li><strong>The example file left in the house.</strong> The doctor stays failed and people start shipping anyway because the page "looks filled in."</li>
+    <li><strong>A new role given ship work in chat</strong> before the inspect receipt exists.</li>
+    <li><strong>Two boards at once.</strong> Some roles watch the live URL. Others edit the hand-kept file. Handoffs land in the quiet one.</li>
+    <li><strong>Resume from memory.</strong> The session ticket is on disk and unread. The role starts a neighbor task and calls it continuity.</li>
+  </ul>
+</section>
+<section id="next">
+  <h2>How do you request a consult?</h2>
+  <p>Bring the queue you have, the role list, and what should ship next week. A consult maps the gaps and the first gate.</p>
+  <p class="cta-row"><a class="btn btn-pri" href="https://ops.0xray.dev/#consult">Request a consult</a></p>
+</section><section class="related">
+<h2>Where should you read next?</h2>
+<ul class="plain">
+<li><a href="../../guides/what-is-ai-fleet-ops/">What is AI Fleet OPS</a></li>
+<li><a href="../../guides/control-plane/">Orchestrating agent work</a></li>
+<li><a href="../../guides/compute-discipline/">Governing model spend and compute</a></li>
+<li><a href="../../lexicon/">Glossary</a></li>
+</ul>
+</section>
+    <section class="faq" id="faq">
+<h2>What else do operators ask?</h2>
+<h3>How do we stand up an agent team?</h3>
+<p>Name the owner, the roles, the public voice, what they may do, and what needs a human yes. Fasten the operating kit on the project, prove the checks are live, point at one queue, and only then open the first ticket.</p>
+<h3>How do we know the kit is actually running?</h3>
+<p>Run the house check until it reports PASS, and keep an inspect receipt that says the kit is fastened. A copied instruction file with no live hooks is not a running team.</p>
+<h3>What happens on the session after a context reset?</h3>
+<p>The role reads the procedure file named by the house, then the session ticket, then the working notes, and continues the same job. It does not reconstruct the rules from memory.</p>
+<h3>When may a new role ship?</h3>
+<p>After a written role, a fastened kit with an inspect receipt, an orientation, and an acknowledgement. The first assignment is a ticket, not a side task in chat.</p>
+<h3>Where is the install path documented?</h3>
+<p>The steps on this page list the install commands. The house kit is @0xray/grok-bot. The product manual is at docs.0xray.dev.</p>
+</section>
+    
+  </main>
+  <footer class="site-footer">
+    <p>Build work ships on a recorded review. The public lane stays on hold until the owner gives an explicit go.</p>
+    <p><a href="https://0xray.dev">Product</a> · <a href="https://docs.0xray.dev">Docs</a> · <a href="https://bifrost.0xray.dev">Live board</a></p>
+    <p>© 0xRay · AI Fleet OPS</p>
+  </footer>
+</body>
+</html>
