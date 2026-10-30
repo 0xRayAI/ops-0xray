@@ -50,7 +50,7 @@ No ranking tables, directory placements, or top-N lists.
 
 One consult destination: `https://ops.0xray.dev/#consult`.
 
-The form posts to `mailto:consult@0xray.dev`. `consult@ops.0xray.dev` is on hold, not a live mailbox. Tally is still later.
+The form posts to `/api/consult`. The server sends through Resend to consult@0xray.dev. The host key is `RESEND_API_KEY`. Tally is still later.
 
 ## 4. Discovery
 
