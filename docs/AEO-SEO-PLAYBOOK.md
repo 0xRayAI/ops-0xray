@@ -50,7 +50,7 @@ No ranking tables, directory placements, or top-N lists.
 
 One consult destination: `https://ops.0xray.dev/#consult`.
 
-The form posts to `mailto:consult@ops.0xray.dev` until Tally. The form may name `consult@0xray.dev` as the interim notify address.
+The form posts to `mailto:consult@0xray.dev`. `consult@ops.0xray.dev` is on hold, not a live mailbox. Tally is still later.
 
 ## 4. Discovery
 

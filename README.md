@@ -8,7 +8,7 @@ Copy rules for the site live in [docs/AEO-SEO-PLAYBOOK.md](docs/AEO-SEO-PLAYBOOK
 
 The site is the category manual for AI Fleet OPS: one plane, one queue, release gates, and a ceiling on model spend. It is a hub, six guides, and a glossary. Industry language leads. In-house names live in the glossary, industry term first.
 
-Railway runs `npm start`, which serves `public/` with `serve`. The consult form is `mailto:consult@ops.0xray.dev` (interim notify `consult@0xray.dev`). No backend.
+Railway runs `npm start`, which serves `public/` with `serve`. The consult form is `mailto:consult@0xray.dev`. `consult@ops.0xray.dev` is on hold, not a live mailbox. No backend.
 
 | Path | What it is |
 | --- | --- |
