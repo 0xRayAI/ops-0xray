@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Operating guides | 0xRay</title>
-  <meta name="description" content="Six operating guides for multi-agent teams: stand-up, the control plane, release gates, model spend, and build versus go-to-market." />
+  <meta name="description" content="Category guides for the control plane, AI fleet ops, frameworks, pilot to production, and spend, plus the house guides." />
   <link rel="canonical" href="https://ops.0xray.dev/guides/" />
   <link rel="stylesheet" href="../assets/site.css" />
   <script type="application/ld+json">
@@ -15,11 +15,11 @@
       "@type": "Article",
       "@id": "https://ops.0xray.dev/guides/#article",
       "headline": "Operating guides",
-      "description": "Six operating guides for multi-agent teams: stand-up, the control plane, release gates, model spend, and build versus go-to-market.",
+      "description": "Category guides for the control plane, AI fleet ops, frameworks, pilot to production, and spend, plus the house guides.",
       "url": "https://ops.0xray.dev/guides/",
       "inLanguage": "en",
       "datePublished": "2026-10-30",
-      "dateModified": "2026-10-30",
+      "dateModified": "2026-10-31",
       "author": {
         "@type": "Organization",
         "name": "0xRay",
@@ -62,15 +62,15 @@
           "name": "Which guide should I read first?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Operators start with standing up the team. Founders start with what AI Fleet OPS is. Engineering leads start with the control plane. The hub lists those three paths."
+            "text": "Start with the agentic control plane, then what AI fleet ops means. Use the house guides when you are running the 0xRay kit day to day."
           }
         },
         {
           "@type": "Question",
-          "name": "What will I know after the six guides?",
+          "name": "What will I know after these guides?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "How a multi-agent team queues work, who owns it, how a change is allowed to ship, how the team is stood up, when the public lane stays closed, and how model spend is held."
+            "text": "How to map the control plane, what AI fleet ops is, how to judge a framework for production, how a pilot becomes governed production, and how to meter spend and enforce policy."
           }
         },
         {
@@ -104,43 +104,51 @@
     <p class="crumb"><a href="../">Hub</a> / Guides</p>
     <p class="eyebrow">AI Fleet OPS manual</p>
     <h1>Operating guides</h1>
-    <p class="direct">Yes. These six guides are the operating manual for a multi-agent team in production. Operators start by standing the team up. Founders start with the definition and the public lane. Engineering leads start with the queue and the release gate. Follow the path for your job, then use the glossary when a house file uses a shorter name.</p>
-    
+    <p class="direct">Yes. These pages are the operating manual for an AI fleet. Start with the agentic control plane, what AI fleet ops means, frameworks versus ops, the pilot-to-production path, and spend and policy. House guides for release gates, standing up a team, the build lane, and model spend stay on the site beside that path.</p>
 <section>
-  <h2>Which path matches your job?</h2>
-  <ul class="plain">
-    <li><strong>Operator.</strong> <a href="stand-up/">Stand the team up</a>, then the <a href="control-plane/">control plane</a>, then <a href="ship-gates/">release gates</a>.</li>
-    <li><strong>Founder.</strong> <a href="what-is-ai-fleet-ops/">What this discipline is</a>, then <a href="eng-vs-dist/">build versus go-to-market</a>, then <a href="compute-discipline/">model spend</a>.</li>
-    <li><strong>Eng lead.</strong> <a href="control-plane/">Control plane</a>, then <a href="ship-gates/">release gates</a>, then <a href="compute-discipline/">model spend</a>.</li>
-  </ul>
-</section>
-<section>
-  <h2>What are the six parts of the manual?</h2>
-  <p>Use this order when you are standing a house up from an empty folder. It follows the work, from the definition through the public lane.</p>
+  <h2>Where should I start reading?</h2>
   <div class="pillars">
     <article class="pillar">
-      <h3><a class="title" href="what-is-ai-fleet-ops/">What is AI Fleet OPS</a></h3>
-      <p>Multi-agent operations in production: roles, queue, procedure, and the two gates.</p>
+      <h3><a class="title" href="control-plane/">Map the agentic control plane</a></h3>
+      <p>Orchestration, observability, and the control plane — which tool covers which job.</p>
+    </article>
+    <article class="pillar">
+      <h3><a class="title" href="what-is-ai-fleet-ops/">What AI fleet ops means</a></h3>
+      <p>Roles, one queue, review gates, spend, and evaluation for a multi-agent fleet.</p>
+    </article>
+    <article class="pillar">
+      <h3><a class="title" href="framework-vs-ops/">Frameworks build agents; ops runs them</a></h3>
+      <p>An ops checklist for cost, audit, identity, and evaluation around the framework you build with.</p>
+    </article>
+    <article class="pillar">
+      <h3><a class="title" href="pilot-to-production/">Take your agent pilot to production</a></h3>
+      <p>Owner, review gate, audit, and budget before real work, and who runs it after launch.</p>
+    </article>
+    <article class="pillar">
+      <h3><a class="title" href="spend-governance/">Govern agent spend and policy</a></h3>
+      <p>Token spend per agent, identity, guardrails, and the policy the runtime actually checks.</p>
+    </article>
+  </div>
+</section>
+<section>
+  <h2>Which house guides stay with the manual?</h2>
+  <p>Same house pages the hub links. Read them when you are operating the kit.</p>
+  <div class="pillars">
+    <article class="pillar">
+      <h3><a class="title" href="ship-gates/">Release gates</a></h3>
+      <p>Review depth, PASS or FIX, receipts, and the handoff.</p>
     </article>
     <article class="pillar">
       <h3><a class="title" href="stand-up/">Standing up an agent team</a></h3>
       <p>House rules, a fastened kit, a live check, and the first ticket.</p>
     </article>
     <article class="pillar">
-      <h3><a class="title" href="control-plane/">Orchestrating agent work</a></h3>
-      <p>Queues, briefs, ownership, and what a resume actually reads.</p>
-    </article>
-    <article class="pillar">
-      <h3><a class="title" href="ship-gates/">Release gates</a></h3>
-      <p>Review depth, PASS or FIX, receipts, and the handoff.</p>
+      <h3><a class="title" href="eng-vs-dist/">Build lane vs go-to-market</a></h3>
+      <p>When the merge is allowed and the public post is still on hold.</p>
     </article>
     <article class="pillar">
       <h3><a class="title" href="compute-discipline/">Model spend and compute</a></h3>
       <p>Spec first, one run per ticket, weekly hold line.</p>
-    </article>
-    <article class="pillar">
-      <h3><a class="title" href="eng-vs-dist/">Build lane vs go-to-market</a></h3>
-      <p>When the merge is allowed and the post is still on hold.</p>
     </article>
   </div>
   <p>Words we use in the product are in the <a href="../lexicon/">glossary</a>.</p>
@@ -154,21 +162,19 @@
   <h2>Where should you read next?</h2>
   <ul class="plain">
     <li><a href="../">Hub</a></li>
-    <li><a href="what-is-ai-fleet-ops/">What is AI Fleet OPS</a></li>
-    <li><a href="control-plane/">Orchestrating agent work</a></li>
+    <li><a href="control-plane/">Map the agentic control plane</a></li>
+    <li><a href="what-is-ai-fleet-ops/">What AI fleet ops means</a></li>
   </ul>
 </section>
-
     <section class="faq" id="faq">
 <h2>What else do operators ask?</h2>
 <h3>Which guide should I read first?</h3>
-<p>Operators start with standing up the team. Founders start with what AI Fleet OPS is. Engineering leads start with the control plane. The hub lists those three paths.</p>
-<h3>What will I know after the six guides?</h3>
-<p>How a multi-agent team queues work, who owns it, how a change is allowed to ship, how the team is stood up, when the public lane stays closed, and how model spend is held.</p>
+<p>Start with the agentic control plane, then what AI fleet ops means. Use the house guides when you are running the 0xRay kit day to day.</p>
+<h3>What will I know after these guides?</h3>
+<p>How to map the control plane, what AI fleet ops is, how to judge a framework for production, how a pilot becomes governed production, and how to meter spend and enforce policy.</p>
 <h3>Where are the in-house names defined?</h3>
 <p>The glossary maps each industry term to the name this fleet uses, with a short definition and a link to the guide that uses it.</p>
 </section>
-    
   </main>
   <footer class="site-footer">
     <p>Build work ships on a recorded review. The public lane stays on hold until the owner gives an explicit go.</p>

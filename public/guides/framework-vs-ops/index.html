@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Multi-agent orchestration: build vs ops | 0xRay</title>
+  <meta name="description" content="CrewAI, LangGraph, AutoGen and Agents SDK build agents. Use this ops checklist (cost, audit, identity, eval) before production. Request a consult." />
+  <link rel="canonical" href="https://ops.0xray.dev/guides/framework-vs-ops/" />
+  <link rel="stylesheet" href="../../assets/site.css" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://ops.0xray.dev/guides/framework-vs-ops/#article",
+      "headline": "Frameworks build agents; ops runs them",
+      "description": "CrewAI, LangGraph, AutoGen and Agents SDK build agents. Use this ops checklist (cost, audit, identity, eval) before production. Request a consult.",
+      "url": "https://ops.0xray.dev/guides/framework-vs-ops/",
+      "inLanguage": "en",
+      "datePublished": "2026-10-31",
+      "dateModified": "2026-10-31",
+      "author": {
+        "@type": "Organization",
+        "name": "0xRay",
+        "url": "https://0xray.dev"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "0xRay",
+        "url": "https://ops.0xray.dev/"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://ops.0xray.dev/guides/framework-vs-ops/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://ops.0xray.dev/guides/framework-vs-ops/#breadcrumbs",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "AI Fleet OPS",
+          "item": "https://ops.0xray.dev/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Operating guides",
+          "item": "https://ops.0xray.dev/guides/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Frameworks build agents; ops runs them",
+          "item": "https://ops.0xray.dev/guides/framework-vs-ops/"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://ops.0xray.dev/guides/framework-vs-ops/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Which framework should we pick?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "We don't rank them. Choose for your team; govern with the checklist."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I mix frameworks?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, if identity, audit, and spend sit above them."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should I move off Swarm?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Its own repo calls it experimental and names the Agents SDK as successor."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I need a separate observability tool?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Only if your stack doesn't already give every framework one trace view."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <a class="skip" href="#content">Skip to content</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="../../">AI Fleet OPS <span>0xRay</span></a>
+      <nav aria-label="Primary">
+        <a href="../../">Hub</a>
+        <a href="../" aria-current="page">Guides</a>
+        <a href="../../lexicon/">Lexicon</a>
+        <a href="https://ops.0xray.dev/#consult">Consult</a>
+      </nav>
+    </div>
+  </header>
+  <main id="content" class="wrap">
+    <p class="crumb"><a href="../../">Hub</a> / <a href="../">Guides</a> / Frameworks vs ops</p>
+    <p class="eyebrow">Multi-agent orchestration</p>
+    <h1>Frameworks build agents; ops runs them</h1>
+    <p class="direct">Yes. You can choose a framework with confidence once you judge it on how it will be run, not only how it's built, and we bring that ops checklist to the decision. <a href="https://www.crewai.com">CrewAI</a>, <a href="https://langchain-ai.github.io/langgraph/">LangGraph</a>, <a href="https://microsoft.github.io/autogen/">AutoGen</a>, and the OpenAI <a href="https://openai.github.io/openai-agents-python/">Agents SDK</a> are build tools; cost, audit, identity, and evaluation are ops questions.</p>
+
+<section id="comparison">
+  <h2>Why does "CrewAI vs LangGraph" miss the production question?</h2>
+  <p>Comparison searches usually weigh developer experience: how agents are defined, how state flows. Those matter for building. In production the questions change: who approved this run, what did it cost, which credentials did it use, and did quality hold this week? Our research found buyers rarely get those criteria alongside framework comparisons (research gap, not a vendor claim).</p>
+</section>
+
+<section id="swarm">
+  <h2>Is OpenAI Swarm production ready?</h2>
+  <p>OpenAI's <a href="https://github.com/openai/swarm">Swarm</a> repository describes itself as educational and experimental, and points to the <a href="https://openai.github.io/openai-agents-python/">Agents SDK</a> as its successor. If you started on Swarm, plan a move to the Agents SDK — and use the move to add the ops layer below.</p>
+</section>
+
+<section id="checklist">
+  <h2>What should an ops checklist cover?</h2>
+  <p>Score any framework, or mix of them, on these. No winner here — your answers decide.</p>
+  <h3>Cost</h3>
+  <ul class="plain">
+    <li>Can you attribute token spend to a single agent and task? (Enterprise vendors cite token metering as a need: <a href="https://www.bmc.com/it-solutions/agentic-orchestration.html">BMC</a>, <a href="https://azure.microsoft.com/en-us/products/ai-foundry/control-plane">Microsoft</a>.)</li>
+    <li>Can you cap or alert on spend per agent? The category guide is <a href="../spend-governance/">spend and policy</a>.</li>
+  </ul>
+  <h3>Audit</h3>
+  <ul class="plain">
+    <li>Is every run, tool call, and approval recorded with who and when? (<a href="https://www.ibm.com/products/watsonx-orchestrate/agent-control-plane">IBM</a>, <a href="https://www.bmc.com/it-solutions/agentic-orchestration.html">BMC</a>, <a href="https://runflow.ai/en/platform">Runflow</a>.)</li>
+    <li>Can you export that trail outside the framework?</li>
+  </ul>
+  <h3>Identity</h3>
+  <ul class="plain">
+    <li>Does each agent run with its own credentials, not a shared key? (<a href="https://www.ibm.com/products/watsonx-orchestrate/agent-control-plane">IBM</a>, <a href="https://www.snowflake.com/en/artificial-intelligence/ai-governance/control-plane/">Snowflake</a>.)</li>
+    <li>Can you revoke one agent without breaking others?</li>
+  </ul>
+  <h3>Evaluation</h3>
+  <ul class="plain">
+    <li>Do you re-check outputs after launch, on a schedule? (<a href="https://www.ibm.com/products/watsonx-orchestrate/agent-control-plane">IBM</a>, <a href="https://azure.microsoft.com/en-us/products/ai-foundry/control-plane">Microsoft</a>.)</li>
+    <li>Is there an independent review gate before merge or release? That gate is the path in <a href="../pilot-to-production/">pilot to production</a>.</li>
+  </ul>
+  <h3>Traces</h3>
+  <ul class="plain">
+    <li>Can traces leave in an open format such as OpenTelemetry? (<a href="https://azure.microsoft.com/en-us/products/ai-foundry/control-plane">Microsoft</a>.)</li>
+    <li>If you use an observability tool such as <a href="https://www.langchain.com/langsmith">LangSmith</a> or <a href="https://www.agentops.ai">AgentOps</a>, does it see every framework you run?</li>
+  </ul>
+</section>
+
+<section id="platform">
+  <h2>Where do frameworks end and the platform begin?</h2>
+  <p><a href="https://www.snowflake.com/en/artificial-intelligence/ai-governance/control-plane/">Snowflake</a>'s split helps: frameworks handle orchestration. Observability tools record runs. The <a href="../control-plane/">control plane</a> holds policy, identity, and audit. Enterprise "multi-agent orchestration platform" pages from <a href="https://www.ibm.com/products/watsonx-orchestrate/agent-control-plane">IBM</a>, <a href="https://www.bmc.com/it-solutions/agentic-orchestration.html">BMC</a>, and <a href="https://runflow.ai/en/platform">Runflow</a> bundle more of these layers; read their pages to see which.</p>
+</section>
+
+<section id="wrong">
+  <h2>What goes wrong when the framework is treated as the platform?</h2>
+  <ul class="failures">
+    <li><strong>Each team picks a framework,</strong> and you end up with three audit stories.</li>
+    <li><strong>Shared API keys</strong> because the framework didn't force identity.</li>
+    <li><strong>Experimental code in production</strong> — the <a href="https://github.com/openai/swarm">Swarm</a> case.</li>
+    <li><strong>Evaluation stops at the demo.</strong></li>
+  </ul>
+</section>
+
+<section id="decide">
+  <h2>How do I decide in practice?</h2>
+  <ol class="steps">
+    <li>Pick the framework your team builds fastest in.</li>
+    <li>Run the checklist above against your <em>whole</em> stack.</li>
+    <li>Fill each empty box with a tool or a rule, owned by a person.</li>
+    <li>Re-run the checklist before each new agent.</li>
+  </ol>
+</section>
+
+<section id="session">
+  <h2>What does running the checklist look like?</h2>
+  <p>Say a team builds a research agent on one framework and a writing agent on another. The <strong>eng lead</strong> fills in the checklist with the <strong>reviewer</strong> and the <strong>owner</strong> in one short session.</p>
+  <p><strong>Cost.</strong> The eng lead finds both agents bill to one key. The answer to "spend per agent" is no. Fix: split credentials and tag each call with agent and task.</p>
+  <p><strong>Audit.</strong> Each framework writes its own logs in its own format. The reviewer can see what one agent did but has to dig through another tool for the second. Fix: send both to one record of runs and approvals.</p>
+  <p><strong>Identity.</strong> The writing agent can read a folder it never needs. The owner decides it shouldn't, and the eng lead narrows access.</p>
+  <p><strong>Evaluation.</strong> Both agents passed a demo a month ago; neither has been checked since. The reviewer sets a weekly check with a small set of known tasks.</p>
+  <p><strong>Traces.</strong> One framework exports traces in an open format; the other needs an adapter. That goes on the list as a task with a name, not a reason to switch frameworks.</p>
+  <p>At the end, every unchecked box has an owner and a date. The framework choice didn't change; the ops layer around it did.</p>
+</section>
+
+<section id="switch">
+  <h2>When does switching frameworks make sense?</h2>
+  <p>Switch when the build is the real problem: the team can't express the workflow, or the project is marked experimental by its own maintainers, as <a href="https://github.com/openai/swarm">Swarm</a> is. Don't switch to fix cost, audit, or identity gaps — those follow you to the next framework unless the ops layer above it covers them.</p>
+</section>
+<section id="next">
+  <h2>How do you request a consult?</h2>
+  <p>We run this checklist on your stack.</p>
+  <p class="cta-row"><a class="btn btn-pri" href="https://ops.0xray.dev/#consult">Request a consult</a></p>
+</section>
+<section class="related">
+<h2>Where should you read next?</h2>
+<ul class="plain">
+<li><a href="../control-plane/">Map the agentic control plane</a></li>
+<li><a href="../spend-governance/">Govern agent spend and policy</a></li>
+<li><a href="../pilot-to-production/">Take your agent pilot to production</a></li>
+<li><a href="../../">Hub</a></li>
+</ul>
+</section>
+
+    <section class="faq" id="faq">
+<h2>What else do operators ask?</h2>
+<h3>Which framework should we pick?</h3>
+<p>We don't rank them. Choose for your team; govern with the checklist.</p>
+<h3>Can I mix frameworks?</h3>
+<p>Yes, if identity, audit, and spend sit above them.</p>
+<h3>Should I move off Swarm?</h3>
+<p>Its own repo calls it experimental and names the <a href="https://openai.github.io/openai-agents-python/">Agents SDK</a> as successor.</p>
+<h3>Do I need a separate observability tool?</h3>
+<p>Only if your stack doesn't already give every framework one trace view.</p>
+</section>
+  </main>
+  <footer class="site-footer">
+    <p>Build work ships on a recorded review. The public lane stays on hold until the owner gives an explicit go.</p>
+    <p><a href="https://0xray.dev">Product</a> · <a href="https://docs.0xray.dev">Docs</a> · <a href="https://bifrost.0xray.dev">Live board</a></p>
+    <p>© 0xRay · AI Fleet OPS</p>
+  </footer>
+
+</body>
+</html>

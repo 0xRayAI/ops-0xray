@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Move an AI agent pilot to production | 0xRay</title>
+  <meta name="description" content="Move an AI agent pilot to governed production — owners, review gates, audit, spend, evaluation. Step-by-step path. Request a consult." />
+  <link rel="canonical" href="https://ops.0xray.dev/guides/pilot-to-production/" />
+  <link rel="stylesheet" href="../../assets/site.css" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://ops.0xray.dev/guides/pilot-to-production/#article",
+      "headline": "Take your agent pilot to production",
+      "description": "Move an AI agent pilot to governed production — owners, review gates, audit, spend, evaluation. Step-by-step path. Request a consult.",
+      "url": "https://ops.0xray.dev/guides/pilot-to-production/",
+      "inLanguage": "en",
+      "datePublished": "2026-10-31",
+      "dateModified": "2026-10-31",
+      "author": {
+        "@type": "Organization",
+        "name": "0xRay",
+        "url": "https://0xray.dev"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "0xRay",
+        "url": "https://ops.0xray.dev/"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://ops.0xray.dev/guides/pilot-to-production/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://ops.0xray.dev/guides/pilot-to-production/#breadcrumbs",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "AI Fleet OPS",
+          "item": "https://ops.0xray.dev/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Operating guides",
+          "item": "https://ops.0xray.dev/guides/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Take your agent pilot to production",
+          "item": "https://ops.0xray.dev/guides/pilot-to-production/"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://ops.0xray.dev/guides/pilot-to-production/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How long does it take?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It depends on the stack; the steps above are a week-one shape, not a promise."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I need new tools?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Not always. Many gaps are rules and owners, not software."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can an agent be the reviewer?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, if it is independent from the agent that did the work and a human owns the gate."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What if we have several pilots?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Run one through first, then reuse the path."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <a class="skip" href="#content">Skip to content</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="../../">AI Fleet OPS <span>0xRay</span></a>
+      <nav aria-label="Primary">
+        <a href="../../">Hub</a>
+        <a href="../" aria-current="page">Guides</a>
+        <a href="../../lexicon/">Lexicon</a>
+        <a href="https://ops.0xray.dev/#consult">Consult</a>
+      </nav>
+    </div>
+  </header>
+  <main id="content" class="wrap">
+    <p class="crumb"><a href="../../">Hub</a> / <a href="../">Guides</a> / Pilot to production</p>
+    <p class="eyebrow">Pilot to production</p>
+    <h1>Take your agent pilot to production</h1>
+    <p class="direct">Yes. Your pilot can carry real work once it has an owner, a review gate, audit, and a budget, and we set those up and keep running them after launch. <a href="https://www.bmc.com/it-solutions/agentic-orchestration.html">BMC</a> frames the shift as pilots to governed production; the steps here are the vendor-neutral version of that path.</p>
+
+<section id="stall">
+  <h2>Why do agent pilots stall?</h2>
+  <p>A pilot proves the model can do the task. It doesn't prove anyone can run it: who gets paged, who approves output, what it costs at volume. <a href="https://www.bmc.com/it-solutions/agentic-orchestration.html">BMC</a> names "fragmented AI pilots" as the enterprise pain. The stall is rarely the model; it's the missing operating layer.</p>
+</section>
+
+<section id="governed">
+  <h2>What does governed production mean?</h2>
+  <p>Five things are true and written down:</p>
+  <ol class="steps">
+    <li><strong>An owner</strong> — a named person per agent. The job around that owner is <a href="../what-is-ai-fleet-ops/">AI fleet ops</a>.</li>
+    <li><strong>A review gate</strong> — output is checked before it merges, ships, or reaches a customer. Human approval sits where risk is highest (<a href="https://runflow.ai/en/platform">Runflow</a>).</li>
+    <li><strong>Audit</strong> — every run and approval is logged (<a href="https://www.ibm.com/products/watsonx-orchestrate/agent-control-plane">IBM</a>, <a href="https://www.bmc.com/it-solutions/agentic-orchestration.html">BMC</a>, <a href="https://runflow.ai/en/platform">Runflow</a>).</li>
+    <li><strong>Identity and budget</strong> — own credentials, metered spend (<a href="https://www.bmc.com/it-solutions/agentic-orchestration.html">BMC</a>, <a href="https://azure.microsoft.com/en-us/products/ai-foundry/control-plane">Microsoft</a>). See <a href="../spend-governance/">spend and policy</a>.</li>
+    <li><strong>Evaluation</strong> — quality re-checked on a schedule (<a href="https://www.ibm.com/products/watsonx-orchestrate/agent-control-plane">IBM</a>, <a href="https://azure.microsoft.com/en-us/products/ai-foundry/control-plane">Microsoft</a>).</li>
+  </ol>
+</section>
+
+<section id="steps">
+  <h2>What are the steps from pilot to production?</h2>
+  <ul class="plain">
+    <li><strong>Week 0 — Scout.</strong> Inventory the pilot: inputs, tools, keys, cost per run, failure cases.</li>
+    <li><strong>Week 1 — Stand up.</strong> Give it an owner and one queue. Every task gets a done-check. The house path for that queue is <a href="../stand-up/">standing up an agent team</a>.</li>
+    <li><strong>Add the gate.</strong> Pick an independent reviewer (person or agent) who passes or fails work. In 0xRay this is the <em>Strict</em> gate — use any name.</li>
+    <li><strong>Split identity.</strong> Move the agent onto its own credentials and set a spend alert.</li>
+    <li><strong>Turn on traces and audit.</strong> Record tool calls and approvals.</li>
+    <li><strong>First gated ship.</strong> One real piece of work goes through the full path, with evidence.</li>
+    <li><strong>Retain.</strong> Weekly evaluation and a short report: shipped, failed, spent.</li>
+  </ul>
+</section>
+
+<section id="after">
+  <h2>Who runs the agent after launch?</h2>
+  <p>This is the question pilots skip. Someone owns the queue, reviews failures, and decides when to add the next agent. That can be your team, or a retained operator; AI Fleet OPS offers Retain for that reason.</p>
+</section>
+
+<section id="fails">
+  <h2>What fails on the way to production?</h2>
+  <ul class="failures">
+    <li><strong>Scaling the pilot before the gate exists.</strong></li>
+    <li><strong>One shared key</strong> for every agent.</li>
+    <li><strong>Announcing early.</strong> Public claims should follow the first gated ship, not the demo.</li>
+    <li><strong>No exit for loops.</strong> An agent repeating tool calls needs a rule that stops it (<a href="https://www.snowflake.com/en/artificial-intelligence/ai-governance/control-plane/">Snowflake</a>). That rule lives on the <a href="../control-plane/">control plane</a>.</li>
+  </ul>
+</section>
+
+<section id="ship">
+  <h2>What does a gated first ship look like?</h2>
+  <p>Take a pilot agent that drafts replies to customer emails. In the demo it did well on twenty hand-picked messages. Here is how the first real ship runs.</p>
+  <p>The <strong>eng lead</strong> moves the agent onto its own credentials and limits it to the inbox folder it needs. They set a spend alert at a level the owner agreed to, and turn on traces so each tool call and model call is recorded.</p>
+  <p>The <strong>owner</strong> writes the rule for the gate: replies about billing or refunds need human approval; general questions can go out after review by an independent reviewer. The owner also names the measure of success — for example, how many drafts the reviewer sends with no edits.</p>
+  <p>The <strong>reviewer</strong> takes the first batch of real drafts. Some pass. Some fail because the agent guessed at a policy it didn't have. Each fail goes back with a note, and the eng lead adds the missing policy text to the agent's context.</p>
+  <p>After the batch, the team has evidence: what shipped, what failed, what it cost per finished reply, and who approved each one. That evidence is what makes the next step — more volume, or a second agent — a decision instead of a guess.</p>
+</section>
+
+<section id="volume">
+  <h2>How do I know the pilot is ready for more volume?</h2>
+  <ul class="plain">
+    <li><strong>The gate has run on real work</strong>, not only demo inputs, and the pass rate holds over at least a few cycles.</li>
+    <li><strong>Spend per finished task is known</strong> and within what the owner agreed to.</li>
+    <li><strong>Failures have a path.</strong> Every failed item has an owner and a next step, and the same failure doesn't repeat for the same reason.</li>
+    <li><strong>The audit trail answers questions on its own.</strong> Someone outside the pilot team can see who approved what without asking.</li>
+    <li><strong>Someone owns it after launch.</strong> There is a named operator for the queue next month, not only this week.</li>
+  </ul>
+  <p>If any of these is missing, hold volume where it is and fix that item first. Adding volume to a pilot that hasn't passed these checks spreads the same problems across more work.</p>
+</section>
+<section id="next">
+  <h2>How do you request a consult?</h2>
+  <p>Scout, Stand-up, or Retain.</p>
+  <p class="cta-row"><a class="btn btn-pri" href="https://ops.0xray.dev/#consult">Request a consult</a></p>
+</section>
+<section class="related">
+<h2>Where should you read next?</h2>
+<ul class="plain">
+<li><a href="../what-is-ai-fleet-ops/">What AI fleet ops means</a></li>
+<li><a href="../spend-governance/">Govern agent spend and policy</a></li>
+<li><a href="../ship-gates/">Release gates for agent fleets</a></li>
+<li><a href="../stand-up/">Standing up an agent team</a></li>
+</ul>
+</section>
+
+    <section class="faq" id="faq">
+<h2>What else do operators ask?</h2>
+<h3>How long does it take?</h3>
+<p>It depends on the stack; the steps above are a week-one shape, not a promise.</p>
+<h3>Do I need new tools?</h3>
+<p>Not always. Many gaps are rules and owners, not software.</p>
+<h3>Can an agent be the reviewer?</h3>
+<p>Yes, if it is independent from the agent that did the work and a human owns the gate.</p>
+<h3>What if we have several pilots?</h3>
+<p>Run one through first, then reuse the path.</p>
+</section>
+  </main>
+  <footer class="site-footer">
+    <p>Build work ships on a recorded review. The public lane stays on hold until the owner gives an explicit go.</p>
+    <p><a href="https://0xray.dev">Product</a> · <a href="https://docs.0xray.dev">Docs</a> · <a href="https://bifrost.0xray.dev">Live board</a></p>
+    <p>© 0xRay · AI Fleet OPS</p>
+  </footer>
+
+</body>
+</html>

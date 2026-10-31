@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Agent control plane | 0xRay</title>
-  <meta name="description" content="The agent control plane is one work queue, a brief with ownership on every ticket, and a procedure the next session reads from disk." />
+  <title>Agentic control plane, explained | 0xRay</title>
+  <meta name="description" content="What an agentic control plane is, how it differs from orchestration and observability, and what to check across vendors. Request a consult." />
   <link rel="canonical" href="https://ops.0xray.dev/guides/control-plane/" />
   <link rel="stylesheet" href="../../assets/site.css" />
   <script type="application/ld+json">
@@ -14,12 +14,12 @@
     {
       "@type": "Article",
       "@id": "https://ops.0xray.dev/guides/control-plane/#article",
-      "headline": "The agent control plane",
-      "description": "The agent control plane is one work queue, a brief with ownership on every ticket, and a procedure the next session reads from disk.",
+      "headline": "Map the agentic control plane",
+      "description": "What an agentic control plane is, how it differs from orchestration and observability, and what to check across vendors. Request a consult.",
       "url": "https://ops.0xray.dev/guides/control-plane/",
       "inLanguage": "en",
       "datePublished": "2026-10-30",
-      "dateModified": "2026-10-30",
+      "dateModified": "2026-10-31",
       "author": {
         "@type": "Organization",
         "name": "0xRay",
@@ -54,7 +54,7 @@
         {
           "@type": "ListItem",
           "position": 3,
-          "name": "The agent control plane",
+          "name": "Map the agentic control plane",
           "item": "https://ops.0xray.dev/guides/control-plane/"
         }
       ]
@@ -65,42 +65,34 @@
       "mainEntity": [
         {
           "@type": "Question",
-          "name": "What is the control plane for an agent fleet?",
+          "name": "Is a control plane only for big enterprises?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "The control plane is the work queue, the ownership on each ticket, and the procedure roles re-read after a restart. Agent orchestration is those three staying in agreement."
+            "text": "No. Three agents on two frameworks is already enough to need shared identity and audit."
           }
         },
         {
           "@type": "Question",
-          "name": "Which work queue should we use?",
+          "name": "Does observability give me governance?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Use one. If the live URL is set, the live board is the queue. If it is unset, the hand-kept house board is the queue. A second board becomes a second memory."
+            "text": "No. It shows what happened; the control plane sets what is allowed (Snowflake)."
           }
         },
         {
           "@type": "Question",
-          "name": "What does a work brief need before anyone starts?",
+          "name": "Can I use open standards for traces?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Goal, constraints, path, acceptance, gates, evidence, the next owner, where to escalate, and the ownership line. Who does the work and who answers have to be filled, or the ticket is not ready for a pass."
+            "text": "Yes. Microsoft supports OpenTelemetry for agent traces."
           }
         },
         {
           "@type": "Question",
-          "name": "What resumes a role after context loss?",
+          "name": "Do I need one vendor for all three layers?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "An inbox line that points at one ticket, plus the session ticket and the procedure on disk. A message in a shared room does not resume the work."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "How do we observe the fleet?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Read the queue. Each ticket has an owner, a stage, and a state. Record real events: opened work, a review verdict, a merge, a deploy. A continuous-integration tick is not one of those events."
+            "text": "No. Many teams mix; the point is that every layer has an owner."
           }
         }
       ]
@@ -124,88 +116,109 @@
   </header>
   <main id="content" class="wrap">
     <p class="crumb"><a href="../../">Hub</a> / <a href="../">Guides</a> / Control plane</p>
-    <p class="eyebrow">Agent orchestration</p>
-    <h1>The agent control plane</h1>
-    <p class="direct">Yes. Agent orchestration holds when one queue, one owner, and one written procedure still agree after a restart. The outcome is a ticket you can resume, instead of a chat that invented a second plan. You get it by filing a brief before code, waking the next role on that ticket, and rereading the procedure from disk.</p>
-    
-<section id="problem">
-  <h2>What breaks agent orchestration?</h2>
-  <p>Agent orchestration breaks when work has two homes. The ticket says one thing, the chat says another, and after a context reset the role rebuilds a third version from whatever is still in the prompt. Owners overlap. The same bug is fixed twice, or it is not fixed at all.</p>
-  <p>You cannot operate what you cannot see. A multi-agent system with no queue has no stage, no owner, and no event log. Status becomes a personality trait of the model.</p>
+    <p class="eyebrow">Agentic control plane</p>
+    <h1>Map the agentic control plane</h1>
+    <p class="direct">Yes. You can tell which tool covers which job once you split the stack into three layers, and we help you assign each layer an owner. <a href="https://www.snowflake.com/en/artificial-intelligence/ai-governance/control-plane/">Snowflake</a> draws the line between control plane, orchestration, and observability; <a href="https://www.ibm.com/products/watsonx-orchestrate/agent-control-plane">IBM</a>, <a href="https://azure.microsoft.com/en-us/products/ai-foundry/control-plane">Microsoft</a>, and <a href="https://www.bmc.com/it-solutions/agentic-orchestration.html">BMC</a> each sell a piece under similar names. This guide maps the layers without picking a vendor.</p>
+
+<section id="layers-confused">
+  <h2>Why do teams confuse the three layers?</h2>
+  <p>Because the words overlap. "Orchestration" shows up on <a href="https://www.bmc.com/it-solutions/agentic-orchestration.html">enterprise scheduling pages</a>, on <a href="../framework-vs-ops/">framework pages</a>, and on control-plane pages. When every product says it orchestrates agents, buyers end up with two tools doing the same job and nobody doing the third. Among the vendor pages we reviewed, we found few neutral pages that line the layers up across frameworks (gap noted in our research, not a vendor claim).</p>
 </section>
 
-<section id="model">
-  <h2>What does the control plane consist of?</h2>
-  <p>The control plane is three objects and one rule.</p>
-  <h3>The queue</h3>
-  <p>One board is the record. When a live URL is configured, each issue, pull request, and comment becomes one ticket and one inbox line for the owning role, and that role is resumed. When the live URL is unset, the hand-kept board in the house folder is the queue. Stages run open, then review, fix, merge, retest, and done. A ticket is live, held, parked, or closed. Work that never becomes a ticket is forgotten as soon as the chat moves on.</p>
-  <h3>The brief</h3>
-  <p>Each ticket carries a short brief: goal, constraints, path, acceptance, gates, evidence, next owner, escalate, and an ownership line. R does the work. A answers for the result. C is consulted before a judgment call. I is informed after the event. Keep each field short enough to re-read on resume, about two hundred characters. A live ticket missing R or A is not ready, and review does not pass it. Acceptance in the brief is the eval the later diff has to meet. Write it before code. That order is what <a href="../ship-gates/">release gates</a> enforce.</p>
-  <h3>The procedure</h3>
-  <p>A pack procedure ships with the kit. The house file overrides it for the owner, the roles, the public voice, what a role may do, what needs a human yes, and which board is real. On every resume, and after every context cut, the role reads that file from disk. A memory note is not the re-read. The <a href="../stand-up/">stand-up guide</a> shows where the house file points.</p>
-  <h3>The handoff rule</h3>
-  <p>A handoff is the brief delivered to the next role, plus a resume signal that points at the same ticket. The shared room is for talk. The inbox line is the resume. A direct message with no ticket is not work. An advance request only asks the implementer to open or move work the ticket already names. It does not replace the brief.</p>
-  <h3>What you watch</h3>
-  <p>Observability is the queue. Record real events: work opened or pushed, a review verdict, a merge, an owner message, a blocker, a finished deploy. A continuous-integration run is attached to the ticket and is not, by itself, board traffic. A draft parks. A live pull request with no real event for a long stretch parks. An idle loop on parked work is noise.</p>
-  <div class="callout">
-    <p>We call the live queue Bifrost, the brief a packet, the role a seat, and the procedure file OP-PROC. Those names are defined in the <a href="../../lexicon/">glossary</a>.</p>
-  </div>
+<section id="layers">
+  <h2>What does each layer do?</h2>
+  <ul class="plain">
+    <li><strong>Orchestration</strong> decides which agent runs next and passes it context. This is where frameworks live.</li>
+    <li><strong>Observability</strong> records what happened — traces of tool calls, latency, errors. <a href="https://azure.microsoft.com/en-us/products/ai-foundry/control-plane">Azure</a> and <a href="https://www.snowflake.com/en/artificial-intelligence/ai-governance/control-plane/">Snowflake</a> both use the term; <a href="https://azure.microsoft.com/en-us/products/ai-foundry/control-plane">Azure</a> points at OpenTelemetry for traces.</li>
+    <li><strong>Control plane</strong> sets the rules everyone runs under: identity and access, policy, evaluation, and audit. <a href="https://www.ibm.com/products/watsonx-orchestrate/agent-control-plane">IBM</a> frames it as one plane "wherever agents are built"; <a href="https://www.snowflake.com/en/artificial-intelligence/ai-governance/control-plane/">Snowflake</a> lists governance and access as control-plane work.</li>
+  </ul>
+  <p>A quick test: if a component <em>runs</em> agents, it's orchestration. If it <em>watches</em> them, it's observability. If it <em>decides what they're allowed to do and proves they did it</em>, it's the control plane.</p>
 </section>
 
-<section id="steps">
-  <h2>How do you put the control plane in place?</h2>
+<section id="vendors">
+  <h2>Which vendors cover which layer?</h2>
+  <p>From their own pages only:</p>
+  <ul class="plain">
+    <li><a href="https://www.ibm.com/products/watsonx-orchestrate/agent-control-plane">IBM watsonx Orchestrate</a> — positions an agent control plane with governance and evaluation.</li>
+    <li><a href="https://azure.microsoft.com/en-us/products/ai-foundry/control-plane">Microsoft Foundry Control Plane</a> — fleet management, OpenTelemetry tracing, guardrails.</li>
+    <li><a href="https://www.bmc.com/it-solutions/agentic-orchestration.html">BMC Control-M</a> — agentic orchestration moving pilots to governed production, with token metering and an MCP runtime gateway.</li>
+    <li><a href="https://www.snowflake.com/en/artificial-intelligence/ai-governance/control-plane/">Snowflake</a> — defines the split itself, from a governance angle.</li>
+  </ul>
+  <p>We don't rank these; your stack and cloud decide the fit.</p>
+</section>
+
+<section id="map">
+  <h2>How do I map my own stack?</h2>
   <ol class="steps">
-    <li><strong>Declare the queue in the house file.</strong> One URL or one file path. Tell every role. Stop updating the other board.</li>
-    <li><strong>Open a ticket the same day you decide to do the work.</strong> One issue or one pull request. Record the owner. Keep the stage honest.</li>
-    <li><strong>Paste the brief</strong> with goal, constraints, path, acceptance, gates, evidence, next owner, escalate, and the ownership line. Fill who does the work and who answers before anyone codes.</li>
-    <li><strong>Lock the gate list when review starts.</strong> The implementer sets it. The reviewer may raise it and does not lower it.</li>
-    <li><strong>Hand off by delivering the brief and waking the next role on that ticket.</strong> Leave the room message as talk. It does not clear the handoff.</li>
-    <li><strong>On every resume, re-read the procedure from the file the house names,</strong> then the session ticket, then the working notes. Continue the intent already written there.</li>
+    <li><strong>List every agent</strong> and the framework it runs on.</li>
+    <li><strong>Tag each tool</strong> you use as orchestration, observability, or control plane. Some tools get two tags; that's fine.</li>
+    <li><strong>Find the empty column.</strong> Usually it's control plane: no <a href="../spend-governance/">shared identity</a>, no policy check, no audit trail.</li>
+    <li><strong>Pick one owner per layer</strong> — a person, not only a product.</li>
+    <li><strong>Set one queue.</strong> Work items carry an owner, a review gate, and evidence of done. In our stack, a hand-off is a <em>tip</em> and the review gate is <em>Strict</em>; any names work. Both names are in the <a href="../../lexicon/">glossary</a>.</li>
   </ol>
 </section>
 
-<section id="failure-modes">
-  <h2>Where does orchestration fail in practice?</h2>
+<section id="breaks">
+  <h2>What breaks when the control plane is missing?</h2>
   <ul class="failures">
-    <li><strong>Two queues.</strong> The live board and a hand-kept file both look official. Roles update the one they remember.</li>
-    <li><strong>A task that exists only in chat.</strong> There is no owner and no stage, so a restart drops it.</li>
-    <li><strong>A brief with no R or A.</strong> The ticket looks busy and review still cannot pass it. The amber mark is the warning, not a pass.</li>
-    <li><strong>A room message treated as the handoff.</strong> The next role never gets an inbox line. The ticket sits still while the room looks active.</li>
-    <li><strong>The procedure rewritten from memory</strong> after compaction. The house file said something else. The role follows the paraphrase and drifts.</li>
+    <li><strong>Loops nobody stops.</strong> <a href="https://www.snowflake.com/en/artificial-intelligence/ai-governance/control-plane/">Snowflake</a>'s example of agents repeating tool calls is an observability signal with no control-plane rule to halt it.</li>
+    <li><strong>Shared keys.</strong> Without agent identity (<a href="https://www.ibm.com/products/watsonx-orchestrate/agent-control-plane">IBM</a>, <a href="https://www.snowflake.com/en/artificial-intelligence/ai-governance/control-plane/">Snowflake</a>), you can't tell which agent spent or changed what.</li>
+    <li><strong>Audit by archaeology.</strong> You rebuild what happened from chat logs after the fact.</li>
+    <li><strong>Two orchestrators.</strong> Duplicate scheduling with no single source of truth.</li>
   </ul>
+</section>
+
+<section id="practice">
+  <h2>What does a control-plane review look like in practice?</h2>
+  <p>Take a common shape: a support agent built on one framework, a research agent on another, and a coding agent that opens pull requests. Each was set up by a different person, and each works on its own.</p>
+  <p>Start with the <strong>eng lead</strong>. They own the inventory: which agents exist, what each one touches, and which keys it holds. In most first reviews the eng lead finds at least one key that two agents share and one agent nobody remembers starting.</p>
+  <p>Next, the <strong>reviewer</strong>. This is the person, or an independent agent, who passes or fails work before it merges or ships. The question for the reviewer is simple: can I see what the agent did, and do I have the right to say no? If the answer depends on reading a chat thread, the control plane is missing.</p>
+  <p>Last, the <strong>owner</strong> — the business person accountable for the outcome. The owner sets the rules the control plane enforces: what needs approval, what is blocked, and what the monthly budget is. Without an owner, rules get written by whoever set up the tool.</p>
+  <p>Walk each agent through one real task and write down three things: who could have stopped it, where the record of it lives, and whose credentials it used. Gaps in any of the three point to the empty layer.</p>
+</section>
+
+<section id="working">
+  <h2>How do I know the map is working?</h2>
+  <ul class="plain">
+    <li><strong>A new agent gets a row before it runs.</strong> It has a framework, an owner, and its own credentials on day one.</li>
+    <li><strong>A failed task has one record.</strong> The reviewer and the eng lead look at the same trace and audit entry, not two different logs.</li>
+    <li><strong>Policy changes in one place.</strong> When the owner tightens an approval rule, every framework picks it up, not just the newest one.</li>
+    <li><strong>Questions get short answers.</strong> "Which agent changed this?" takes minutes, not an afternoon.</li>
+  </ul>
+  <p>If any of these fail, go back to the step where that layer lost its owner. The fix is usually a rule and a name, not another product.</p>
 </section>
 <section id="next">
   <h2>How do you request a consult?</h2>
-  <p>Bring the queue you have, the role list, and what should ship next week. A consult maps the gaps and the first gate.</p>
+  <p>We Scout your stack and fill the empty layer.</p>
   <p class="cta-row"><a class="btn btn-pri" href="https://ops.0xray.dev/#consult">Request a consult</a></p>
-</section><section class="related">
+</section>
+<section class="related">
 <h2>Where should you read next?</h2>
 <ul class="plain">
-<li><a href="../../guides/ship-gates/">Release gates for agent fleets</a></li>
-<li><a href="../../guides/stand-up/">Standing up an agent team</a></li>
-<li><a href="../../guides/what-is-ai-fleet-ops/">What is AI Fleet OPS</a></li>
+<li><a href="../what-is-ai-fleet-ops/">What AI fleet ops means</a></li>
+<li><a href="../framework-vs-ops/">Frameworks build agents; ops runs them</a></li>
+<li><a href="../spend-governance/">Govern agent spend and policy</a></li>
 <li><a href="../../lexicon/">Glossary</a></li>
 </ul>
 </section>
+
     <section class="faq" id="faq">
 <h2>What else do operators ask?</h2>
-<h3>What is the control plane for an agent fleet?</h3>
-<p>The control plane is the work queue, the ownership on each ticket, and the procedure roles re-read after a restart. Agent orchestration is those three staying in agreement.</p>
-<h3>Which work queue should we use?</h3>
-<p>Use one. If the live URL is set, the live board is the queue. If it is unset, the hand-kept house board is the queue. A second board becomes a second memory.</p>
-<h3>What does a work brief need before anyone starts?</h3>
-<p>Goal, constraints, path, acceptance, gates, evidence, the next owner, where to escalate, and the ownership line. Who does the work and who answers have to be filled, or the ticket is not ready for a pass.</p>
-<h3>What resumes a role after context loss?</h3>
-<p>An inbox line that points at one ticket, plus the session ticket and the procedure on disk. A message in a shared room does not resume the work.</p>
-<h3>How do we observe the fleet?</h3>
-<p>Read the queue. Each ticket has an owner, a stage, and a state. Record real events: opened work, a review verdict, a merge, a deploy. A continuous-integration tick is not one of those events.</p>
+<h3>Is a control plane only for big enterprises?</h3>
+<p>No. Three agents on two frameworks is already enough to need shared identity and audit.</p>
+<h3>Does observability give me governance?</h3>
+<p>No. It shows what happened; the control plane sets what is allowed (<a href="https://www.snowflake.com/en/artificial-intelligence/ai-governance/control-plane/">Snowflake</a>).</p>
+<h3>Can I use open standards for traces?</h3>
+<p>Yes. <a href="https://azure.microsoft.com/en-us/products/ai-foundry/control-plane">Microsoft</a> supports OpenTelemetry for agent traces.</p>
+<h3>Do I need one vendor for all three layers?</h3>
+<p>No. Many teams mix; the point is that every layer has an owner.</p>
 </section>
-    
   </main>
   <footer class="site-footer">
     <p>Build work ships on a recorded review. The public lane stays on hold until the owner gives an explicit go.</p>
     <p><a href="https://0xray.dev">Product</a> · <a href="https://docs.0xray.dev">Docs</a> · <a href="https://bifrost.0xray.dev">Live board</a></p>
     <p>© 0xRay · AI Fleet OPS</p>
   </footer>
+
 </body>
 </html>

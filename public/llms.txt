@@ -6,10 +6,13 @@ Operating manual for a multi-agent team. Public posts stay on hold until the own
 
 ## Pages
 
-- [Hub](https://ops.0xray.dev/): one plane, one queue, start here by job
-- [Operating guides](https://ops.0xray.dev/guides/): the six parts of the manual
-- [What is AI Fleet OPS](https://ops.0xray.dev/guides/what-is-ai-fleet-ops/): multi-agent operations in production
-- [The agent control plane](https://ops.0xray.dev/guides/control-plane/): queues, ownership, and the procedure
+- [Hub](https://ops.0xray.dev/): one plane, one queue
+- [Operating guides](https://ops.0xray.dev/guides/): category path and house guides
+- [Map the agentic control plane](https://ops.0xray.dev/guides/control-plane/): orchestration, observability, and the control plane
+- [What AI fleet ops means](https://ops.0xray.dev/guides/what-is-ai-fleet-ops/): roles, queue, review, and spend
+- [Frameworks build agents; ops runs them](https://ops.0xray.dev/guides/framework-vs-ops/): ops checklist around build frameworks
+- [Take your agent pilot to production](https://ops.0xray.dev/guides/pilot-to-production/): owner, review gate, audit, and budget
+- [Govern agent spend and policy](https://ops.0xray.dev/guides/spend-governance/): token spend per agent and policy
 - [Release gates for agents](https://ops.0xray.dev/guides/ship-gates/): review, PASS, and the receipt
 - [Stand up an agent team](https://ops.0xray.dev/guides/stand-up/): keep the job after context loss
 - [When not to post](https://ops.0xray.dev/guides/eng-vs-dist/): build lane versus public posts

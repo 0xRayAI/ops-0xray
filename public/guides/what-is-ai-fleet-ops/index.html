@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>What is AI Fleet OPS | 0xRay</title>
-  <meta name="description" content="AI Fleet OPS is multi-agent operations in production: named roles, one queue, a procedure after context loss, and separate gates for shipping and posting." />
+  <title>AI fleet management for agents | 0xRay</title>
+  <meta name="description" content="What AI fleet management means for multi-agent systems in production — roles, queue, review, spend. Request a consult with AI Fleet OPS." />
   <link rel="canonical" href="https://ops.0xray.dev/guides/what-is-ai-fleet-ops/" />
   <link rel="stylesheet" href="../../assets/site.css" />
   <script type="application/ld+json">
@@ -14,12 +14,12 @@
     {
       "@type": "Article",
       "@id": "https://ops.0xray.dev/guides/what-is-ai-fleet-ops/#article",
-      "headline": "What is AI Fleet OPS",
-      "description": "AI Fleet OPS is multi-agent operations in production: named roles, one queue, a procedure after context loss, and separate gates for shipping and posting.",
+      "headline": "What AI fleet ops means",
+      "description": "What AI fleet management means for multi-agent systems in production — roles, queue, review, spend. Request a consult with AI Fleet OPS.",
       "url": "https://ops.0xray.dev/guides/what-is-ai-fleet-ops/",
       "inLanguage": "en",
       "datePublished": "2026-10-30",
-      "dateModified": "2026-10-30",
+      "dateModified": "2026-10-31",
       "author": {
         "@type": "Organization",
         "name": "0xRay",
@@ -54,7 +54,7 @@
         {
           "@type": "ListItem",
           "position": 3,
-          "name": "What is AI Fleet OPS",
+          "name": "What AI fleet ops means",
           "item": "https://ops.0xray.dev/guides/what-is-ai-fleet-ops/"
         }
       ]
@@ -65,42 +65,34 @@
       "mainEntity": [
         {
           "@type": "Question",
-          "name": "How is a multi-agent fleet different from several agents in one chat?",
+          "name": "Is AI fleet ops a product?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "A fleet has named roles, one queue, and a ticket for each task. A chat can brief a role. The ticket is what owns, resumes, and proves the work."
+            "text": "It's a practice. AI Fleet OPS is our consulting arm that sets it up, using the open-source 0xRay suit."
           }
         },
         {
           "@type": "Question",
-          "name": "What does agent reliability mean here?",
+          "name": "Do I need a specific framework?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "The same job is still there after a restart. Release depends on a recorded review, not on the agent saying it is done. You can see the stage and the owner on the queue."
+            "text": "No. The practice sits above whatever you build with."
           }
         },
         {
           "@type": "Question",
-          "name": "What has to exist before the first ship?",
+          "name": "How many agents before I need this?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "A fastened operating kit, a house file that names the owner and the roles, one queue, and a first ticket whose brief names who does the work and who answers for it."
+            "text": "As soon as two agents share work or budget."
           }
         },
         {
           "@type": "Question",
-          "name": "Where does human judgment sit?",
+          "name": "Does this remove humans?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "The human owner decides money, credentials, deletes, publishing, and taste. A reviewer role records PASS or FIX on the change. Those are different decisions."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "What software does this manual assume?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "The operating kit you fasten is 0xRay. Install and the reference manual live at 0xray.dev and docs.0xray.dev. This site defines how a team runs that kit in production."
+            "text": "No. It puts humans at the review gates and takes them out of copy-paste hand-offs."
           }
         }
       ]
@@ -123,86 +115,111 @@
     </div>
   </header>
   <main id="content" class="wrap">
-    <p class="crumb"><a href="../../">Hub</a> / <a href="../">Guides</a> / What is AI Fleet OPS</p>
-    <p class="eyebrow">Definition</p>
-    <h1>What is AI Fleet OPS</h1>
-    <p class="direct">Yes. AI Fleet OPS is the production discipline that keeps a multi-agent system shipping after the demo. The outcome is a job that survives a context reset, a release a human can audit, and a public post that waits for its own go. You get it by naming roles, using one queue, and writing the procedure on disk.</p>
-    
-<section id="problem">
-  <h2>What breaks when agents only share a chat?</h2>
-  <p>Teams add agents the way they add browser tabs. Each session starts blank. Two agents edit the same files. The status report is a chat line that says the work is finished. A week later nobody can point to the owner, the acceptance check, or why a public post went out.</p>
-  <p>Agent reliability fails in a specific place. The context window closes, and the job lived only inside that window. The next session invents a new plan. Observability fails in the same place: if the queue has no ticket, there is nothing to watch.</p>
+    <p class="crumb"><a href="../../">Hub</a> / <a href="../">Guides</a> / AI fleet ops</p>
+    <p class="eyebrow">AI fleet management</p>
+    <h1>What AI fleet ops means</h1>
+    <p class="direct">Yes. Your agents behave like a managed team instead of loose scripts once someone owns roles, review, and spend, and AI Fleet OPS is that operating practice. <a href="https://azure.microsoft.com/en-us/products/ai-foundry/control-plane">Microsoft</a>'s product page already uses "AI fleet"; this is the vendor-neutral version — what the job is, whoever's tools you use.</p>
+
+<section id="counts">
+  <h2>What counts as an AI fleet?</h2>
+  <p>Any set of agents that share work, data, or budget. It doesn't need to be large. Two agents that hand tasks to each other and bill to one account are a fleet, because a failure in one now costs the other.</p>
 </section>
 
-<section id="model">
-  <h2>What has to be true at the same time?</h2>
-  <p>AI Fleet OPS is the operating model for a multi-agent system that has to ship. Four parts stay true together.</p>
-  <h3>Roles</h3>
-  <p>Someone implements. Someone reviews. Someone coordinates the queue. A human owner holds money, credentials, deletes, publishing, and taste. The role is the assignment. It is not the model brand and it is not a person's chat handle.</p>
-  <h3>One queue</h3>
-  <p>Every task is a ticket, an issue or a pull request, with an owner, a stage, and a state. Agent orchestration means the queue and the roles still agree after the session ends. The <a href="../control-plane/">control plane guide</a> is the detail.</p>
-  <h3>A procedure on disk</h3>
-  <p>After a restart the role reads the written procedure and a one-line session ticket, then continues the same job. Notes hold the long body. A recollection inside the model is not the procedure. Standing that up is the <a href="../stand-up/">house path</a>.</p>
-  <h3>Two gates that stay separate</h3>
-  <p>A release gate decides whether code ships. A go-to-market gate decides whether anyone says so in public. The eval is the acceptance written on the brief before the run. The reviewer compares the result to that acceptance. Human-in-the-loop means the reviewer records the verdict, and the human owner still decides spend, production, and anything public. Posts wait on that second gate.</p>
-  <div class="callout">
-    <p>On this fleet the kit an agent runs with is the suit, a named role is a seat, and the roster under one procedure is the fleet. The short names sit in the <a href="../../lexicon/">glossary</a>.</p>
-  </div>
+<section id="harder">
+  <h2>Why is running many agents harder than running one?</h2>
+  <p><a href="https://www.bmc.com/it-solutions/agentic-orchestration.html">BMC</a> describes enterprises stuck with "fragmented AI pilots". Each pilot works alone; together they collide. The usual pain points:</p>
+  <ul class="plain">
+    <li>No clear owner for a task that passes between agents.</li>
+    <li>No review before an agent's output merges, ships, or goes public.</li>
+    <li>No view of which agent spent what.</li>
+    <li>No steady evaluation after launch, so quality drifts quietly. <a href="https://www.ibm.com/products/watsonx-orchestrate/agent-control-plane">IBM</a> and <a href="https://azure.microsoft.com/en-us/products/ai-foundry/control-plane">Microsoft</a> both list continuous evaluation as part of the job.</li>
+  </ul>
 </section>
 
-<section id="steps">
-  <h2>How do you place the team?</h2>
+<section id="parts">
+  <h2>What are the parts of AI fleet ops?</h2>
   <ol class="steps">
-    <li><strong>Name the roles you actually need.</strong> Implementer, reviewer, coordinator, and the human owner. Write one line on what each may do without asking.</li>
-    <li><strong>Write the job in one sentence</strong> and point at the ticket that holds it. If the sentence has no ticket, the team does not have the job yet.</li>
-    <li><strong>Pick one queue and one procedure file.</strong> Tell every role where they are. Retire the other board and the other doc.</li>
-    <li><strong>Write acceptance before the run.</strong> That paragraph is the eval. Review will score the diff against it.</li>
-    <li><strong>Split release from announcement.</strong> A recorded PASS ships code. Public language waits for the owner's go.</li>
-    <li><strong>Set a weekly compute line</strong> before you add the second agent. New runs stop when weekly spend reaches the hold line.</li>
+    <li><strong>Roles.</strong> Each agent has one job and a human owner. In 0xRay we call an agent's role kit a <em>suit</em> — gloss only. The short name is in the <a href="../../lexicon/">glossary</a>.</li>
+    <li><a href="../control-plane/"><strong>One queue.</strong></a> Work is a card with an owner, a status, and a done-check, not a chat thread.</li>
+    <li><a href="../pilot-to-production/"><strong>Review gates.</strong></a> An independent reviewer passes or fails work before merge. Human approval sits at the steps that matter; <a href="https://runflow.ai/en/platform">Runflow</a>, for example, sells human-in-the-loop approval for this reason.</li>
+    <li><a href="../spend-governance/"><strong>Spend and identity.</strong></a> Each agent has its own credentials and a metered budget (<a href="https://www.bmc.com/it-solutions/agentic-orchestration.html">BMC</a>, <a href="https://azure.microsoft.com/en-us/products/ai-foundry/control-plane">Microsoft</a>).</li>
+    <li><strong>Evaluation and audit.</strong> You keep checking outputs after launch and keep a trail of who did what (<a href="https://www.ibm.com/products/watsonx-orchestrate/agent-control-plane">IBM</a>, <a href="https://www.bmc.com/it-solutions/agentic-orchestration.html">BMC</a>).</li>
   </ol>
 </section>
 
-<section id="failure-modes">
-  <h2>Where does a new fleet usually break?</h2>
-  <ul class="failures">
-    <li><strong>Chat as the system of record.</strong> The session ends and the owner, the acceptance, and the next cut leave with it.</li>
-    <li><strong>One shared prompt called a team.</strong> Roles are unnamed, so two agents take the same task and neither owns the result.</li>
-    <li><strong>Green build called done.</strong> Continuous integration passed. There is still no reviewer receipt and no live proof.</li>
-    <li><strong>Announcement from the build channel.</strong> A demo worked, a post went out, and the public lane never had an owner or a go.</li>
+<section id="start">
+  <h2>How do I start managing multiple agents in production?</h2>
+  <ul class="plain">
+    <li><strong>Inventory</strong> every agent, its framework, keys, and owner.</li>
+    <li><strong>Cut to the jobs that earn money or save time.</strong> Pause the rest.</li>
+    <li><strong>Put work on one queue</strong> and require a done-check on every item.</li>
+    <li><strong>Add one review gate</strong> before anything reaches customers.</li>
+    <li><strong>Meter spend per agent</strong> before you add the next agent.</li>
+    <li><strong>Schedule evaluation</strong> — weekly is fine at first.</li>
   </ul>
+</section>
+
+<section id="fail">
+  <h2>Where do fleets usually fail?</h2>
+  <ul class="failures">
+    <li><strong>Adding agents before ownership.</strong> More agents, same confusion.</li>
+    <li><strong>Trusting the demo.</strong> A pilot that passed once is not evidence it passes weekly.</li>
+    <li><strong>Approvals in chat.</strong> "Looks good" in a thread is not an audit trail.</li>
+    <li><strong>Announcing before proof.</strong> Public claims go out after the gate passes, not before.</li>
+  </ul>
+</section>
+
+<section id="week">
+  <h2>What does a week of fleet ops look like?</h2>
+  <p>Picture a team with four agents: one drafts support replies, one summarizes sales calls, one triages bug reports, and one opens small code fixes.</p>
+  <p><strong>Monday.</strong> The <strong>eng lead</strong> checks the queue. Every open card has an owner, a status, and a done-check. Two cards from last week never closed; one was blocked on a missing credential, the other failed review twice. Both get a next step and a name.</p>
+  <p><strong>Midweek.</strong> The <strong>reviewer</strong> works the gate. The code agent's fix passes tests but changes a file outside its scope, so it fails review and goes back with a note. The support agent's replies pass. Every pass and fail is recorded, so nobody has to remember why a change was held.</p>
+  <p><strong>Friday.</strong> The <strong>owner</strong> gets a short report: what shipped, what failed, what each agent cost, and whether quality held against last week's checks. If the call-summary agent costs more per finished task than the value it returns, the owner can pause it. That call is a business decision, and the report makes it possible.</p>
+  <p>None of this needs a large team. It needs clear roles and one place where work, review, and spend meet.</p>
+</section>
+
+<section id="roles">
+  <h2>Who does what on a fleet team?</h2>
+  <ul class="plain">
+    <li><strong>Owner</strong> — sets goals, budget, and approval rules; decides when to add or pause an agent.</li>
+    <li><strong>Eng lead</strong> — keeps agents running, holds the inventory, fixes failures, and handles credentials.</li>
+    <li><strong>Reviewer</strong> — independent from the agent that did the work; passes or fails it against a written check. A reviewer can be an agent, as long as a human owns the gate.</li>
+    <li><strong>Operator</strong> — runs the queue day to day. On small teams this is the eng lead; on larger ones it can be a retained operator.</li>
+  </ul>
+  <p>One person can hold more than one role. The rule is that the agent doing the work never reviews its own output.</p>
 </section>
 <section id="next">
   <h2>How do you request a consult?</h2>
-  <p>Bring the queue you have, the role list, and what should ship next week. A consult maps the gaps and the first gate.</p>
+  <p>Scout, Stand-up, or Retain.</p>
   <p class="cta-row"><a class="btn btn-pri" href="https://ops.0xray.dev/#consult">Request a consult</a></p>
-</section><section class="related">
+</section>
+<section class="related">
 <h2>Where should you read next?</h2>
 <ul class="plain">
-<li><a href="../../guides/control-plane/">Orchestrating agent work: queues, ownership, and the control plane</a></li>
-<li><a href="../../guides/stand-up/">Standing up an agent team that keeps the job after context loss</a></li>
-<li><a href="../../guides/eng-vs-dist/">Build lane vs go-to-market lane</a></li>
+<li><a href="../control-plane/">Map the agentic control plane</a></li>
+<li><a href="../pilot-to-production/">Take your agent pilot to production</a></li>
+<li><a href="../framework-vs-ops/">Frameworks build agents; ops runs them</a></li>
 <li><a href="../../lexicon/">Glossary</a></li>
 </ul>
 </section>
+
     <section class="faq" id="faq">
 <h2>What else do operators ask?</h2>
-<h3>How is a multi-agent fleet different from several agents in one chat?</h3>
-<p>A fleet has named roles, one queue, and a ticket for each task. A chat can brief a role. The ticket is what owns, resumes, and proves the work.</p>
-<h3>What does agent reliability mean here?</h3>
-<p>The same job is still there after a restart. Release depends on a recorded review, not on the agent saying it is done. You can see the stage and the owner on the queue.</p>
-<h3>What has to exist before the first ship?</h3>
-<p>A fastened operating kit, a house file that names the owner and the roles, one queue, and a first ticket whose brief names who does the work and who answers for it.</p>
-<h3>Where does human judgment sit?</h3>
-<p>The human owner decides money, credentials, deletes, publishing, and taste. A reviewer role records PASS or FIX on the change. Those are different decisions.</p>
-<h3>What software does this manual assume?</h3>
-<p>The operating kit you fasten is 0xRay. Install and the reference manual live at 0xray.dev and docs.0xray.dev. This site defines how a team runs that kit in production.</p>
+<h3>Is AI fleet ops a product?</h3>
+<p>It's a practice. AI Fleet OPS is our consulting arm that sets it up, using the open-source 0xRay suit.</p>
+<h3>Do I need a specific framework?</h3>
+<p>No. The practice sits above whatever you build with.</p>
+<h3>How many agents before I need this?</h3>
+<p>As soon as two agents share work or budget.</p>
+<h3>Does this remove humans?</h3>
+<p>No. It puts humans at the review gates and takes them out of copy-paste hand-offs.</p>
 </section>
-    
   </main>
   <footer class="site-footer">
     <p>Build work ships on a recorded review. The public lane stays on hold until the owner gives an explicit go.</p>
     <p><a href="https://0xray.dev">Product</a> · <a href="https://docs.0xray.dev">Docs</a> · <a href="https://bifrost.0xray.dev">Live board</a></p>
     <p>© 0xRay · AI Fleet OPS</p>
   </footer>
+
 </body>
 </html>
