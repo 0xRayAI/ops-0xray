@@ -268,6 +268,9 @@ button {
   font-size: 0.92rem;
 }
 .site-footer p { margin: 0.35rem 0; }
+.listing-badge { margin: 0.85rem 0 0.2rem; }
+.listing-badge a { display: inline-block; line-height: 0; }
+.listing-badge img { display: block; width: 182px; height: 46px; }
 
 .term + .term { margin-top: 0.75rem; }
 
