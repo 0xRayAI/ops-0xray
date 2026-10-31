@@ -14,7 +14,7 @@ Operating manual for a multi-agent team. Public posts stay on hold until the own
 - [Take your agent pilot to production](https://ops.0xray.dev/guides/pilot-to-production/): owner, review gate, audit, and budget
 - [Govern agent spend and policy](https://ops.0xray.dev/guides/spend-governance/): token spend per agent and policy
 - [Install a multi-agent ops stack](https://ops.0xray.dev/guides/install/): one install, rules, tool servers, and a station card
-- [Configure agent seats, gates, and limits](https://ops.0xray.dev/guides/config/): roles, limits, memory, and keys
+- [Configure roles, gates, and limits](https://ops.0xray.dev/guides/config/): roles, limits, memory, and keys
 - [Run your first agent ticket end to end](https://ops.0xray.dev/guides/first-ticket/): station card, review PASS, gate, and receipt
 - [Common AI agent fleet pitfalls and fixes](https://ops.0xray.dev/guides/fleet-pitfalls/): ownership, stalls, spend, and review gates
 - [Release gates for agents](https://ops.0xray.dev/guides/ship-gates/): review, PASS, and the receipt

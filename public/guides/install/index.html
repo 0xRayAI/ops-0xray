@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Install a multi-agent ops stack | 0xRay</title>
-  <meta name="description" content="Install the 0xRay suit on a repo: one npm install wires governance, seven MCP servers, chat bridges, and a station card that survives a reset." />
+  <meta name="description" content="Install the 0xRay operating kit on a repo: one npm install wires governance, seven MCP servers, chat bridges, and a station card that survives a reset." />
   <link rel="canonical" href="https://ops.0xray.dev/guides/install/" />
   <link rel="stylesheet" href="../../assets/site.css" />
   <script type="application/ld+json">
@@ -15,7 +15,7 @@
       "@type": "Article",
       "@id": "https://ops.0xray.dev/guides/install/#article",
       "headline": "Install a multi-agent ops stack",
-      "description": "Install the 0xRay suit on a repo: one npm install wires governance, seven MCP servers, chat bridges, and a station card that survives a reset.",
+      "description": "Install the 0xRay operating kit on a repo: one npm install wires governance, seven MCP servers, chat bridges, and a station card that survives a reset.",
       "url": "https://ops.0xray.dev/guides/install/",
       "inLanguage": "en",
       "datePublished": "2026-10-31",
@@ -73,10 +73,10 @@
         },
         {
           "@type": "Question",
-          "name": "Can two seats share one repo?",
+          "name": "Can two agents share one repo?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "They can, but give each seat its own worktree and its own station card, or two agents will pick up the same ticket."
+            "text": "They can, but give each agent its own worktree and its own station card, or two agents will pick up the same ticket."
           }
         },
         {
@@ -110,7 +110,7 @@
     <p class="crumb"><a href="../../">Hub</a> / <a href="../">Guides</a> / Install</p>
     <p class="eyebrow">Install</p>
     <h1>Install a multi-agent ops stack</h1>
-    <p class="direct">Yes. One command installs it. Run <code>npm install 0xray</code> in each agent's project folder. Postinstall writes the shared rules, seven tool servers, host bridges, and a station card, so every agent follows the same codex and resumes its ticket after a reset. Then run <code>npx 0xray validate</code> to prove the suit is worn.</p>
+    <p class="direct">Yes. One command installs it. Run <code>npm install 0xray</code> in each agent's project folder. Postinstall writes the shared rules, seven tool servers, host bridges, and a station card, so every agent follows the same codex and resumes its ticket after a reset. Then run <code>npx 0xray validate</code> to prove the operating kit is installed.</p>
   <p>A multi-agent ops install puts the same operating rules, tool servers, and recovery notes into every repo an agent works in. In 0xRay that is one package install per seat. A <strong>seat</strong> is one named agent role (builder, reviewer, coordinator) with its own working folder. The install is the same for every seat; the role comes from config, not from a different package.</p>
 <section id="what-do-you-need-before-you-start">
   <h2>What do you need before you start?</h2>
@@ -191,7 +191,7 @@ npx 0xray health     # framework health</code></pre>
 <section class="related">
 <h2>Where should you read next?</h2>
 <ul class="plain">
-<li><a href="../config/">Configure agent seats, gates, and limits</a></li>
+<li><a href="../config/">Configure roles, gates, and limits</a></li>
 <li><a href="../first-ticket/">Run your first agent ticket end to end</a></li>
 <li><a href="../fleet-pitfalls/">Common AI agent fleet pitfalls and fixes</a></li>
 </ul>
@@ -200,8 +200,8 @@ npx 0xray health     # framework health</code></pre>
 <h2>What else do operators ask?</h2>
 <h3>Does install need an API key?</h3>
 <p>No. The install writes config only. Model and service keys belong to your host and your human owner.</p>
-<h3>Can two seats share one repo?</h3>
-<p>They can, but give each seat its own worktree and its own station card, or two agents will pick up the same ticket.</p>
+<h3>Can two agents share one repo?</h3>
+<p>They can, but give each agent its own worktree and its own station card, or two agents will pick up the same ticket.</p>
 <h3>What if my host is not listed?</h3>
 <p>Any MCP-capable host can point at <code>npx -y 0xray mcp &lt;server&gt;</code>. Bridges just save the wiring.</p>
 </section>

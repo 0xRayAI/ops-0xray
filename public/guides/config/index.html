@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Configure agent seats, gates, and limits | 0xRay</title>
-  <meta name="description" content="Configure a multi-agent fleet: seat roles, codex rules, temperament, token limits, memory routing, the work queue, and where keys belong." />
+  <title>Configure roles, gates, and limits | 0xRay</title>
+  <meta name="description" content="Configure a multi-agent fleet: roles, codex rules, temperament, token limits, memory routing, the work queue, and where keys belong." />
   <link rel="canonical" href="https://ops.0xray.dev/guides/config/" />
   <link rel="stylesheet" href="../../assets/site.css" />
   <script type="application/ld+json">
@@ -14,8 +14,8 @@
     {
       "@type": "Article",
       "@id": "https://ops.0xray.dev/guides/config/#article",
-      "headline": "Configure agent seats, gates, and limits",
-      "description": "Configure a multi-agent fleet: seat roles, codex rules, temperament, token limits, memory routing, the work queue, and where keys belong.",
+      "headline": "Configure roles, gates, and limits",
+      "description": "Configure a multi-agent fleet: roles, codex rules, temperament, token limits, memory routing, the work queue, and where keys belong.",
       "url": "https://ops.0xray.dev/guides/config/",
       "inLanguage": "en",
       "datePublished": "2026-10-31",
@@ -54,7 +54,7 @@
         {
           "@type": "ListItem",
           "position": 3,
-          "name": "Configure agent seats, gates, and limits",
+          "name": "Configure roles, gates, and limits",
           "item": "https://ops.0xray.dev/guides/config/"
         }
       ]
@@ -81,7 +81,7 @@
         },
         {
           "@type": "Question",
-          "name": "Does the suit config ever hold secrets?",
+          "name": "Does the operating-kit config ever hold secrets?",
           "acceptedAnswer": {
             "@type": "Answer",
             "text": "No. .xray/config.json and features.json hold limits and flags only. Repo app keys, npm one-time codes, and model keys stay in your host vault."
@@ -125,7 +125,7 @@
   <main id="content" class="wrap">
     <p class="crumb"><a href="../../">Hub</a> / <a href="../">Guides</a> / Configure</p>
     <p class="eyebrow">Configuration</p>
-    <h1>Configure agent seats, gates, and limits</h1>
+    <h1>Configure roles, gates, and limits</h1>
     <p class="direct">Yes. Each control is one file on disk. Roles live in seat folders, rules in <code>.xray/codex.json</code>, ceremony and memory in <code>.xray/features.json</code>, token ceilings in <code>.xray/config.json</code>. Edit your overlays, not managed copies, and postinstall layers them on top, so every fresh session reads the same answers the last one did.</p>
   <p>Configuration in a multi-agent system answers four questions: who does what, what rules they follow, how much they can spend, and where the work is recorded. In 0xRay each answer lives in a file on disk, so a fresh session reads the same answers the last one did.</p>
 <section id="which-file-controls-what">
@@ -237,7 +237,7 @@
 <p>In the reviewer seat's PASS on the pull request plus <code>npx @0xray/foundry gate</code>, then <code>npx @0xray/foundry gate --verify-only</code>. Instruction files may shorten this to "foundry gate". With a global install the command is <code>0xray-foundry gate</code>. A green build is the first check, not the ship. More in <a href="../ship-gates/">ship gates</a>.</p>
 <h3>How do I stop runaway spend?</h3>
 <p>Token ceilings here, one deep-work run per ticket, and a weekly hold line set by the owner. See <a href="../compute-discipline/">compute discipline</a>.</p>
-<h3>Does the suit config ever hold secrets?</h3>
+<h3>Does the operating-kit config ever hold secrets?</h3>
 <p>No. <code>.xray/config.json</code> and <code>features.json</code> hold limits and flags only. Repo app keys, npm one-time codes, and model keys stay in your host vault.</p>
 <h3>What happens if SEAT_KEYS_DIR is missing?</h3>
 <p>With <code>LIVE_URL</code> set, the inbox command exits with code 2 and names the missing variable. Without <code>LIVE_URL</code>, seats use the markdown board and need neither.</p>

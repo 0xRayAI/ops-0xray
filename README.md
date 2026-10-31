@@ -20,7 +20,7 @@ Railway runs `npm start` (`node server.mjs`). That serves `public/` and `POST /a
 | `/guides/pilot-to-production/` | Pilot to governed production |
 | `/guides/spend-governance/` | Agent spend and policy |
 | `/guides/install/` | Install the multi-agent ops stack |
-| `/guides/config/` | Seats, gates, and limits |
+| `/guides/config/` | Roles, gates, and limits |
 | `/guides/first-ticket/` | Run one ticket through the loop |
 | `/guides/fleet-pitfalls/` | Fleet pitfalls and fixes |
 | `/guides/ship-gates/` | Release gates (house) |
