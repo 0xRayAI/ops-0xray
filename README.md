@@ -6,19 +6,23 @@ Copy rules for the site live in [docs/AEO-SEO-PLAYBOOK.md](docs/AEO-SEO-PLAYBOOK
 
 ## Content battery
 
-The site is the category manual for AI Fleet OPS: one plane, one queue, and the operating guides. It is a hub, five category guides, four house guides, and a glossary. Industry language leads. In-house names live in the glossary, industry term first.
+The site is the category manual for AI Fleet OPS: one plane, one queue, and the operating guides. It is a hub, five category guides, four kit guides (install, config, first ticket, pitfalls), four house guides, and a glossary. Industry language leads. In-house names live in the glossary, industry term first.
 
 Railway runs `npm start` (`node server.mjs`). That serves `public/` and `POST /api/consult`. The form emails consult@0xray.dev through Resend. Set `RESEND_API_KEY` on the host. `RESEND_FROM` is optional and defaults to `AI Fleet OPS <consult@0xray.dev>`. No Tally.
 
 | Path | What it is |
 | --- | --- |
 | `/` | Category hub and consult form |
-| `/guides/` | Guide map: category path, then house guides |
+| `/guides/` | Guide map: category path, kit guides, then house guides |
 | `/guides/control-plane/` | Agentic control plane layer map |
 | `/guides/what-is-ai-fleet-ops/` | What AI fleet ops means |
 | `/guides/framework-vs-ops/` | Frameworks versus ops checklist |
 | `/guides/pilot-to-production/` | Pilot to governed production |
 | `/guides/spend-governance/` | Agent spend and policy |
+| `/guides/install/` | Install the multi-agent ops stack |
+| `/guides/config/` | Seats, gates, and limits |
+| `/guides/first-ticket/` | Run one ticket through the loop |
+| `/guides/fleet-pitfalls/` | Fleet pitfalls and fixes |
 | `/guides/ship-gates/` | Release gates (house) |
 | `/guides/stand-up/` | Standing up a team (house) |
 | `/guides/eng-vs-dist/` | Build lane vs public posts (house) |

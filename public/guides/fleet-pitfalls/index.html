@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Common AI agent fleet pitfalls and fixes | 0xRay</title>
+  <meta name="description" content="Eight ways multi-agent fleets fail in production, from ownership thrash and silent stalls to spend blowups and skipped review gates, and the fix for each." />
+  <link rel="canonical" href="https://ops.0xray.dev/guides/fleet-pitfalls/" />
+  <link rel="stylesheet" href="../../assets/site.css" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://ops.0xray.dev/guides/fleet-pitfalls/#article",
+      "headline": "Common AI agent fleet pitfalls and fixes",
+      "description": "Eight ways multi-agent fleets fail in production, from ownership thrash and silent stalls to spend blowups and skipped review gates, and the fix for each.",
+      "url": "https://ops.0xray.dev/guides/fleet-pitfalls/",
+      "inLanguage": "en",
+      "datePublished": "2026-10-31",
+      "dateModified": "2026-10-31",
+      "author": {
+        "@type": "Organization",
+        "name": "0xRay",
+        "url": "https://0xray.dev"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "0xRay",
+        "url": "https://ops.0xray.dev/"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://ops.0xray.dev/guides/fleet-pitfalls/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://ops.0xray.dev/guides/fleet-pitfalls/#breadcrumbs",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "AI Fleet OPS",
+          "item": "https://ops.0xray.dev/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Operating guides",
+          "item": "https://ops.0xray.dev/guides/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Common AI agent fleet pitfalls and fixes",
+          "item": "https://ops.0xray.dev/guides/fleet-pitfalls/"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://ops.0xray.dev/guides/fleet-pitfalls/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Which pitfall is most common?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "In our practice, chat as the record. It causes most of the others."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do better models fix these?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. They are operating problems, and research on multi-agent failures points the same way. A stronger model stalls just as silently without a ticket state."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is this framework-specific?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. The fixes apply to any multi-agent stack."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <a class="skip" href="#content">Skip to content</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="../../">AI Fleet OPS <span>0xRay</span></a>
+      <nav aria-label="Primary">
+        <a href="../../">Hub</a>
+        <a href="../" aria-current="page">Guides</a>
+        <a href="../../lexicon/">Lexicon</a>
+        <a href="https://ops.0xray.dev/#consult">Consult</a>
+      </nav>
+    </div>
+  </header>
+  <main id="content" class="wrap">
+    <p class="crumb"><a href="../../">Hub</a> / <a href="../">Guides</a> / Fleet pitfalls</p>
+    <p class="eyebrow">Fleet pitfalls</p>
+    <h1>Common AI agent fleet pitfalls and fixes</h1>
+    <p class="direct">Yes. Most agent fleet failures are fixable without a better model. They come from operations: nobody owns the ticket, work stalls silently, spend climbs overnight, or a change ships unreviewed. Write one owner per lane, a station card on disk, a stale check, a spend hold line, and a reviewer PASS gate into your procedure.</p>
+  <table>
+    <thead><tr><th>Pitfall</th><th>Symptom</th><th>Fix</th></tr></thead>
+    <tbody>
+    <tr><td>Chat as the record</td><td>Work lost after a reset</td><td>Station card + ticket on disk</td></tr>
+    <tr><td>Ownership thrash</td><td>Two agents on one ticket</td><td>One owner per lane</td></tr>
+    <tr><td>Silent stalls</td><td>Ticket idle, no one says so</td><td>Stage + state + a stale check</td></tr>
+    <tr><td>Spend blowups</td><td>Surprise bill</td><td>Spec first, one run, hold line</td></tr>
+    <tr><td>Skipped review gate</td><td>Green build ships a bug</td><td>Reviewer PASS + gate = ship</td></tr>
+    <tr><td>Duplicate relaunch</td><td>Same job run twice</td><td>Resume the same run</td></tr>
+    <tr><td>Public lane leaks</td><td>Post before it is ready</td><td>Owner go, separate lane</td></tr>
+    <tr><td>Adding agents too early</td><td>Five seats, one job</td><td>Start simple, add seats</td></tr>
+    </tbody>
+  </table>
+<section id="why-does-an-agent-forget-what-it-was-doing">
+  <h2>Why does an agent forget what it was doing?</h2>
+  <p><strong>Symptom.</strong> After a context window closes, the agent asks what it was doing, or redoes finished work.</p>
+  <p><strong>Fix.</strong> The record is on disk. Every seat reads its procedure and station card first, and updates the card before it stops. If you can delete the chat and still resume, you are safe.</p>
+</section>
+<section id="why-do-two-agents-work-the-same-ticket">
+  <h2>Why do two agents work the same ticket?</h2>
+  <p><strong>Symptom.</strong> Two agents edit the same file, answer the same message, or undo each other. Tickets bounce between seats.</p>
+  <p><strong>Fix.</strong> One owner per lane, written in the procedure. The coordinator assigns; it does not implement. Agents that are not the owner stay quiet on acknowledgments of known state.</p>
+  <p><strong>Why it matters.</strong> A human sign-off does not make the call human. In <a href="https://www.anthropic.com/research/agents-judgment-calls">Anthropic's study of 50 analysts</a>, experts went with the agent's suggested lean 86% of the time. The <a href="https://arxiv.org/abs/2503.13657">MAST failure taxonomy</a> (a catalog of 14 ways multi-agent systems break) lists ignoring the role and ignoring other agents as major failure classes. Public responsibility charts for agents agree: <a href="https://learn.microsoft.com/en-us/agents/center-of-excellence/roles-responsibilities">Microsoft's agent Center of Excellence guidance</a> says "Assign exactly one accountable role per task. If two roles are accountable, no one is."</p>
+</section>
+<section id="why-does-a-ticket-sit-idle-with-no-error">
+  <h2>Why does a ticket sit idle with no error?</h2>
+  <p><strong>Symptom.</strong> A ticket sits in progress for a day. No error, no message. The agent is waiting on something nobody knows about, often a human step like a login or a key.</p>
+  <p><strong>Fix.</strong> Every ticket has a stage and a state, including blocked and who it is blocked on. The coordinator runs a stale check on a schedule. Blocked-on-human items go into one short checklist for the owner, not scattered across chats.</p>
+  <p>Give every run three guards: a <strong>turn cap</strong> (a hard limit on loop steps, like <code>max_turns</code> in the <a href="https://openai.github.io/openai-agents-python/running_agents/">OpenAI Agents SDK</a>), a <strong>heartbeat</strong> (a periodic "still alive" signal, as in <a href="https://docs.temporal.io/encyclopedia/detecting-activity-failures">Temporal</a>), and a wake that re-plans when progress stops.</p>
+</section>
+<section id="why-does-the-bill-spike-overnight">
+  <h2>Why does the bill spike overnight?</h2>
+  <p><strong>Symptom.</strong> A cloud run loops, retries, or spawns sub-agents until the budget is gone. Or many small wakes add up to a large bill.</p>
+  <p><strong>Fix.</strong> Write the spec before the cloud run. Allow one deep-work run per ticket. Set token ceilings in config. The owner sets a weekly budget and a hold line; past it, new wakes go quiet until reset. Spend and credentials are always ask-first. More in <a href="../compute-discipline/">compute discipline</a>.</p>
+  <p><strong>Why it matters.</strong> Anthropic <a href="https://www.anthropic.com/engineering/multi-agent-research-system">reports</a> that multi-agent systems use about 15 times the tokens of a chat. Without a budget gate, that is a bill, not a fleet.</p>
+  <p>Here's what it costs in practice. <a href="https://pub.towardsai.net/we-spent-47-000-running-ai-agents-in-production-heres-what-nobody-tells-you-about-a2a-and-mcp-5f845848de33">One team reported</a> $47,000 burned when two of four LangChain agents talking agent-to-agent looped on each other for 11 days. As one <a href="https://github.com/vectara/awesome-agent-failures/blob/main/docs/case-studies/langchain-a2a-47k-infinite-loop.md">case-study writeup</a> put it: "The team had observability. They did not have enforcement." Their fixes were plain ones: a daily dollar cap, an iteration limit, and a timeout per call.</p>
+</section>
+<section id="why-does-a-green-build-still-ship-a-bug">
+  <h2>Why does a green build still ship a bug?</h2>
+  <p><strong>Symptom.</strong> "Tests passed" becomes "shipped." A broken page or a bad config goes live because CI was green.</p>
+  <p><strong>Fix.</strong> Done is a receipt: a reviewer PASS on the pull request plus the release gate, then a live URL or release posted on the ticket. Green CI is the first check, not the ship. Keep the same reviewer seat on a track and resume it. See <a href="../ship-gates/">ship gates</a>.</p>
+  <p>Also check who can approve. If the person who asked for the work can approve the agent's pull request, there is no review gate. GitHub's <a href="https://docs.github.com/en/copilot/concepts/coding-agent/coding-agent">Copilot coding agent</a> blocks exactly that.</p>
+</section>
+<section id="why-is-the-same-job-running-twice">
+  <h2>Why is the same job running twice?</h2>
+  <p><strong>Symptom.</strong> A long-running cloud agent seems stuck, so someone starts a fresh one. Now two runs fight over the same branch and both bill.</p>
+  <p><strong>Fix.</strong> One seat owns cloud runs. It resumes the existing run on that track instead of launching a new one. The run ID goes on the station card so any session can find it.</p>
+</section>
+<section id="why-did-something-go-public-too-early">
+  <h2>Why did something go public too early?</h2>
+  <p><strong>Symptom.</strong> A post, listing, or email goes out before the claim is checked, or with a contact address that bounces.</p>
+  <p><strong>Fix.</strong> Building and going public are separate lanes. A PASS on code does not open the public lane; the human owner's go does. Check every contact path before it ships.</p>
+</section>
+<section id="do-you-have-too-many-agents">
+  <h2>Do you have too many agents?</h2>
+  <p><strong>Symptom.</strong> A five-seat fleet for a job one agent and a checklist could do.</p>
+  <p><strong>Fix.</strong> Start simple, then add seats. <a href="https://www.anthropic.com/engineering/building-effective-agents">Anthropic</a> recommends fixed workflows first and agents only for open-ended work, and notes tightly coupled tasks like most coding suit multi-agent setups poorly.</p>
+</section>
+<section id="how-do-you-audit-your-fleet-in-an-hour">
+  <h2>How do you audit your fleet in an hour?</h2>
+  <ol class="steps">
+    <li>Delete one seat's chat and see if it resumes.</li>
+    <li>List every ticket in progress and its owner. Any with two owners or none?</li>
+    <li>Find the oldest idle ticket. Who is it waiting on?</li>
+    <li>Read last week's spend. Was there a hold line?</li>
+    <li>Pick three shipped changes. Does each have a review PASS?</li>
+  </ol>
+  <p>If you find more than two gaps, fix the procedure before adding agents. More agents amplify whatever the operations already are.</p>
+</section>
+<section id="next">
+  <h2>How do you request a consult?</h2>
+  <p>Want a fleet audit? Email <a href="mailto:consult@0xray.dev">consult@0xray.dev</a>.</p>
+  <p class="cta-row"><a class="btn btn-pri" href="https://ops.0xray.dev/#consult">Request a consult</a></p>
+</section>
+<section class="related">
+<h2>Where should you read next?</h2>
+<ul class="plain">
+<li><a href="../first-ticket/">Run your first agent ticket end to end</a></li>
+<li><a href="../install/">Install a multi-agent ops stack</a></li>
+<li><a href="../config/">Configure agent seats, gates, and limits</a></li>
+</ul>
+</section>
+    <section class="faq" id="faq">
+<h2>What else do operators ask?</h2>
+<h3>Which pitfall is most common?</h3>
+<p>In our practice, chat as the record. It causes most of the others.</p>
+<h3>Do better models fix these?</h3>
+<p>No. They are operating problems, and research on multi-agent failures points the same way. A stronger model stalls just as silently without a ticket state.</p>
+<h3>Is this framework-specific?</h3>
+<p>No. The fixes apply to any multi-agent stack.</p>
+</section>
+  </main>
+  <footer class="site-footer">
+    <p>Build work ships on a recorded review. The public lane stays on hold until the owner gives an explicit go.</p>
+    <p><a href="https://0xray.dev">Product</a> · <a href="https://docs.0xray.dev">Docs</a> · <a href="https://bifrost.0xray.dev">Live board</a></p>
+    <p>© 0xRay · AI Fleet OPS</p>
+    <p class="listing-badge"><a href="https://theaitoolsdir.com/product/ai-fleet-ops?ref=badge" rel="dofollow"><img src="https://theaitoolsdir.com/badge/ai-fleet-ops.svg" alt="Featured on TheAIToolsDir" width="182" height="46"></a></p>
+  </footer>
+</body>
+</html>

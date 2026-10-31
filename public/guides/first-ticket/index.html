@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Run your first agent ticket end to end | 0xRay</title>
+  <meta name="description" content="Take one ticket through a multi-agent loop: station card, branch, review PASS, release gate, receipt, and a deliberate reset drill." />
+  <link rel="canonical" href="https://ops.0xray.dev/guides/first-ticket/" />
+  <link rel="stylesheet" href="../../assets/site.css" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://ops.0xray.dev/guides/first-ticket/#article",
+      "headline": "Run your first agent ticket end to end",
+      "description": "Take one ticket through a multi-agent loop: station card, branch, review PASS, release gate, receipt, and a deliberate reset drill.",
+      "url": "https://ops.0xray.dev/guides/first-ticket/",
+      "inLanguage": "en",
+      "datePublished": "2026-10-31",
+      "dateModified": "2026-10-31",
+      "author": {
+        "@type": "Organization",
+        "name": "0xRay",
+        "url": "https://0xray.dev"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "0xRay",
+        "url": "https://ops.0xray.dev/"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://ops.0xray.dev/guides/first-ticket/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://ops.0xray.dev/guides/first-ticket/#breadcrumbs",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "AI Fleet OPS",
+          "item": "https://ops.0xray.dev/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Operating guides",
+          "item": "https://ops.0xray.dev/guides/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Run your first agent ticket end to end",
+          "item": "https://ops.0xray.dev/guides/first-ticket/"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://ops.0xray.dev/guides/first-ticket/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What should the first ticket be?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Something small and checkable: one doc page, one test, one config change. Day one proves the loop, not a feature."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can the builder review its own pull request?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Then nobody owns the gate. Keep the reviewer a separate seat and resume it on FIX."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which host should we use?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Whichever your team already runs. The suit wires OpenCode, Grok, Hermes, OpenClaw, and Cursor the same way."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <a class="skip" href="#content">Skip to content</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="../../">AI Fleet OPS <span>0xRay</span></a>
+      <nav aria-label="Primary">
+        <a href="../../">Hub</a>
+        <a href="../" aria-current="page">Guides</a>
+        <a href="../../lexicon/">Lexicon</a>
+        <a href="https://ops.0xray.dev/#consult">Consult</a>
+      </nav>
+    </div>
+  </header>
+  <main id="content" class="wrap">
+    <p class="crumb"><a href="../../">Hub</a> / <a href="../">Guides</a> / First ticket</p>
+    <p class="eyebrow">First ticket</p>
+    <h1>Run your first agent ticket end to end</h1>
+    <p class="direct">Yes. One ticket can go from assigned to shipped in an afternoon. Point the builder's station card at the ticket, build on a branch, get a reviewer PASS, run <code>npx @0xray/foundry gate</code>, and post the receipt. Then close the session mid-ticket on purpose and confirm a fresh one resumes the same work.</p>
+<section id="is-your-team-stood-up-first">
+  <h2>Is your team stood up first?</h2>
+  <p>This guide starts where <a href="../stand-up/">Stand up an agent team</a> ends: roles named, house rules on disk, kit fastened with a PASS, one queue open, and a first ticket filed with an owner, a stage, and a state. If any of that is missing, do stand-up first. Here we run that ticket through the loop.</p>
+</section>
+<section id="how-do-you-point-the-station-card-at-the-ticket">
+  <h2>How do you point the station card at the ticket?</h2>
+  <p>The <strong>station card</strong> (<code>.xray/state/STATION.md</code>) is the compact live ticket for a seat: what it is doing, which branch, which pull request, what is next. The suit's hot-swap rule is plain: read the station card before other work, and continue the card instead of restarting the job.</p>
+  <p>Write the builder's card by hand the first time: ticket link, branch name, next step. After that the seat updates it at the end of every session.</p>
+  <p>A good card fits on one screen. Something like:</p>
+  <pre><code>ticket: #42 add the retry note to the deploy doc
+branch: builder/42-retry-note
+pr: #57 (open, waiting on review)
+last: drafted section, ran local checks
+next: answer reviewer FIX on wording, re-request review
+blocked: none</code></pre>
+  <p>If a line would take a paragraph, it belongs on the ticket, not the card. The card is a pointer, not a diary. Keep the reviewer's card just as short: which pull request, which verdict, what it is waiting on.</p>
+</section>
+<section id="how-does-the-ticket-move-from-build-to-ship">
+  <h2>How does the ticket move from build to ship?</h2>
+  <ol class="steps">
+    <li>Coordinator assigns the ticket to the builder.</li>
+    <li>Builder creates a branch and worktree, makes the change, opens a pull request, updates its station card.</li>
+    <li>Reviewer reads the pull request and leaves PASS or FIX with reasons.</li>
+    <li>On FIX, the builder fixes on the same branch. Resume the same reviewer seat, not a fresh one.</li>
+    <li>On PASS, the builder runs <code>npx @0xray/foundry gate</code>, then <code>npx @0xray/foundry gate --verify-only</code>, and merges.</li>
+    <li>Someone posts the receipt on the ticket: the merged pull request or the live URL.</li>
+  </ol>
+  <p>Green CI alone is not ship. The review PASS and the gate are; see <a href="../ship-gates/">ship gates</a>.</p>
+</section>
+<section id="what-does-the-reviewer-pass-loop-look-like-in-practice">
+  <h2>What does the reviewer PASS loop look like in practice?</h2>
+  <p>The reviewer reads the change against the ticket, not against its own taste. A useful verdict names the line, the problem, and what would clear it. "FIX: step 4 says merge before gate; swap them" is a verdict. "Looks off" is not.</p>
+  <p>Split findings into two kinds. Must-fix items block the merge. Soft items are notes the builder may take or leave, and they never hold the gate. When the builder pushes the fix, it tips the same reviewer seat with a one-line summary of what changed. The reviewer re-checks only the open items, then answers PASS or FIX again.</p>
+  <p>Two or three rounds is normal on a first ticket. If it hits five, stop and look at the ticket, not the people: the ask is usually too vague or too big. Split it and run the smaller piece.</p>
+</section>
+<section id="how-do-you-prove-the-loop-survives-a-reset">
+  <h2>How do you prove the loop survives a reset?</h2>
+  <p>The house is only real if it survives a context reset. Close the builder's session mid-ticket. Open a new one, on a different host if you have one. The new session should read <code>AGENTS.md</code>, then the station card, then resume the same ticket on the same branch. If it starts over or asks what it was doing, the card is too thin. Fix the card, not the agent.</p>
+  <p>Run the drill at a real midpoint, after the pull request is open but before review comes back. That is where work most often gets lost. A clean pass looks like this:</p>
+  <ol class="steps">
+    <li>The new session names the ticket and branch without being told.</li>
+    <li>It checks the pull request for review comments before doing anything else.</li>
+    <li>It picks up the <code>next</code> line from the card, not a guess.</li>
+    <li>It updates the card when it stops.</li>
+  </ol>
+  <p>Write down how long the resume took and anything it got wrong. Run it again once the card is fixed. A second clean pass is your proof the team can hand work across sessions and hosts.</p>
+</section>
+<section id="what-spend-line-should-exist-before-it-runs-unattended">
+  <h2>What spend line should exist before it runs unattended?</h2>
+  <p>Before anything runs unattended, the owner writes down:</p>
+  <ul class="plain">
+    <li>A weekly compute budget and a hold line where new wakes go quiet.</li>
+    <li>One deep-work cloud run per ticket, after the spec is written.</li>
+    <li>Which actions always need a human yes.</li>
+  </ul>
+  <p>Keep it short enough to paste on the ticket. Name a number, not a feeling, and name who watches it. When the hold line trips, seats finish what they are on, update their cards, and go quiet until the owner raises the line or the week resets. That is a pause, not a failure; the cards mean nothing is lost.</p>
+  <p>The "human yes" list is usually: spending money, touching credentials, anything public, and merging to main without a PASS. If a seat ever needs one of those, it asks on the ticket and waits.</p>
+</section>
+<section id="when-does-the-work-go-public">
+  <h2>When does the work go public?</h2>
+  <p>Building and going public are separate lanes. A reviewer PASS on a pull request does not open the public lane. Posts, listings, and outreach wait for the human owner's explicit go.</p>
+  <p>The ways that loop fails are in <a href="../fleet-pitfalls/">common AI agent fleet pitfalls</a>.</p>
+</section>
+<section id="what-does-a-finished-first-ticket-look-like">
+  <h2>What does a finished first ticket look like?</h2>
+  <ul class="plain">
+    <li>One ticket closed with a receipt.</li>
+    <li>Each seat has a current station card.</li>
+    <li>A reset resumed work without help.</li>
+    <li>Nobody pasted a key into chat.</li>
+  </ul>
+</section>
+<section id="what-counts-as-a-receipt">
+  <h2>What counts as a receipt?</h2>
+  <p>A receipt is a link anyone on the team can open and check without asking: the merged pull request, the commit on main, or the live page returning 200. Post it on the ticket with one line on what shipped. "Done" with no link is not a receipt. If the work isn't checkable from a link, it isn't shipped yet.</p>
+</section>
+<section id="next">
+  <h2>How do you request a consult?</h2>
+  <p>Want us to run the first loop with you? Email <a href="mailto:consult@0xray.dev">consult@0xray.dev</a>.</p>
+  <p class="cta-row"><a class="btn btn-pri" href="https://ops.0xray.dev/#consult">Request a consult</a></p>
+</section>
+<section class="related">
+<h2>Where should you read next?</h2>
+<ul class="plain">
+<li><a href="../stand-up/">Standing up an agent team</a></li>
+<li><a href="../config/">Configure agent seats, gates, and limits</a></li>
+<li><a href="../fleet-pitfalls/">Common AI agent fleet pitfalls and fixes</a></li>
+</ul>
+</section>
+    <section class="faq" id="faq">
+<h2>What else do operators ask?</h2>
+<h3>What should the first ticket be?</h3>
+<p>Something small and checkable: one doc page, one test, one config change. Day one proves the loop, not a feature.</p>
+<h3>Can the builder review its own pull request?</h3>
+<p>No. Then nobody owns the gate. Keep the reviewer a separate seat and resume it on FIX.</p>
+<h3>Which host should we use?</h3>
+<p>Whichever your team already runs. The suit wires OpenCode, Grok, Hermes, OpenClaw, and Cursor the same way.</p>
+</section>
+  </main>
+  <footer class="site-footer">
+    <p>Build work ships on a recorded review. The public lane stays on hold until the owner gives an explicit go.</p>
+    <p><a href="https://0xray.dev">Product</a> · <a href="https://docs.0xray.dev">Docs</a> · <a href="https://bifrost.0xray.dev">Live board</a></p>
+    <p>© 0xRay · AI Fleet OPS</p>
+    <p class="listing-badge"><a href="https://theaitoolsdir.com/product/ai-fleet-ops?ref=badge" rel="dofollow"><img src="https://theaitoolsdir.com/badge/ai-fleet-ops.svg" alt="Featured on TheAIToolsDir" width="182" height="46"></a></p>
+  </footer>
+</body>
+</html>

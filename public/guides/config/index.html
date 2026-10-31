@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Configure agent seats, gates, and limits | 0xRay</title>
+  <meta name="description" content="Configure a multi-agent fleet: seat roles, codex rules, temperament, token limits, memory routing, the work queue, and where keys belong." />
+  <link rel="canonical" href="https://ops.0xray.dev/guides/config/" />
+  <link rel="stylesheet" href="../../assets/site.css" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://ops.0xray.dev/guides/config/#article",
+      "headline": "Configure agent seats, gates, and limits",
+      "description": "Configure a multi-agent fleet: seat roles, codex rules, temperament, token limits, memory routing, the work queue, and where keys belong.",
+      "url": "https://ops.0xray.dev/guides/config/",
+      "inLanguage": "en",
+      "datePublished": "2026-10-31",
+      "dateModified": "2026-10-31",
+      "author": {
+        "@type": "Organization",
+        "name": "0xRay",
+        "url": "https://0xray.dev"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "0xRay",
+        "url": "https://ops.0xray.dev/"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://ops.0xray.dev/guides/config/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://ops.0xray.dev/guides/config/#breadcrumbs",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "AI Fleet OPS",
+          "item": "https://ops.0xray.dev/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Operating guides",
+          "item": "https://ops.0xray.dev/guides/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Configure agent seats, gates, and limits",
+          "item": "https://ops.0xray.dev/guides/config/"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://ops.0xray.dev/guides/config/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Where does the release gate live?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "In the reviewer seat's PASS on the pull request plus npx @0xray/foundry gate, then npx @0xray/foundry gate --verify-only. Instruction files may shorten this to \"foundry gate\". With a global install the command is 0xray-foundry gate. A green build is the first check, not the ship. More in ship gates."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I stop runaway spend?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Token ceilings here, one deep-work run per ticket, and a weekly hold line set by the owner. See compute discipline."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does the suit config ever hold secrets?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. .xray/config.json and features.json hold limits and flags only. Repo app keys, npm one-time codes, and model keys stay in your host vault."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What happens if SEAT_KEYS_DIR is missing?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "With LIVE_URL set, the inbox command exits with code 2 and names the missing variable. Without LIVE_URL, seats use the markdown board and need neither."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Will an upgrade overwrite my rules?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Only if you edited managed files. Keep changes in xray/codex.json, xray/features.json, and src/skills; postinstall layers them on top and your file wins."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <a class="skip" href="#content">Skip to content</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="../../">AI Fleet OPS <span>0xRay</span></a>
+      <nav aria-label="Primary">
+        <a href="../../">Hub</a>
+        <a href="../" aria-current="page">Guides</a>
+        <a href="../../lexicon/">Lexicon</a>
+        <a href="https://ops.0xray.dev/#consult">Consult</a>
+      </nav>
+    </div>
+  </header>
+  <main id="content" class="wrap">
+    <p class="crumb"><a href="../../">Hub</a> / <a href="../">Guides</a> / Configure</p>
+    <p class="eyebrow">Configuration</p>
+    <h1>Configure agent seats, gates, and limits</h1>
+    <p class="direct">Yes. Each control is one file on disk. Roles live in seat folders, rules in <code>.xray/codex.json</code>, ceremony and memory in <code>.xray/features.json</code>, token ceilings in <code>.xray/config.json</code>. Edit your overlays, not managed copies, and postinstall layers them on top, so every fresh session reads the same answers the last one did.</p>
+  <p>Configuration in a multi-agent system answers four questions: who does what, what rules they follow, how much they can spend, and where the work is recorded. In 0xRay each answer lives in a file on disk, so a fresh session reads the same answers the last one did.</p>
+<section id="which-file-controls-what">
+  <h2>Which file controls what?</h2>
+  <table>
+    <thead><tr><th>File</th><th>Controls</th><th>Owner</th></tr></thead>
+    <tbody>
+    <tr><td><code>AGENTS.md</code></td><td>The manual hosts read first</td><td>Managed by the package</td></tr>
+    <tr><td><code>.xray/codex.json</code></td><td>The codex: 69 rule terms checked before tool calls</td><td>Package, overlaid by your <code>xray/codex.json</code></td></tr>
+    <tr><td><code>.xray/features.json</code></td><td>Feature flags, temperament, memory routing</td><td>You</td></tr>
+    <tr><td><code>.xray/config.json</code></td><td>Token, cache, and memory limits</td><td>You</td></tr>
+    <tr><td><code>.mcp.json</code></td><td>Which tool servers a host loads</td><td>Package, editable</td></tr>
+    <tr><td><code>foundry.json</code></td><td>Plant choice, extra skills, path remaps</td><td>You</td></tr>
+    <tr><td><code>.xray/state/STATION.md</code></td><td>The station card: the live ticket for this seat</td><td>The agent, every session</td></tr>
+    </tbody>
+  </table>
+  <p>Edit your own overlays (<code>xray/codex.json</code>, <code>xray/features.json</code>, <code>src/skills</code>, <code>src/opencode/agents</code>). Postinstall layers them over the managed defaults, and your file wins when names collide. Editing the managed copy works until the next upgrade, then it is gone.</p>
+</section>
+<section id="how-should-you-split-seats">
+  <h2>How should you split seats?</h2>
+  <p>A <strong>seat</strong> is one named role with its own working folder and its own station card. Typical seats:</p>
+  <ul class="plain">
+    <li><strong>Builder.</strong> Implements on a branch and worktree, opens the pull request.</li>
+    <li><strong>Reviewer (critic).</strong> Gives PASS or FIX on the pull request. Use the same reviewer seat for a track and resume it, so review context is not lost.</li>
+    <li><strong>Coordinator.</strong> Runs the board, assigns tickets, does not implement.</li>
+    <li><strong>Human owner.</strong> Money, credentials, deletes, publishing, and taste.</li>
+  </ul>
+  <p>The role is written in the seat's own skills and instructions. Do not let two seats own the same lane; that is the root of most ownership thrash.</p>
+</section>
+<section id="how-much-ceremony-should-a-seat-enforce">
+  <h2>How much ceremony should a seat enforce?</h2>
+  <p>Temperament sets how strictly the engine enforces planning steps such as analyzing complexity before spawning a sub-agent. Set it in <code>.xray/features.json</code> under <code>suit_temperament</code>.</p>
+  <table>
+    <thead><tr><th>Profile</th><th>Behavior</th><th>Good for</th></tr></thead>
+    <tbody>
+    <tr><td>guided (default)</td><td>Ceremony enforced</td><td>Smaller or free models</td></tr>
+    <tr><td><code>auto</code> on frontier hosts</td><td>Warns on spawn-without-plan instead of blocking</td><td>Strong models that plan well</td></tr>
+    </tbody>
+  </table>
+  <p>An existing <code>features.json</code> without <code>suit_temperament</code> stays guided. The codex itself is always on in every profile; temperament changes ceremony, never the rules.</p>
+</section>
+<section id="how-do-you-cap-tokens-and-memory">
+  <h2>How do you cap tokens and memory?</h2>
+  <p><code>.xray/config.json</code> sets context and runtime ceilings. The values a working seat ships with:</p>
+  <pre><code>&quot;token_management&quot;: { &quot;maxPromptTokens&quot;: 20000, &quot;warningThreshold&quot;: 15000,
+  &quot;contextPruning&quot;: { &quot;enabled&quot;: true, &quot;aggressivePruning&quot;: true, &quot;preserveCriticalContext&quot;: true } }</code></pre>
+  <p>Lower <code>maxPromptTokens</code> to force shorter, cheaper prompts. Keep <code>preserveCriticalContext</code> on so pruning never drops the station card. Cache and heap settings live in the same file; the defaults are fine for most seats.</p>
+</section>
+<section id="where-does-memory-go">
+  <h2>Where does memory go?</h2>
+  <p>Repertoire is the preferred memory layer. In <code>features.json</code>:</p>
+  <pre><code>&quot;memory_routing&quot;: { &quot;enabled&quot;: true, &quot;provider&quot;: &quot;repertoire&quot;,
+  &quot;config&quot;: { &quot;signalsPath&quot;: &quot;.xray/state/repertoire/curated_signals.json&quot;,
+              &quot;statePath&quot;: &quot;.xray/state/repertoire/inference-state.json&quot;,
+              &quot;feedbackDir&quot;: &quot;.xray/state/repertoire/feedback&quot; } }</code></pre>
+  <p>Paths sit under <code>.xray/state/</code>, so memory belongs to the seat. Opt out only with <code>"enabled": false</code>.</p>
+</section>
+<section id="where-do-tickets-and-messages-live">
+  <h2>Where do tickets and messages live?</h2>
+  <p>Every task is a ticket with an owner, a stage, and a state. 0xRay is queue-agnostic: the board can be a git issue tracker, a markdown board in the seat folder (<code>house/WAVEBOARD.md</code> in a reference seat), or both. What matters:</p>
+  <ul class="plain">
+    <li>One queue is the record. Chat is not.</li>
+    <li>The station card points at the active ticket, so a reset resumes that ticket.</li>
+    <li>Agent-to-agent messages are notes on the ticket, not a second queue.</li>
+  </ul>
+  <p>The reference board runs in two modes. With no <code>LIVE_URL</code> set, it is the hand-kept <code>house/WAVEBOARD.md</code>. With <code>LIVE_URL</code> set, seats read cards from a live board over <code>GET /cards</code> (plus <code>/history</code> endpoints), shown as a kanban with columns open, review, fix, merge, retest, and done. Seats check their inbox with <code>live-inbox &lt;seat&gt;</code>. There is no formal published schema for cards, so don't build against field names; treat the tracker as your choice and keep the card pattern: owner, stage, state, link.</p>
+</section>
+<section id="where-do-keys-and-credentials-belong">
+  <h2>Where do keys and credentials belong?</h2>
+  <p>The suit config holds <strong>no secrets</strong>. Model keys, service tokens, and repo app keys belong to the host or a secret store, and the human owner issues them. Rules that hold across seats:</p>
+  <ul class="plain">
+    <li>Spend and credentials are ask-first, always.</li>
+    <li>Short-lived tokens beat long-lived ones. Re-mint when expired; never paste a key into a ticket.</li>
+    <li>A seat that needs a new credential files a ticket for the owner.</li>
+  </ul>
+  <p>0xRay documents only the board and inbox variables a seat needs:</p>
+  <table>
+    <thead><tr><th>Variable</th><th>What it is</th><th>Required</th></tr></thead>
+    <tbody>
+    <tr><td><code>LIVE_URL</code></td><td>Live board address; unset means the markdown board</td><td>Yes, for the live board</td></tr>
+    <tr><td><code>SEAT_KEYS_DIR</code></td><td>Folder holding seat keys</td><td>Yes, for the live board (a missing one exits 2 and names it)</td></tr>
+    <tr><td><code>LIVE_OWNER</code></td><td>Owner label on cards</td><td>Optional</td></tr>
+    <tr><td><code>XRAY_MAIN</code></td><td>Path to your main checkout</td><td>Optional</td></tr>
+    <tr><td><code>LIVE_CURSORS</code></td><td>Cloud-run cursors</td><td>Not required</td></tr>
+    </tbody>
+  </table>
+  <p>Everything secret stays in your host vault: per-seat repo app keys (<code>gh-&lt;seat&gt;</code>), npm one-time codes, and model keys. 0xRay does not define your host's own model-key variable names; check the host's docs.</p>
+</section>
+<section id="how-do-you-choose-the-plant-and-skills">
+  <h2>How do you choose the plant and skills?</h2>
+  <p><code>foundry.json</code> chooses the mill plant. The built-in plant is <code>mill</code> plus <code>inspect</code>. <code>"plant": "@0xray/blip"</code> swaps in that package's declared skills. <code>"shopPlant"</code> adds extra shop skills. Your <code>src/skills</code> overlay on top.</p>
+</section>
+<section id="next">
+  <h2>How do you request a consult?</h2>
+  <p>Need a second pair of eyes on your config? Email <a href="mailto:consult@0xray.dev">consult@0xray.dev</a>.</p>
+  <p class="cta-row"><a class="btn btn-pri" href="https://ops.0xray.dev/#consult">Request a consult</a></p>
+</section>
+<section class="related">
+<h2>Where should you read next?</h2>
+<ul class="plain">
+<li><a href="../install/">Install the ops stack</a></li>
+<li><a href="../first-ticket/">Run the first ticket</a></li>
+<li><a href="../fleet-pitfalls/">Fleet pitfalls</a></li>
+</ul>
+</section>
+    <section class="faq" id="faq">
+<h2>What else do operators ask?</h2>
+<h3>Where does the release gate live?</h3>
+<p>In the reviewer seat's PASS on the pull request plus <code>npx @0xray/foundry gate</code>, then <code>npx @0xray/foundry gate --verify-only</code>. Instruction files may shorten this to "foundry gate". With a global install the command is <code>0xray-foundry gate</code>. A green build is the first check, not the ship. More in <a href="../ship-gates/">ship gates</a>.</p>
+<h3>How do I stop runaway spend?</h3>
+<p>Token ceilings here, one deep-work run per ticket, and a weekly hold line set by the owner. See <a href="../compute-discipline/">compute discipline</a>.</p>
+<h3>Does the suit config ever hold secrets?</h3>
+<p>No. <code>.xray/config.json</code> and <code>features.json</code> hold limits and flags only. Repo app keys, npm one-time codes, and model keys stay in your host vault.</p>
+<h3>What happens if SEAT_KEYS_DIR is missing?</h3>
+<p>With <code>LIVE_URL</code> set, the inbox command exits with code 2 and names the missing variable. Without <code>LIVE_URL</code>, seats use the markdown board and need neither.</p>
+<h3>Will an upgrade overwrite my rules?</h3>
+<p>Only if you edited managed files. Keep changes in <code>xray/codex.json</code>, <code>xray/features.json</code>, and <code>src/skills</code>; postinstall layers them on top and your file wins.</p>
+</section>
+  </main>
+  <footer class="site-footer">
+    <p>Build work ships on a recorded review. The public lane stays on hold until the owner gives an explicit go.</p>
+    <p><a href="https://0xray.dev">Product</a> · <a href="https://docs.0xray.dev">Docs</a> · <a href="https://bifrost.0xray.dev">Live board</a></p>
+    <p>© 0xRay · AI Fleet OPS</p>
+    <p class="listing-badge"><a href="https://theaitoolsdir.com/product/ai-fleet-ops?ref=badge" rel="dofollow"><img src="https://theaitoolsdir.com/badge/ai-fleet-ops.svg" alt="Featured on TheAIToolsDir" width="182" height="46"></a></p>
+  </footer>
+</body>
+</html>
