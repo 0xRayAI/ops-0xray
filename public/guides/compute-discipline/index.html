@@ -19,7 +19,7 @@
       "url": "https://ops.0xray.dev/guides/compute-discipline/",
       "inLanguage": "en",
       "datePublished": "2026-10-30",
-      "dateModified": "2026-10-30",
+      "dateModified": "2026-10-31",
       "author": {
         "@type": "Organization",
         "name": "0xRay",
@@ -137,7 +137,7 @@
 <section id="model">
   <h2>How do you govern model spend?</h2>
   <h3>Architecture before the run</h3>
-  <p>Write the bug or the outcome, how to reproduce the current behavior, what finished looks like, and the paths. That page is the spec the run implements. The architecture track sits outside the day-to-day roster. Reach it on the ticket: an issue, a pull request, or a comment that mentions the person who owns the track. A side inbox is a second queue, which the <a href="../control-plane/">control plane</a> already forbids.</p>
+  <p>Write the bug or the outcome, how to reproduce the current behavior, what finished looks like, and the paths. That page is the spec the run implements. The architecture track sits outside the day-to-day roster. Reach it on the ticket: an issue, a pull request, or a comment that mentions the person who owns the track. A side inbox is a second queue, which the <a href="../control-plane/">agentic control plane</a> already forbids.</p>
   <h3>One run on the ticket</h3>
   <p>Deep work goes to a cloud agent, including a long review. No ticket id, no launch. One implementation run on the ticket, then one review run, and not both live. The run pushes a branch. The role's own application opens the pull request. A wake from the queue does not itself launch a run. Roles do not build the receipt on a laptop. The cloud run is where code and tests execute. A few-line production fix can be deployed by the shipping role once tests are green. Anything larger waits for the cloud run. The release side of that rule is in <a href="../ship-gates/">release gates</a>.</p>
   <h3>When a second run is allowed</h3>
@@ -180,7 +180,8 @@
 <ul class="plain">
 <li><a href="../../guides/ship-gates/">Release gates for agent fleets</a></li>
 <li><a href="../../guides/stand-up/">Standing up an agent team</a></li>
-<li><a href="../../guides/control-plane/">Orchestrating agent work</a></li>
+<li><a href="../../guides/spend-governance/">Govern agent spend and policy</a></li>
+<li><a href="../../guides/control-plane/">Map the agentic control plane</a></li>
 <li><a href="../../lexicon/">Glossary</a></li>
 </ul>
 </section>
@@ -203,6 +204,7 @@
     <p>Build work ships on a recorded review. The public lane stays on hold until the owner gives an explicit go.</p>
     <p><a href="https://0xray.dev">Product</a> · <a href="https://docs.0xray.dev">Docs</a> · <a href="https://bifrost.0xray.dev">Live board</a></p>
     <p>© 0xRay · AI Fleet OPS</p>
+    <p class="listing-badge"><a href="https://theaitoolsdir.com/product/ai-fleet-ops?ref=badge" rel="dofollow"><img src="https://theaitoolsdir.com/badge/ai-fleet-ops.svg" alt="Featured on TheAIToolsDir" width="182" height="46"></a></p>
   </footer>
 </body>
 </html>

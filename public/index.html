@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>One plane, one queue | 0xRay</title>
-  <meta name="description" content="One plane and one queue for a multi-agent system: named owners, release gates, and a ceiling on model spend." />
+  <title>Agentic control plane for AI fleets | 0xRay</title>
+  <meta name="description" content="Run your AI fleet from one agentic control plane — ownership, review gates, spend and audit in one queue. Request a consult." />
   <link rel="canonical" href="https://ops.0xray.dev/" />
   <link rel="stylesheet" href="assets/site.css" />
   <script type="application/ld+json">
@@ -15,11 +15,11 @@
       "@type": "Article",
       "@id": "https://ops.0xray.dev/#article",
       "headline": "One plane, one queue",
-      "description": "One plane and one queue for a multi-agent system: named owners, release gates, and a ceiling on model spend.",
+      "description": "Run your AI fleet from one agentic control plane — ownership, review gates, spend and audit in one queue. Request a consult.",
       "url": "https://ops.0xray.dev/",
       "inLanguage": "en",
       "datePublished": "2026-10-30",
-      "dateModified": "2026-10-30",
+      "dateModified": "2026-10-31",
       "author": {
         "@type": "Organization",
         "name": "0xRay",
@@ -53,42 +53,26 @@
       "mainEntity": [
         {
           "@type": "Question",
-          "name": "What is AI Fleet OPS?",
+          "name": "Is a control plane the same as an orchestration framework?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "AI Fleet OPS is the operating discipline for a multi-agent system in production. Named roles share one work queue, a written procedure, human-in-the-loop release gates, and a ceiling on model spend. The job has to be recoverable after a context window closes."
+            "text": "No. Snowflake separates control plane, orchestration, and observability; frameworks mostly handle orchestration."
           }
         },
         {
           "@type": "Question",
-          "name": "Who should read this manual?",
+          "name": "Do I have to replace my framework?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Operators who run the queue, founders who own the outcome and the public voice, and engineering leads who own release gates and compute. The three start-here paths on this page point each job at the right guides."
+            "text": "No. The control plane sits over it."
           }
         },
         {
           "@type": "Question",
-          "name": "How do agents keep a job after the context window closes?",
+          "name": "Is this a product or a service?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "The next session reads the procedure and the session ticket from disk, then resumes the same role on the same ticket. The long notes stay in the working page. The chat scroll is not the record."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "When can the team post publicly?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "The build lane and the go-to-market lane are separate. A review pass on a pull request leaves the public lane closed. This plant stays on hold until the human owner gives an explicit go."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "How do I request a consult?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Use the form on this page. It emails consult@0xray.dev. Say what the team should ship next week."
+            "text": "AI Fleet OPS is consulting on top of the open-source 0xRay suit — Scout, Stand-up, or Retain."
           }
         }
       ]
@@ -111,91 +95,60 @@
     </div>
   </header>
   <main id="content" class="wrap wide">
-    
     <p class="eyebrow">Multi-agent operations</p>
     <h1>One plane, one queue</h1>
-    <p class="direct">Yes. AI Fleet OPS runs a multi-agent system on one plane and one queue so the job survives a context reset. Named roles share that queue, a human records the release, and model spend has a ceiling. You get there by writing the procedure on disk, filing every task as a ticket, and holding public posts until after GO.</p>
-    
+    <p class="direct">Yes. You get a multi-agent system that ships on schedule when we put ownership, review gates, spend, and audit on one agentic control plane. Vendors such as <a href="https://www.ibm.com/products/watsonx-orchestrate/agent-control-plane">IBM</a>, <a href="https://www.snowflake.com/en/artificial-intelligence/ai-governance/control-plane/">Snowflake</a>, and <a href="https://azure.microsoft.com/en-us/products/ai-foundry/control-plane">Microsoft</a> now describe the control plane as its own layer; AI Fleet OPS sets that layer up across whatever frameworks you already run.</p>
+
 <section>
-  <h2>What are the operating parts?</h2>
-  <p>A fleet is running when one plane holds these four parts. A chat transcript cannot stand in for any of them.</p>
-  <div class="parts">
-    <article class="card">
-      <span class="kicker">Queue</span>
-      <h3>One work queue</h3>
-      <p>Every task is a ticket with an owner, a stage, and a state. Agent orchestration is that queue staying the record after the session ends.</p>
-    </article>
-    <article class="card">
-      <span class="kicker">Ownership</span>
-      <h3>Named roles</h3>
-      <p>Someone implements, someone reviews, someone coordinates. A human owner holds money, credentials, deletes, publishing, and taste.</p>
-    </article>
-    <article class="card">
-      <span class="kicker">Release</span>
-      <h3>A recorded gate</h3>
-      <p>Done is a receipt: a live URL, a registry view, a release, or a reviewer PASS on the pull request. A green build is the first check, not the receipt.</p>
-    </article>
-    <article class="card">
-      <span class="kicker">Spend</span>
-      <h3>A compute ceiling</h3>
-      <p>Write the spec before the cloud run. One deep-work run per ticket. New wakes go quiet when the weekly budget hits its hold line.</p>
-    </article>
-  </div>
+  <h2>Why does an AI fleet need one control plane?</h2>
+  <p>Most teams start with one agent, then add a second for a different job, then a third on a different framework. Each one logs somewhere different, spends on its own key, and hands off work in chat. <a href="https://azure.microsoft.com/en-us/products/ai-foundry/control-plane">Microsoft</a>'s product page calls this collection an "AI fleet", and <a href="https://www.ibm.com/products/watsonx-orchestrate/agent-control-plane">IBM</a> pitches "one control plane for AI agents" wherever they were built. The idea is simple: one place that knows who owns each job, what it costs, and whether it passed review.</p>
 </section>
 
 <section>
-  <h2>Where should you start?</h2>
-  <div class="paths">
-    <article class="path">
-      <span class="kicker">Operator</span>
-      <h3><a class="stretch" href="guides/stand-up/">Run the team day to day</a></h3>
-      <p>Stand the house up, then keep the queue and the release gate honest.</p>
-      <p class="see"><a href="guides/stand-up/">Standing up an agent team</a> · <a href="guides/control-plane/">Control plane</a> · <a href="guides/ship-gates/">Release gates</a></p>
-    </article>
-    <article class="path">
-      <span class="kicker">Founder</span>
-      <h3><a class="stretch" href="guides/what-is-ai-fleet-ops/">Own the outcome</a></h3>
-      <p>Learn the discipline, keep the public lane closed until you call it, and set the spend line.</p>
-      <p class="see"><a href="guides/what-is-ai-fleet-ops/">What AI Fleet OPS is</a> · <a href="guides/eng-vs-dist/">Build lane vs go-to-market</a> · <a href="guides/compute-discipline/">Model spend</a></p>
-    </article>
-    <article class="path">
-      <span class="kicker">Eng lead</span>
-      <h3><a class="stretch" href="guides/control-plane/">Own the gates and the compute</a></h3>
-      <p>Put ownership on the ticket, score the change against a written eval, and stop extra runs.</p>
-      <p class="see"><a href="guides/control-plane/">Control plane</a> · <a href="guides/ship-gates/">Release gates</a> · <a href="guides/compute-discipline/">Model spend</a></p>
-    </article>
-  </div>
+  <h2>What does AI Fleet OPS actually do?</h2>
+  <p>We wire the operating layer — roles, a shared work queue, review gates before anything merges or goes public, and spend tracking per agent. The open-source 0xRay suit is how we carry that layer (in our own stack we call each agent's kit a <a href="lexicon/">suit</a>; that is gloss, not a requirement).</p>
 </section>
 
 <section>
-  <h2>Which guide matches the work?</h2>
-  <p>Six guides, one operating system. In-house names for these ideas live in the <a href="lexicon/">glossary</a>, industry term first.</p>
-  <div class="pillars">
-    <article class="pillar">
-      <h3><a class="title" href="guides/what-is-ai-fleet-ops/">What is AI Fleet OPS</a></h3>
-      <p>Multi-agent operations in production: reliability after context loss, human judgment, and the difference between shipping code and announcing it.</p>
-    </article>
-    <article class="pillar">
-      <h3><a class="title" href="guides/control-plane/">Orchestrating agent work</a></h3>
-      <p>The control plane: one queue, a brief on every ticket, an ownership line, and a procedure the next session actually reads.</p>
-    </article>
-    <article class="pillar">
-      <h3><a class="title" href="guides/ship-gates/">Release gates for agent fleets</a></h3>
-      <p>Review depth, PASS or FIX, what counts as done, and how work moves to the next role without turning chat into the gate.</p>
-    </article>
-    <article class="pillar">
-      <h3><a class="title" href="guides/stand-up/">Standing up an agent team</a></h3>
-      <p>The house path: fasten the kit, prove the checks are live, and only then give a role its first ticket.</p>
-    </article>
-    <article class="pillar">
-      <h3><a class="title" href="guides/eng-vs-dist/">Build lane vs go-to-market</a></h3>
-      <p>When a merge is allowed and when a public post is still on hold. This plant's public lane is on hold.</p>
-    </article>
-    <article class="pillar">
-      <h3><a class="title" href="guides/compute-discipline/">Model spend and compute</a></h3>
-      <p>Architecture before the run, one cloud agent per ticket, and a weekly line that stops new wakes.</p>
-    </article>
-  </div>
+  <h2>Where should I start reading?</h2>
+  <ul class="plain">
+    <li><a href="guides/control-plane/">Map the agentic control plane</a></li>
+    <li><a href="guides/what-is-ai-fleet-ops/">What AI fleet ops means</a></li>
+    <li><a href="guides/framework-vs-ops/">Frameworks build agents; ops runs them</a></li>
+    <li><a href="guides/pilot-to-production/">Take your agent pilot to production</a></li>
+    <li><a href="guides/spend-governance/">Govern agent spend and policy</a></li>
+  </ul>
+</section>
+
+<section>
+  <h2>Which house guides stay with the manual?</h2>
+  <p>These four pages stay live. They are the house path for the 0xRay kit: release gates, standing a team up, the build lane versus public posts, and the rule for model spend on a cloud run. The five guides above are the category reading path.</p>
+  <ul class="plain">
+    <li><a href="guides/ship-gates/">Release gates for agent fleets</a> — PASS, FIX, and the receipt.</li>
+    <li><a href="guides/stand-up/">Standing up an agent team</a> — the house path before the first ticket.</li>
+    <li><a href="guides/eng-vs-dist/">Build lane vs go-to-market</a> — public posts stay on hold until the owner gives a go.</li>
+    <li><a href="guides/compute-discipline/">Model spend and compute</a> — spec first, one run, weekly hold line.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>How do you install the kit and run a ticket?</h2>
+  <ul class="plain">
+    <li><a href="guides/install/">Install a multi-agent ops stack</a></li>
+    <li><a href="guides/config/">Configure roles, gates, and limits</a></li>
+    <li><a href="guides/first-ticket/">Run your first agent ticket end to end</a></li>
+    <li><a href="guides/fleet-pitfalls/">Common AI agent fleet pitfalls and fixes</a></li>
+  </ul>
+</section>
+
+<section class="faq" id="faq">
+<h2>What else do operators ask?</h2>
+<h3>Is a control plane the same as an orchestration framework?</h3>
+<p>No. <a href="https://www.snowflake.com/en/artificial-intelligence/ai-governance/control-plane/">Snowflake</a> separates control plane, orchestration, and observability; frameworks mostly handle orchestration.</p>
+<h3>Do I have to replace my framework?</h3>
+<p>No. The control plane sits over it.</p>
+<h3>Is this a product or a service?</h3>
+<p>AI Fleet OPS is consulting on top of the open-source 0xRay suit — Scout, Stand-up, or Retain.</p>
 </section>
 
 <section>
@@ -217,21 +170,6 @@
   </div>
 </section>
 
-
-    <section class="faq" id="faq">
-<h2>What else do operators ask?</h2>
-<h3>What is AI Fleet OPS?</h3>
-<p>AI Fleet OPS is the operating discipline for a multi-agent system in production. Named roles share one work queue, a written procedure, human-in-the-loop release gates, and a ceiling on model spend. The job has to be recoverable after a context window closes.</p>
-<h3>Who should read this manual?</h3>
-<p>Operators who run the queue, founders who own the outcome and the public voice, and engineering leads who own release gates and compute. The three start-here paths on this page point each job at the right guides.</p>
-<h3>How do agents keep a job after the context window closes?</h3>
-<p>The next session reads the procedure and the session ticket from disk, then resumes the same role on the same ticket. The long notes stay in the working page. The chat scroll is not the record.</p>
-<h3>When can the team post publicly?</h3>
-<p>The build lane and the go-to-market lane are separate. A review pass on a pull request leaves the public lane closed. This plant stays on hold until the human owner gives an explicit go.</p>
-<h3>How do I request a consult?</h3>
-<p>Use the form on this page. It emails consult@0xray.dev. Say what the team should ship next week.</p>
-</section>
-    
 <section class="consult" id="consult">
   <h2>How do you request a consult?</h2>
   <p>Tell us what the team should ship next week.</p>
@@ -254,12 +192,12 @@
     <p class="hint">We'll reply within one business day. The form emails consult@0xray.dev.</p>
   </form>
 </section>
-
   </main>
   <footer class="site-footer">
     <p>Build work ships on a recorded review. The public lane stays on hold until the owner gives an explicit go.</p>
     <p><a href="https://0xray.dev">Product</a> · <a href="https://docs.0xray.dev">Docs</a> · <a href="https://bifrost.0xray.dev">Live board</a></p>
     <p>© 0xRay · AI Fleet OPS</p>
+    <p class="listing-badge"><a href="https://theaitoolsdir.com/product/ai-fleet-ops?ref=badge" rel="dofollow"><img src="https://theaitoolsdir.com/badge/ai-fleet-ops.svg" alt="Featured on TheAIToolsDir" width="182" height="46"></a></p>
   </footer>
 </body>
 </html>

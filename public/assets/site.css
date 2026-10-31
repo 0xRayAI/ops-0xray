@@ -198,7 +198,21 @@ ol.steps, ul.failures, ul.plain {
   color: var(--muted);
 }
 ol.steps li, ul.failures li, ul.plain li { margin: 0.55rem 0; }
-ol.steps strong, ul.failures strong { color: var(--fg); }
+ol.steps strong, ul.failures strong, ul.plain strong { color: var(--fg); }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0 1.25rem;
+  font-size: 0.95rem;
+}
+th, td {
+  border: 1px solid var(--line);
+  padding: 0.45rem 0.6rem;
+  text-align: left;
+  vertical-align: top;
+}
+th { color: var(--fg); background: var(--card); font-weight: 650; }
 
 pre {
   background: #0b0f14;
@@ -268,6 +282,9 @@ button {
   font-size: 0.92rem;
 }
 .site-footer p { margin: 0.35rem 0; }
+.listing-badge { margin: 0.85rem 0 0.2rem; }
+.listing-badge a { display: inline-block; line-height: 0; }
+.listing-badge img { display: block; width: 182px; height: 46px; }
 
 .term + .term { margin-top: 0.75rem; }
 

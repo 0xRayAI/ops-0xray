@@ -19,7 +19,7 @@
       "url": "https://ops.0xray.dev/guides/ship-gates/",
       "inLanguage": "en",
       "datePublished": "2026-10-30",
-      "dateModified": "2026-10-30",
+      "dateModified": "2026-10-31",
       "author": {
         "@type": "Organization",
         "name": "0xRay",
@@ -137,7 +137,7 @@
 <section id="model">
   <h2>What has to be true before an agent change ships?</h2>
   <h3>Done is a receipt</h3>
-  <p>A live URL, a package-registry view, a release URL, or a reviewer PASS recorded on the pull request. Green continuous integration is the first gate. It is the floor, not the receipt. The brief's acceptance lines are the eval. Code review checks the diff against that brief, which is why the <a href="../control-plane/">brief is written first</a>.</p>
+  <p>A live URL, a package-registry view, a release URL, or a reviewer PASS recorded on the pull request. Green continuous integration is the first gate. It is the floor, not the receipt. The brief's acceptance lines are the eval. Code review checks the diff against that brief, so write the brief before code. Ownership and policy for the fleet sit on the <a href="../control-plane/">agentic control plane</a>.</p>
   <h3>The floor, and what you add</h3>
   <p>Every merge needs green checks and docs that match the change. Add install proof when a package has to install on the machines where people actually run it. That install proof runs on the human owner's machine, because the role machines do not carry every environment. Add live proof when you publish: a fresh install and an upgrade. A tag pushed by itself is not live proof. The implementer sets this list on the brief. The reviewer may raise it and may not lower it. The list locks when review starts.</p>
   <h3>How deep the review is</h3>
@@ -180,7 +180,8 @@
 </section><section class="related">
 <h2>Where should you read next?</h2>
 <ul class="plain">
-<li><a href="../../guides/control-plane/">Orchestrating agent work</a></li>
+<li><a href="../../guides/pilot-to-production/">Take your agent pilot to production</a></li>
+<li><a href="../../guides/control-plane/">Map the agentic control plane</a></li>
 <li><a href="../../guides/eng-vs-dist/">Build lane vs go-to-market lane</a></li>
 <li><a href="../../guides/compute-discipline/">Governing model spend and compute</a></li>
 <li><a href="../../lexicon/">Glossary</a></li>
@@ -205,6 +206,7 @@
     <p>Build work ships on a recorded review. The public lane stays on hold until the owner gives an explicit go.</p>
     <p><a href="https://0xray.dev">Product</a> · <a href="https://docs.0xray.dev">Docs</a> · <a href="https://bifrost.0xray.dev">Live board</a></p>
     <p>© 0xRay · AI Fleet OPS</p>
+    <p class="listing-badge"><a href="https://theaitoolsdir.com/product/ai-fleet-ops?ref=badge" rel="dofollow"><img src="https://theaitoolsdir.com/badge/ai-fleet-ops.svg" alt="Featured on TheAIToolsDir" width="182" height="46"></a></p>
   </footer>
 </body>
 </html>

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI agent cost control and governance | 0xRay</title>
+  <meta name="description" content="Control AI agent cost with token spend per agent, plus governance: identity, policy, guardrails, audit. Practical steps. Request a consult." />
+  <link rel="canonical" href="https://ops.0xray.dev/guides/spend-governance/" />
+  <link rel="stylesheet" href="../../assets/site.css" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://ops.0xray.dev/guides/spend-governance/#article",
+      "headline": "Govern agent spend and policy",
+      "description": "Control AI agent cost with token spend per agent, plus governance: identity, policy, guardrails, audit. Practical steps. Request a consult.",
+      "url": "https://ops.0xray.dev/guides/spend-governance/",
+      "inLanguage": "en",
+      "datePublished": "2026-10-31",
+      "dateModified": "2026-10-31",
+      "author": {
+        "@type": "Organization",
+        "name": "0xRay",
+        "url": "https://0xray.dev"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "0xRay",
+        "url": "https://ops.0xray.dev/"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://ops.0xray.dev/guides/spend-governance/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://ops.0xray.dev/guides/spend-governance/#breadcrumbs",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "AI Fleet OPS",
+          "item": "https://ops.0xray.dev/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Operating guides",
+          "item": "https://ops.0xray.dev/guides/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Govern agent spend and policy",
+          "item": "https://ops.0xray.dev/guides/spend-governance/"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://ops.0xray.dev/guides/spend-governance/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What's the first thing to do?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Give each agent its own credential."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is cost per call the right number?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Track cost per finished task; it shows waste better."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do guardrails replace review?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Guardrails block known bad inputs; review gates check outputs."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can this work across clouds and frameworks?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, if identity and logging sit above them."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <a class="skip" href="#content">Skip to content</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="../../">AI Fleet OPS <span>0xRay</span></a>
+      <nav aria-label="Primary">
+        <a href="../../">Hub</a>
+        <a href="../" aria-current="page">Guides</a>
+        <a href="../../lexicon/">Lexicon</a>
+        <a href="https://ops.0xray.dev/#consult">Consult</a>
+      </nav>
+    </div>
+  </header>
+  <main id="content" class="wrap">
+    <p class="crumb"><a href="../../">Hub</a> / <a href="../">Guides</a> / Spend and policy</p>
+    <p class="eyebrow">Agent spend and governance</p>
+    <h1>Govern agent spend and policy</h1>
+    <p class="direct">Yes. You can see and cap what each agent spends, and enforce what it may do, once identity, metering, and policy sit in one place, and we wire that layer for your fleet. <a href="https://www.bmc.com/it-solutions/agentic-orchestration.html">BMC</a> and <a href="https://azure.microsoft.com/en-us/products/ai-foundry/control-plane">Microsoft</a> list token metering and spend among enterprise needs; <a href="https://www.ibm.com/products/watsonx-orchestrate/agent-control-plane">IBM</a> and <a href="https://www.snowflake.com/en/artificial-intelligence/ai-governance/control-plane/">Snowflake</a> put policy in the <a href="../control-plane/">control plane</a>.</p>
+
+<section id="why-hard">
+  <h2>Why is agent spend hard to track?</h2>
+  <p>Agents call models and tools many times per task, often on one shared key. The bill arrives as one number. Without per-agent identity, you can't tell which agent, task, or loop drove it. Loops matter: <a href="https://www.snowflake.com/en/artificial-intelligence/ai-governance/control-plane/">Snowflake</a> gives the example of agents repeating tool calls, and every repeat is spend.</p>
+</section>
+
+<section id="meter">
+  <h2>How do I meter token spend per agent?</h2>
+  <ol class="steps">
+    <li><strong>One credential per agent.</strong> Shared keys make attribution impossible (<a href="https://www.ibm.com/products/watsonx-orchestrate/agent-control-plane">IBM</a>, <a href="https://www.snowflake.com/en/artificial-intelligence/ai-governance/control-plane/">Snowflake</a>).</li>
+    <li><strong>Tag every call</strong> with agent, task, and owner.</li>
+    <li><strong>Roll up daily</strong> by agent and by task type.</li>
+    <li><strong>Set alerts and caps</strong> per agent, not only per account.</li>
+    <li><strong>Review weekly</strong>: cost per finished task, not cost per call.</li>
+    <li><strong>Reuse warm context</strong> instead of starting a fresh long run for every ask: keep the same long-running agent and its context for related tasks, so you don't pay to rebuild context each time.</li>
+  </ol>
+</section>
+
+<section id="enforce">
+  <h2>What does agent governance actually enforce?</h2>
+  <ul class="plain">
+    <li><strong>Identity and access</strong> — which data and tools each agent may touch (<a href="https://www.ibm.com/products/watsonx-orchestrate/agent-control-plane">IBM</a>, <a href="https://www.snowflake.com/en/artificial-intelligence/ai-governance/control-plane/">Snowflake</a>).</li>
+    <li><strong>Policy</strong> — what needs approval, what is blocked outright (<a href="https://www.ibm.com/products/watsonx-orchestrate/agent-control-plane">IBM</a>, <a href="https://www.snowflake.com/en/artificial-intelligence/ai-governance/control-plane/">Snowflake</a>).</li>
+    <li><strong>Guardrails</strong> — input checks such as prompt-injection defenses; <a href="https://azure.microsoft.com/en-us/products/ai-foundry/control-plane">Microsoft</a> lists these in its control plane.</li>
+    <li><strong>Audit</strong> — a record of runs, approvals, and spend (<a href="https://www.ibm.com/products/watsonx-orchestrate/agent-control-plane">IBM</a>, <a href="https://www.bmc.com/it-solutions/agentic-orchestration.html">BMC</a>).</li>
+    <li><strong>Evaluation</strong> — scheduled quality checks (<a href="https://www.ibm.com/products/watsonx-orchestrate/agent-control-plane">IBM</a>, <a href="https://azure.microsoft.com/en-us/products/ai-foundry/control-plane">Microsoft</a>).</li>
+  </ul>
+</section>
+
+<section id="connect">
+  <h2>How do spend and governance connect?</h2>
+  <p>They share the same foundation: per-agent identity and a single log. If you can attribute a token to an agent, you can attribute an action to it too. Build them together. The same owner and reviewer show up when you <a href="../pilot-to-production/">take a pilot to production</a>.</p>
+</section>
+
+<section id="wrong">
+  <h2>What goes wrong?</h2>
+  <ul class="failures">
+    <li><strong>Caps only at account level</strong> — one runaway agent starves the rest.</li>
+    <li><strong>Governance written but not enforced</strong> — a policy doc no runtime checks.</li>
+    <li><strong>Guardrails on one framework only</strong> while others run open. The build-versus-run split is in <a href="../framework-vs-ops/">frameworks versus ops</a>.</li>
+    <li><strong>Cutting model quality to save money</strong> before checking for loops and retries. The waste is often in the workflow, not the model.</li>
+    <li><strong>Alerts nobody reads.</strong> An alert needs a named person who acts on it the same day.</li>
+    <li><strong>Savings promised up front.</strong> We don't guarantee savings; we make spend visible so you can decide.</li>
+  </ul>
+</section>
+
+<section id="review">
+  <h2>What does a spend review look like?</h2>
+  <p>Say a team runs three agents on one account. The monthly bill jumped, and nobody can say why.</p>
+  <p>The <strong>eng lead</strong> gives each agent its own credential and tags every call with agent, task, and owner. Within a week, the daily roll-up shows the cause: a research agent retries a failing tool call several times per task. Each retry is a full model call. That is the loop pattern <a href="https://www.snowflake.com/en/artificial-intelligence/ai-governance/control-plane/">Snowflake</a> describes, showing up on the bill.</p>
+  <p>The <strong>owner</strong> sets a per-agent cap and an alert at a lower threshold. The eng lead adds a rule that stops the agent after a fixed number of retries and flags the task for review.</p>
+  <p>The <strong>reviewer</strong> checks a sample of the research agent's finished tasks. Quality is fine on the ones that finish; the waste sits in the ones that loop. So the fix is the retry rule, not a cheaper model.</p>
+  <p>The weekly report now shows cost per finished task for each agent. The owner can see which agent earns its spend and which needs work, and can make that call without guessing.</p>
+</section>
+
+<section id="who">
+  <h2>Who owns spend and policy?</h2>
+  <ul class="plain">
+    <li><strong>Owner</strong> — sets budgets and caps per agent, and writes the policy: what needs approval, what is blocked.</li>
+    <li><strong>Eng lead</strong> — puts the policy into the runtime: credentials, tags, caps, retry limits, guardrails.</li>
+    <li><strong>Reviewer</strong> — checks that the rules hold in practice: samples outputs, reads the audit trail, flags drift.</li>
+  </ul>
+  <p>Keep the roles separate. When the person who sets the budget is also the only one who can see the spend, problems stay hidden longer.</p>
+</section>
+
+<section id="often">
+  <h2>How often should spend and policy be checked?</h2>
+  <p>Daily for alerts, weekly for cost per finished task, and monthly for the policy itself. Revisit the policy any time you add an agent, a new tool, or access to new data. Each of those changes what an agent can spend and what it can touch. Cloud-run discipline on this fleet — spec first, one run, a weekly hold line — stays in <a href="../compute-discipline/">model spend and compute</a>.</p>
+</section>
+<section id="next">
+  <h2>How do you request a consult?</h2>
+  <p>We Scout your spend and policy gaps.</p>
+  <p class="cta-row"><a class="btn btn-pri" href="https://ops.0xray.dev/#consult">Request a consult</a></p>
+</section>
+<section class="related">
+<h2>Where should you read next?</h2>
+<ul class="plain">
+<li><a href="../control-plane/">Map the agentic control plane</a></li>
+<li><a href="../pilot-to-production/">Take your agent pilot to production</a></li>
+<li><a href="../framework-vs-ops/">Frameworks build agents; ops runs them</a></li>
+<li><a href="../compute-discipline/">Model spend and compute</a></li>
+</ul>
+</section>
+
+    <section class="faq" id="faq">
+<h2>What else do operators ask?</h2>
+<h3>What's the first thing to do?</h3>
+<p>Give each agent its own credential.</p>
+<h3>Is cost per call the right number?</h3>
+<p>Track cost per finished task; it shows waste better.</p>
+<h3>Do guardrails replace review?</h3>
+<p>No. Guardrails block known bad inputs; review gates check outputs.</p>
+<h3>Can this work across clouds and frameworks?</h3>
+<p>Yes, if identity and logging sit above them.</p>
+</section>
+  </main>
+  <footer class="site-footer">
+    <p>Build work ships on a recorded review. The public lane stays on hold until the owner gives an explicit go.</p>
+    <p><a href="https://0xray.dev">Product</a> · <a href="https://docs.0xray.dev">Docs</a> · <a href="https://bifrost.0xray.dev">Live board</a></p>
+    <p>© 0xRay · AI Fleet OPS</p>
+    <p class="listing-badge"><a href="https://theaitoolsdir.com/product/ai-fleet-ops?ref=badge" rel="dofollow"><img src="https://theaitoolsdir.com/badge/ai-fleet-ops.svg" alt="Featured on TheAIToolsDir" width="182" height="46"></a></p>
+  </footer>
+
+</body>
+</html>

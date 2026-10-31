@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Install a multi-agent ops stack | 0xRay</title>
+  <meta name="description" content="Install the 0xRay operating kit on a repo: one npm install wires governance, seven MCP servers, chat bridges, and a station card that survives a reset." />
+  <link rel="canonical" href="https://ops.0xray.dev/guides/install/" />
+  <link rel="stylesheet" href="../../assets/site.css" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://ops.0xray.dev/guides/install/#article",
+      "headline": "Install a multi-agent ops stack",
+      "description": "Install the 0xRay operating kit on a repo: one npm install wires governance, seven MCP servers, chat bridges, and a station card that survives a reset.",
+      "url": "https://ops.0xray.dev/guides/install/",
+      "inLanguage": "en",
+      "datePublished": "2026-10-31",
+      "dateModified": "2026-10-31",
+      "author": {
+        "@type": "Organization",
+        "name": "0xRay",
+        "url": "https://0xray.dev"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "0xRay",
+        "url": "https://ops.0xray.dev/"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://ops.0xray.dev/guides/install/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://ops.0xray.dev/guides/install/#breadcrumbs",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "AI Fleet OPS",
+          "item": "https://ops.0xray.dev/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Operating guides",
+          "item": "https://ops.0xray.dev/guides/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Install a multi-agent ops stack",
+          "item": "https://ops.0xray.dev/guides/install/"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://ops.0xray.dev/guides/install/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Does install need an API key?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. The install writes config only. Model and service keys belong to your host and your human owner."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can two agents share one repo?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "They can, but give each agent its own worktree and its own station card, or two agents will pick up the same ticket."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What if my host is not listed?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Any MCP-capable host can point at npx -y 0xray mcp <server>. Bridges just save the wiring."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <a class="skip" href="#content">Skip to content</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="../../">AI Fleet OPS <span>0xRay</span></a>
+      <nav aria-label="Primary">
+        <a href="../../">Hub</a>
+        <a href="../" aria-current="page">Guides</a>
+        <a href="../../lexicon/">Lexicon</a>
+        <a href="https://ops.0xray.dev/#consult">Consult</a>
+      </nav>
+    </div>
+  </header>
+  <main id="content" class="wrap">
+    <p class="crumb"><a href="../../">Hub</a> / <a href="../">Guides</a> / Install</p>
+    <p class="eyebrow">Install</p>
+    <h1>Install a multi-agent ops stack</h1>
+    <p class="direct">Yes. One command installs it. Run <code>npm install 0xray</code> in each agent's project folder. Postinstall writes the shared rules, seven tool servers, host bridges, and a station card, so every agent follows the same codex and resumes its ticket after a reset. Then run <code>npx 0xray validate</code> to prove the operating kit is installed.</p>
+  <p>A multi-agent ops install puts the same operating rules, tool servers, and recovery notes into every repo an agent works in. In 0xRay that is one package install per seat. A <strong>seat</strong> is one named agent role (builder, reviewer, coordinator) with its own working folder. The install is the same for every seat; the role comes from config, not from a different package.</p>
+<section id="what-do-you-need-before-you-start">
+  <h2>What do you need before you start?</h2>
+  <ul class="plain">
+    <li><strong>Node.js 20 or newer.</strong> The package declares <code>engines.node &gt;=20</code>.</li>
+    <li><strong>A git repo per seat.</strong> The suit writes files into the project root. Use a branch and a worktree for code changes so the main branch is never edited directly.</li>
+    <li><strong>An agent host.</strong> Any of the supported bridges: OpenCode, Grok, Hermes, OpenClaw, or Cursor project hooks. You can run more than one host on the same seat.</li>
+    <li><strong>A human owner.</strong> Money, credentials, deletes, and public posts stay with a person. The install does not change that, and nothing in it asks for a key.</li>
+  </ul>
+</section>
+<section id="how-do-you-install-the-package">
+  <h2>How do you install the package?</h2>
+  <p>From the seat's project root:</p>
+  <pre><code>npm install 0xray</code></pre>
+  <p>That is the whole required step. The package runs a <strong>postinstall</strong> script (<code>install-bridges.cjs</code>). Postinstall means the setup runs automatically right after npm finishes downloading.</p>
+</section>
+<section id="what-did-postinstall-write">
+  <h2>What did postinstall write?</h2>
+  <p>Read the diff before you commit. Postinstall does seven things:</p>
+  <table>
+    <thead><tr><th>Writes</th><th>What it is</th><th>Why it matters</th></tr></thead>
+    <tbody>
+    <tr><td><code>AGENTS.md</code></td><td>The operating manual every host reads first</td><td>Same rules on every host</td></tr>
+    <tr><td><code>.xray/codex.json</code></td><td>The codex: the rule set checked before each tool call</td><td>Guardrails are enforced, not suggested</td></tr>
+    <tr><td><code>.xray/features.json</code>, <code>.xray/config.json</code></td><td>Feature flags and token limits</td><td>Ceremony and context size per seat</td></tr>
+    <tr><td><code>.mcp.json</code></td><td>Seven MCP servers, each run as <code>npx -y 0xray mcp &lt;name&gt;</code></td><td>The tools agents call</td></tr>
+    <tr><td>Bridges</td><td>OpenCode, Grok, Hermes, OpenClaw configs, plus Cursor <code>.cursor/hooks.json</code></td><td>Hosts load the same suit</td></tr>
+    <tr><td><code>.gitignore</code></td><td>Seeded from a template only if you have none</td><td>Keeps runtime state out of git</td></tr>
+    <tr><td>Mill plant</td><td>The <code>mill</code> and <code>inspect</code> skills, then your own <code>src/skills</code> on top</td><td>Your skill wins when names match</td></tr>
+    </tbody>
+  </table>
+  <p><strong>MCP</strong> (Model Context Protocol) is the open standard hosts use to call tool servers. The seven servers are governance, skills, orchestrator, enforcer, researcher, code-review, and architect-tools. They all ship in the same package, so no extra install is needed.</p>
+  <p>Postinstall does <strong>not</strong> write a root <code>SKILLS.md</code>, and it does not unpack the large optional skill costume unless <code>foundry.json</code> sets <code>"costume": true</code>.</p>
+</section>
+<section id="which-optional-extras-should-you-add">
+  <h2>Which optional extras should you add?</h2>
+  <pre><code>npx 0xray setup</code></pre>
+  <p>This adds symlinks, extra hooks, and Hermes skill sync. Run it if you use Hermes or want the hook extras. Skip it otherwise.</p>
+  <p>Install a single bridge again if a host was added after the first install:</p>
+  <table>
+    <thead><tr><th>Host</th><th>Command</th></tr></thead>
+    <tbody>
+    <tr><td>OpenCode</td><td><code>npx 0xray opencode install</code></td></tr>
+    <tr><td>Grok</td><td><code>npx 0xray grok install</code> (writes project <code>.grok/plugins/0xray</code>)</td></tr>
+    <tr><td>Hermes</td><td><code>npx 0xray hermes install</code></td></tr>
+    <tr><td>OpenClaw</td><td><code>npx 0xray openclaw install</code></td></tr>
+    </tbody>
+  </table>
+</section>
+<section id="how-do-you-verify-the-install">
+  <h2>How do you verify the install?</h2>
+  <p>Three checks, in this order:</p>
+  <pre><code>npx 0xray status     # is it installed
+npx 0xray validate   # wear check: pack paths, Cursor hooks, mill, repertoire
+npx 0xray health     # framework health</code></pre>
+  <p>Then run <code>npx @0xray/foundry inspect</code> for the mill receipt. A <strong>receipt</strong> is a file or URL that proves a check ran. Chat output is not a receipt. If <code>validate</code> fails, fix that before you start agents (the <a href="../stand-up/">house check in stand-up</a> expects a PASS); a half-worn suit is the most common source of agents ignoring rules.</p>
+</section>
+<section id="how-do-you-add-shared-memory">
+  <h2>How do you add shared memory?</h2>
+  <p>Repertoire is the memory layer. It ships on by default in the vendored config. For external hosts such as Hermes or Grok, add it next to the 0xRay servers in the host's MCP config:</p>
+  <pre><code>&quot;repertoire&quot;: { &quot;command&quot;: &quot;npx&quot;, &quot;args&quot;: [&quot;-y&quot;, &quot;@0xray/repertoire&quot;, &quot;mcp&quot;] }</code></pre>
+  <p>Turning it off is an explicit setting, never a silent default: <code>{ "enabled": false, "provider": "repertoire" }</code>.</p>
+</section>
+<section id="what-should-you-commit">
+  <h2>What should you commit?</h2>
+  <p>Commit <code>AGENTS.md</code>, <code>.xray/</code> config, <code>.mcp.json</code>, and the bridge files on a branch and open a pull request. Runtime state under <code>.xray/state/</code> is per seat and stays out of git. The seeded <code>.gitignore</code> template ignores <code>.xray/state/*</code> but keeps <code>.xray/state/LENS.md</code> tracked. One catch: if you already had a <code>.gitignore</code>, postinstall appends a marked block (<code># --- 0xray suit (postinstall) ---</code>) that ignores all of <code>.xray/</code> with no <code>LENS.md</code> carve-out. Open your ignore file and check which one you got before you commit. The seeded template also blocks <code>.env*</code>, <code>*.pem</code>, <code>*.key</code>, <code>credentials.json</code>, and <code>**/auth.json</code>.</p>
+</section>
+<section id="how-do-you-upgrade">
+  <h2>How do you upgrade?</h2>
+  <p>Bump the version and reinstall. Postinstall runs again and overwrites managed files, marked ``. Keep your own rules in your skills and config overlays, not in managed files, or the upgrade will replace them.</p>
+  <p>Next, <a href="../config/">configure seats, gates, and limits</a>.</p>
+</section>
+<section id="next">
+  <h2>How do you request a consult?</h2>
+  <p>Want help standing up a fleet? Email <a href="mailto:consult@0xray.dev">consult@0xray.dev</a>.</p>
+  <p class="cta-row"><a class="btn btn-pri" href="https://ops.0xray.dev/#consult">Request a consult</a></p>
+</section>
+<section class="related">
+<h2>Where should you read next?</h2>
+<ul class="plain">
+<li><a href="../config/">Configure roles, gates, and limits</a></li>
+<li><a href="../first-ticket/">Run your first agent ticket end to end</a></li>
+<li><a href="../fleet-pitfalls/">Common AI agent fleet pitfalls and fixes</a></li>
+</ul>
+</section>
+    <section class="faq" id="faq">
+<h2>What else do operators ask?</h2>
+<h3>Does install need an API key?</h3>
+<p>No. The install writes config only. Model and service keys belong to your host and your human owner.</p>
+<h3>Can two agents share one repo?</h3>
+<p>They can, but give each agent its own worktree and its own station card, or two agents will pick up the same ticket.</p>
+<h3>What if my host is not listed?</h3>
+<p>Any MCP-capable host can point at <code>npx -y 0xray mcp &lt;server&gt;</code>. Bridges just save the wiring.</p>
+</section>
+  </main>
+  <footer class="site-footer">
+    <p>Build work ships on a recorded review. The public lane stays on hold until the owner gives an explicit go.</p>
+    <p><a href="https://0xray.dev">Product</a> · <a href="https://docs.0xray.dev">Docs</a> · <a href="https://bifrost.0xray.dev">Live board</a></p>
+    <p>© 0xRay · AI Fleet OPS</p>
+    <p class="listing-badge"><a href="https://theaitoolsdir.com/product/ai-fleet-ops?ref=badge" rel="dofollow"><img src="https://theaitoolsdir.com/badge/ai-fleet-ops.svg" alt="Featured on TheAIToolsDir" width="182" height="46"></a></p>
+  </footer>
+</body>
+</html>
