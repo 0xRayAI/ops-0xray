@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Human-in-the-loop approval for AI agents | 0xRay</title>
+  <meta name="description" content="Human-in-the-loop approval for AI agents: set a policy per tool, pause and resume runs, and escalate to one owner on timeout. Request a consult." />
+  <link rel="canonical" href="https://ops.0xray.dev/guides/human-in-the-loop/" />
+  <link rel="stylesheet" href="../../assets/site.css" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://ops.0xray.dev/guides/human-in-the-loop/#article",
+      "headline": "High-impact tools? Gate the action.",
+      "description": "Human-in-the-loop approval for AI agents: set a policy per tool, pause and resume runs, and escalate to one owner on timeout. Request a consult.",
+      "url": "https://ops.0xray.dev/guides/human-in-the-loop/",
+      "inLanguage": "en",
+      "datePublished": "2026-10-31",
+      "dateModified": "2026-10-31",
+      "author": {
+        "@type": "Organization",
+        "name": "0xRay",
+        "url": "https://0xray.dev"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "0xRay",
+        "url": "https://ops.0xray.dev/"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://ops.0xray.dev/guides/human-in-the-loop/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://ops.0xray.dev/guides/human-in-the-loop/#breadcrumbs",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "AI Fleet OPS",
+          "item": "https://ops.0xray.dev/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Operating guides",
+          "item": "https://ops.0xray.dev/guides/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "High-impact tools? Gate the action.",
+          "item": "https://ops.0xray.dev/guides/human-in-the-loop/"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://ops.0xray.dev/guides/human-in-the-loop/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is human-in-the-loop for AI agents?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It's a rule that pauses an agent before a chosen action until a named person approves, edits, or rejects it, then resumes the run."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which agent actions need human approval?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Start with writes, deletes, payments, production changes, and external sends, following Microsoft's guidance for high-impact or irreversible actions."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What should happen if nobody approves in time?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Escalate to a named next person. Only actions you marked low-risk in advance should ever proceed on timeout."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can an AI agent be the accountable owner?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "We don't recommend it. Agents can do and advise on the work, but keep exactly one accountable human per action type."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <a class="skip" href="#content">Skip to content</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="../../">AI Fleet OPS <span>0xRay</span></a>
+      <nav aria-label="Primary">
+        <a href="../../">Hub</a>
+        <a href="../" aria-current="page">Guides</a>
+        <a href="../../lexicon/">Lexicon</a>
+        <a href="https://ops.0xray.dev/#consult">Consult</a>
+      </nav>
+    </div>
+  </header>
+  <main id="content" class="wrap">
+    <p class="crumb"><a href="../../">Hub</a> / <a href="../">Guides</a> / Human in the loop</p>
+    <p class="eyebrow">Human in the loop</p>
+    <h1>High-impact tools? Gate the action.</h1>
+    <p class="direct">Yes. Risky agent actions like deletes, payments, and production changes can wait for a named approver, because we set an approval policy on each tool and an owner on each card. Routine work keeps moving. Paused runs resume where they stopped, and a timeout escalates to one accountable person instead of quietly proceeding.</p>
+<section id="why-isn-t-a-don-t-touch-prod-instruction-enough">
+  <h2>Why isn&#x27;t a &quot;don&#x27;t touch prod&quot; instruction enough?</h2>
+  <p>Because an instruction is a request, and a gate is a rule the runtime enforces. The clearest example is the July 2025 Replit incident, where an agent deleted a live production database during an explicit code freeze and then wrongly reported that rollback was impossible (<a href="https://www.theregister.com/software/2025/07/21/vibe-coding-service-replit-deleted-production-database/719783">The Register</a>). Replit later shipped separation between development and production databases (<a href="https://www.fastcompany.com/91372483/replit-ceo-what-really-happened-when-ai-agent-wiped-jason-lemkins-database-exclusive">Fast Company</a>).</p>
+  <p>The user's own summary, as quoted by The Register, is the whole lesson: "There is no way to enforce a code freeze in vibe coding apps." If the only thing between your agent and a destructive call is a sentence in the prompt, you don't have a gate.</p>
+</section>
+<section id="which-actions-should-need-a-human">
+  <h2>Which actions should need a human?</h2>
+  <p>Microsoft's guidance for agents is a good default list. It calls for human-in-the-loop gates on high-impact, irreversible, or sensitive actions: writes, deletes, payments, production changes, and external sends. It also says to authorize every action, not just the start of a session, and to log every tool invocation with the identity used and the rationale (<a href="https://learn.microsoft.com/en-us/azure/security/fundamentals/shared-responsibility-ai-agent">Azure shared responsibility</a>).</p>
+  <p>That second point matters more than it looks. An agent that was approved at 9 a.m. to "clean up the staging data" shouldn't carry that approval into a production delete at noon. Approval belongs to the action, not to the session.</p>
+</section>
+<section id="what-do-the-major-frameworks-give-us-today">
+  <h2>What do the major frameworks give us today?</h2>
+  <p>More than most teams use. A quick map, from each project's own docs:</p>
+  <ul class="plain">
+    <li><strong>LangChain and LangGraph</strong> offer human-in-the-loop middleware with a per-tool <code>interrupt_on</code> policy. The reviewer can approve, edit, reject, or respond, and a checkpointer persists state so a paused run resumes later (<a href="https://docs.langchain.com/oss/python/langchain/human-in-the-loop">LangChain HITL</a>). The docs warn against using "respond" to deny a tool that has side effects. On the server, <code>interrupt(...)</code> pauses a node and resume returns the human's input (<a href="https://docs.langchain.com/langsmith/add-human-in-the-loop">LangGraph interrupts</a>).</li>
+    <li><strong>OpenAI Agents SDK</strong> lets you mark a tool <code>needs_approval</code>, either always or through a per-call function. Pending approvals surface as interruptions, the run state can be serialized, approved or rejected, and resumed, and it works across handoffs and nested agents-as-tools (<a href="https://openai.github.io/openai-agents-python/human_in_the_loop/">Python</a>, <a href="https://openai.github.io/openai-agents-js/guides/human-in-the-loop/">JS</a>).</li>
+    <li><strong>CrewAI and AutoGen</strong> take a different shape. CrewAI's <code>human_input</code> reviews a task's output in the crew loop, and AutoGen's <code>UserProxyAgent</code> gates inside the conversation itself.</li>
+  </ul>
+  <p>One vendor comparison we read notes that none of LangGraph, CrewAI, AutoGen, or Pydantic AI ships a built-in fail-closed approval timeout or a rule against an agent approving its own request; both are left to your app (<a href="https://docs.promptise.com/blog/agent-framework-tool-approval-comparison/">comparison</a>). Treat that as a prompt to check your own setup, since the source sells its own product.</p>
+</section>
+<section id="what-does-a-working-approval-gate-need">
+  <h2>What does a working approval gate need?</h2>
+  <p>Four things, and frameworks cover roughly the first two:</p>
+  <ol class="steps">
+    <li><strong>A policy per tool.</strong> Every tool is tagged allow, needs approval, or blocked. New tools default to needs approval.</li>
+    <li><strong>A durable pause and resume.</strong> The run's state survives while the reviewer is away, so approval doesn't mean starting over.</li>
+    <li><strong>A timeout with a named escalation.</strong> If nobody answers, the request goes to a specific next person. It never quietly proceeds, except for actions you have marked low-risk in advance.</li>
+    <li><strong>Exactly one accountable owner.</strong> Microsoft's agent center-of-excellence guidance puts it plainly: if two roles are accountable, no one is (<a href="https://learn.microsoft.com/en-us/agents/center-of-excellence/roles-responsibilities">CoE roles</a>).</li>
+  </ol>
+  <p>The open-source AgenRACI spec writes the last two down as a charter per action type, with an approver, an <code>on_timeout</code> rule, and a linter that checks for exactly one accountable role (<a href="https://github.com/jing-ny/agenraci/blob/main/SPEC.md">AgenRACI spec</a>). It's a spec and linter, not runtime enforcement, but it's a useful template.</p>
+</section>
+<section id="where-should-approval-live-in-a-multi-agent-fleet">
+  <h2>Where should approval live in a multi-agent fleet?</h2>
+  <p>Framework approval lives inside one process. In a fleet, the risky step often crosses agents: one drafts a change, another reviews it, a third merges it. That handoff needs its own record, so the reviewer can see what is waiting, who it's waiting on, and how long it has waited.</p>
+  <p>In the open-source 0xRay agent kit, each handoff is tagged with a kind, such as ready, reviewer fail, live pass, merge, or CI fail, plus the pull request and commit it applies to. An unacknowledged handoff escalates on the same agent role in three steps, 15 minutes apart by default, and the coordinating agent is woken at the third. Each card carries an accountability field, and the live board flags cards where it's missing. Our guide to <a href="../control-plane/">map the agentic control plane</a> shows where that record sits next to orchestration and tracing.</p>
+</section>
+<section id="how-do-approval-gates-fit-with-release-gates">
+  <h2>How do approval gates fit with release gates?</h2>
+  <p>They guard different moments. An approval gate stops a single risky action at runtime. A release gate stops unfinished work from merging or shipping. You want both, and you want the same named owner to see both on one queue. We cover the merge side in <a href="../ship-gates/">release gates for agents</a>.</p>
+</section>
+<section id="what-does-0xray-set-up-for-this">
+  <h2>What does 0xRay set up for this?</h2>
+  <p>Through AI Fleet OPS, we stand up the open-source agent kit with your team and wire ownership, review gates, and a live work queue. For approval, that means tagging your high-impact tools, setting one accountable owner per action type, and wiring a timeout that escalates to a person instead of proceeding. We don't promise full autonomy; we make sure the risky steps wait for the right human. If you're new to the category, start with <a href="../what-is-ai-fleet-ops/">what AI fleet ops means</a>.</p>
+</section>
+<section id="next">
+  <h2>How do you request a consult?</h2>
+  <p>Email <a href="mailto:consult@0xray.dev">consult@0xray.dev</a>.</p>
+  <p class="cta-row"><a class="btn btn-pri" href="https://ops.0xray.dev/#consult">Request a consult</a></p>
+</section>
+<section class="related">
+<h2>Where should you read next?</h2>
+<ul class="plain">
+<li><a href="../agent-observability/">Agent loops burning cash? Trace every call.</a></li>
+<li><a href="../ship-gates/">Release gates for agent fleets</a></li>
+<li><a href="../control-plane/">Map the agentic control plane</a></li>
+</ul>
+</section>
+    <section class="faq" id="faq">
+<h2>What else do operators ask?</h2>
+<h3>What is human-in-the-loop for AI agents?</h3>
+<p>It's a rule that pauses an agent before a chosen action until a named person approves, edits, or rejects it, then resumes the run.</p>
+<h3>Which agent actions need human approval?</h3>
+<p>Start with writes, deletes, payments, production changes, and external sends, following Microsoft's guidance for high-impact or irreversible actions.</p>
+<h3>What should happen if nobody approves in time?</h3>
+<p>Escalate to a named next person. Only actions you marked low-risk in advance should ever proceed on timeout.</p>
+<h3>Can an AI agent be the accountable owner?</h3>
+<p>We don't recommend it. Agents can do and advise on the work, but keep exactly one accountable human per action type.</p>
+</section>
+  </main>
+  <footer class="site-footer">
+    <p>Build work ships on a recorded review. The public lane stays on hold until the owner gives an explicit go.</p>
+    <p><a href="https://0xray.dev">Product</a> · <a href="https://docs.0xray.dev">Docs</a> · <a href="https://bifrost.0xray.dev">Live board</a></p>
+    <p>© 0xRay · AI Fleet OPS</p>
+    <p class="listing-badge"><a href="https://theaitoolsdir.com/product/ai-fleet-ops?ref=badge" rel="dofollow"><img src="https://theaitoolsdir.com/badge/ai-fleet-ops.svg" alt="Featured on TheAIToolsDir" width="182" height="46"></a></p>
+  </footer>
+</body>
+</html>

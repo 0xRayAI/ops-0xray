@@ -11,6 +11,8 @@
   <url><loc>https://ops.0xray.dev/guides/config/</loc></url>
   <url><loc>https://ops.0xray.dev/guides/first-ticket/</loc></url>
   <url><loc>https://ops.0xray.dev/guides/fleet-pitfalls/</loc></url>
+  <url><loc>https://ops.0xray.dev/guides/agent-observability/</loc></url>
+  <url><loc>https://ops.0xray.dev/guides/human-in-the-loop/</loc></url>
   <url><loc>https://ops.0xray.dev/guides/ship-gates/</loc></url>
   <url><loc>https://ops.0xray.dev/guides/stand-up/</loc></url>
   <url><loc>https://ops.0xray.dev/guides/eng-vs-dist/</loc></url>

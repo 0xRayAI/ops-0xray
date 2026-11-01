@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Agent observability and tool-call tracing | 0xRay</title>
+  <meta name="description" content="Agent observability for multi-agent fleets: trace every model and tool call with OpenTelemetry, cap each run, and name who stops it. Request a consult." />
+  <link rel="canonical" href="https://ops.0xray.dev/guides/agent-observability/" />
+  <link rel="stylesheet" href="../../assets/site.css" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://ops.0xray.dev/guides/agent-observability/#article",
+      "headline": "Agent loops burning cash? Trace every call.",
+      "description": "Agent observability for multi-agent fleets: trace every model and tool call with OpenTelemetry, cap each run, and name who stops it. Request a consult.",
+      "url": "https://ops.0xray.dev/guides/agent-observability/",
+      "inLanguage": "en",
+      "datePublished": "2026-10-31",
+      "dateModified": "2026-10-31",
+      "author": {
+        "@type": "Organization",
+        "name": "0xRay",
+        "url": "https://0xray.dev"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "0xRay",
+        "url": "https://ops.0xray.dev/"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://ops.0xray.dev/guides/agent-observability/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://ops.0xray.dev/guides/agent-observability/#breadcrumbs",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "AI Fleet OPS",
+          "item": "https://ops.0xray.dev/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Operating guides",
+          "item": "https://ops.0xray.dev/guides/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Agent loops burning cash? Trace every call.",
+          "item": "https://ops.0xray.dev/guides/agent-observability/"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://ops.0xray.dev/guides/agent-observability/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is agent observability the same as LLM observability?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Mostly, but agent observability also traces tool calls and handoffs between agents, not just model prompts and completions."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does OpenTelemetry have a standard for AI agents?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. The OpenTelemetry GenAI semantic conventions define agent and tool spans, though the spec is still marked Development and names can change."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why didn't max_tokens stop our runaway loop?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Because each call stayed under the limit and returned 200. The problem only shows at the run level, so you need run caps that stop new work."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should we log tool-call arguments and results?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Only by deliberate choice. They are opt-in in the spec for privacy, so name who may enable them and where that data is kept."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <a class="skip" href="#content">Skip to content</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="../../">AI Fleet OPS <span>0xRay</span></a>
+      <nav aria-label="Primary">
+        <a href="../../">Hub</a>
+        <a href="../" aria-current="page">Guides</a>
+        <a href="../../lexicon/">Lexicon</a>
+        <a href="https://ops.0xray.dev/#consult">Consult</a>
+      </nav>
+    </div>
+  </header>
+  <main id="content" class="wrap">
+    <p class="crumb"><a href="../../">Hub</a> / <a href="../">Guides</a> / Agent observability</p>
+    <p class="eyebrow">Agent observability</p>
+    <h1>Agent loops burning cash? Trace every call.</h1>
+    <p class="direct">Yes. You can catch a runaway agent loop before it drains the budget when every model and tool call lands on one trace with an owner and a hard cap. We wire OpenTelemetry GenAI spans, run-level limits, and a live work queue that names who stops the run.</p>
+<section id="why-didn-t-our-dashboards-stop-the-loop">
+  <h2>Why didn&#x27;t our dashboards stop the loop?</h2>
+  <p>Because dashboards watch, and nothing in them is allowed to say no. The best-known case is a LangChain agent-to-agent loop that ran up roughly $47,000 before anyone pulled the plug. The write-up puts it bluntly: "The team had observability. They did not have enforcement." (<a href="https://github.com/vectara/awesome-agent-failures/blob/main/docs/case-studies/langchain-a2a-47k-infinite-loop.md">case study</a>)</p>
+  <p>The harder lesson is that every single call in that loop looked healthy. Each request was well-formed, stayed under <code>max_tokens</code>, and returned a 200 (<a href="https://dev.to/prashar32/the-47k-agent-loop-why-logging-monitoring-and-maxtokens-all-failed-to-stop-it-19ch">analysis</a>). Per-call logging can't see a problem that only exists at the level of the whole run. You need traces shaped around runs, and you need a rule that acts on them.</p>
+</section>
+<section id="what-should-an-agent-trace-actually-record">
+  <h2>What should an agent trace actually record?</h2>
+  <p>There is now a shared standard for this. The OpenTelemetry GenAI semantic conventions define agent spans (<code>invoke_agent</code>, <code>create_agent</code>) and tool spans named <code>execute_tool {gen_ai.tool.name}</code> (<a href="https://github.com/open-telemetry/semantic-conventions-genai/blob/main/docs/gen-ai/gen-ai-agent-spans.md">spec</a>). The attributes your reviewer will lean on most are:</p>
+  <ul class="plain">
+    <li><code>gen_ai.operation.name</code>, which is required and tells you what kind of step it was.</li>
+    <li><code>gen_ai.agent.name</code> and <code>gen_ai.conversation.id</code>, so you know which agent did it and in which session.</li>
+    <li><code>gen_ai.tool.call.id</code> and <code>gen_ai.tool.type</code>, so each tool call can be found again later.</li>
+    <li><code>gen_ai.transfer.mode</code> and <code>gen_ai.transfer.target.name</code>, which record a handoff from one agent to another as "agent as a tool."</li>
+  </ul>
+  <p>Tool-call arguments and results are opt-in for privacy, so decide up front who is allowed to turn them on. One caution: the spec is still marked Development, which means attribute names can change. Pin a version and plan to re-check it.</p>
+  <p>Microsoft's guidance for agents adds the part a trace alone can't give you: log every tool invocation with its inputs, outputs, the identity it ran under, and the rationale (<a href="https://learn.microsoft.com/en-us/azure/security/fundamentals/shared-responsibility-ai-agent">Azure shared responsibility</a>). Identity is the field most teams skip, and it's the one you'll want first when someone asks which agent changed what.</p>
+</section>
+<section id="do-our-frameworks-and-tools-already-emit-these-spans">
+  <h2>Do our frameworks and tools already emit these spans?</h2>
+  <p>Many do. The OpenTelemetry reference table lists execute-tool spans from AutoGen, CrewAI, Google ADK, LangChain, LlamaIndex, OpenAI Agents, and Pydantic AI, among others (<a href="https://github.com/open-telemetry/semantic-conventions-genai/blob/main/reference/README.md">coverage table</a>). The OpenAI Agents SDK also ships built-in tracing for agent runs, tool calls, handoffs, and guardrails (<a href="https://openai.github.io/openai-agents-python/tracing/">SDK tracing</a>).</p>
+  <p>On the backend side, LangSmith ingests OTLP and maps <code>gen_ai.operation.name</code> to its run types (<a href="https://docs.langchain.com/langsmith/trace-with-opentelemetry">LangSmith OTel</a>), and Langfuse accepts OTLP and reads cost from <code>gen_ai.usage.cost</code> (<a href="https://langfuse.com/integrations/native/opentelemetry">Langfuse OTel</a>). A collector can fan the same spans out to more than one backend, so you don't have to pick one tool forever. We don't rank these; your stack decides the fit.</p>
+</section>
+<section id="how-should-one-agent-run-be-shaped">
+  <h2>How should one agent run be shaped?</h2>
+  <p>Make one trace equal one agent run, and tie turns together with a session. Inside the run, record one generation per model call, interleaved with the tool observations between them. Langfuse's guidance warns against wrapping the whole loop in a single parent generation, because that hides which tool call blew up the context or the cost (<a href="https://langfuse.com/docs/observability/best-practices">trace best practices</a>).</p>
+  <p>When the shape is right, you can answer the question that matters during an incident: which step, by which agent, under whose credentials, started the burn.</p>
+</section>
+<section id="what-signals-tell-us-a-run-is-going-wrong">
+  <h2>What signals tell us a run is going wrong?</h2>
+  <p>Watch the shape of the graph, not single calls. Three numbers carry most of the warning: calls per run, the rate of 429 responses, and spend per run. A steady ramp usually means a loop. A staircase usually means retry amplification, where three layers each retrying three times turn one failed request into 27 (<a href="https://agenticfabriq.github.io/fail/runaway-loops/">runaway loops</a>).</p>
+  <p>Put a hard ceiling on each of those numbers, and make crossing it stop new work rather than just send an alert. That's the enforcement the $47K case was missing. For the budget side of this, see our guide on how to <a href="../compute-discipline/">govern agent model spend</a>.</p>
+</section>
+<section id="where-do-call-traces-stop-being-enough">
+  <h2>Where do call traces stop being enough?</h2>
+  <p>A call trace tells you what happened inside one run. It doesn't tell you who owns the work, what stage it's in, or who is supposed to act when it stalls. That second record is accountability, and it lives on the control plane, not in the tracing backend. Our guide to <a href="../control-plane/">map the agentic control plane</a> splits those layers apart.</p>
+  <p>In practice, the two records work as a pair. The trace shows the eng lead which tool call ran away. The work queue shows which agent owned that work card, when it last checked in, and whether anyone has been named accountable. In the open-source 0xRay agent kit, each cloud agent gets its own row on a live board, installed hooks post activity to it, and a missed health beat exits non-zero so a stall is loud instead of silent. Neither record replaces the other.</p>
+</section>
+<section id="what-does-0xray-set-up-for-this">
+  <h2>What does 0xRay set up for this?</h2>
+  <p>Through AI Fleet OPS, we stand up the open-source agent kit with your team and wire ownership, review gates, and a live work queue next to the tracing you already run. Concretely, that means OpenTelemetry spans shaped per run, a run-level cap with a named owner who can stop it, and release checks before anything merges, as covered in <a href="../ship-gates/">release gates for agents</a>. We don't promise savings figures; we make the burn visible and give one person the right to halt it.</p>
+</section>
+<section id="next">
+  <h2>How do you request a consult?</h2>
+  <p>Email <a href="mailto:consult@0xray.dev">consult@0xray.dev</a>.</p>
+  <p class="cta-row"><a class="btn btn-pri" href="https://ops.0xray.dev/#consult">Request a consult</a></p>
+</section>
+<section class="related">
+<h2>Where should you read next?</h2>
+<ul class="plain">
+<li><a href="../human-in-the-loop/">High-impact tools? Gate the action.</a></li>
+<li><a href="../control-plane/">Map the agentic control plane</a></li>
+<li><a href="../compute-discipline/">Model spend and compute</a></li>
+</ul>
+</section>
+    <section class="faq" id="faq">
+<h2>What else do operators ask?</h2>
+<h3>Is agent observability the same as LLM observability?</h3>
+<p>Mostly, but agent observability also traces tool calls and handoffs between agents, not just model prompts and completions.</p>
+<h3>Does OpenTelemetry have a standard for AI agents?</h3>
+<p>Yes. The OpenTelemetry GenAI semantic conventions define agent and tool spans, though the spec is still marked Development and names can change.</p>
+<h3>Why didn&#x27;t max_tokens stop our runaway loop?</h3>
+<p>Because each call stayed under the limit and returned 200. The problem only shows at the run level, so you need run caps that stop new work.</p>
+<h3>Should we log tool-call arguments and results?</h3>
+<p>Only by deliberate choice. They are opt-in in the spec for privacy, so name who may enable them and where that data is kept.</p>
+</section>
+  </main>
+  <footer class="site-footer">
+    <p>Build work ships on a recorded review. The public lane stays on hold until the owner gives an explicit go.</p>
+    <p><a href="https://0xray.dev">Product</a> · <a href="https://docs.0xray.dev">Docs</a> · <a href="https://bifrost.0xray.dev">Live board</a></p>
+    <p>© 0xRay · AI Fleet OPS</p>
+    <p class="listing-badge"><a href="https://theaitoolsdir.com/product/ai-fleet-ops?ref=badge" rel="dofollow"><img src="https://theaitoolsdir.com/badge/ai-fleet-ops.svg" alt="Featured on TheAIToolsDir" width="182" height="46"></a></p>
+  </footer>
+</body>
+</html>
